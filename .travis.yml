@@ -1,0 +1,12 @@
+sudo: false
+language: node_js
+node_js:
+  - "5"
+before_script:
+  - sh -e /etc/init.d/xvfb start
+branches:
+  only:
+    - master
+email:
+  on_failure: never
+  on_success: never
