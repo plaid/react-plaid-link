@@ -49,7 +49,7 @@ a more holistic understanding of the various Link options.
   product="auth"
   token="test,wells,connected"
   selectAccount={true}
-  webhook="https://plaid.com"
+  webhook="https://webhooks.test.com"
   onSuccess={this.handleOnSuccess}
   onExit={this.handleOnExit}
   onLoad={this.handleOnLoad}
