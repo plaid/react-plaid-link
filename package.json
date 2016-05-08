@@ -4,10 +4,9 @@
   "description": "A React component for Plaid Link",
   "files": [
     "dist/",
-    "src/",
     "LICENSE"
   ],
-  "main": "src/PlaidLink.js",
+  "main": "dist/PlaidLink.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/pbernasconi/react-plaid-link.git"

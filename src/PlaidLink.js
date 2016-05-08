@@ -29,7 +29,7 @@ const PlaidLink = React.createClass({
     env: React.PropTypes.oneOf(['tartan', 'production']).isRequired,
 
     // Open link to a specific institution, for a more custom solution
-    institution: React.PropTypes.String,
+    institution: React.PropTypes.string,
 
     // Set to true to launch Link with longtail institution support enabled.
     // Longtail institutions are only available with the Connect product.
@@ -74,7 +74,7 @@ const PlaidLink = React.createClass({
     styles: React.PropTypes.object,
 
     // Button Class names as a String
-    className: React.PropTypes.string
+    className: React.PropTypes.string,
   },
   getInitialState: function() {
     return {
@@ -94,13 +94,13 @@ const PlaidLink = React.createClass({
       env: this.props.env,
       key: this.props.publicKey,
       longtail: this.props.longtail,
-      product: this.props.product,
-      token: this.props.token,
-      selectAccount: this.props.selectAccount,
-      webhook: this.props.webhook,
-      onSuccess: this.props.onSuccess,
-      onLoad: this.handleLinkOnLoad,
       onExit: this.props.onExit,
+      onLoad: this.handleLinkOnLoad,
+      onSuccess: this.props.onSuccess,
+      product: this.props.product,
+      selectAccount: this.props.selectAccount,
+      token: this.props.token,
+      webhook: this.props.webhook,
     });
 
     this.setState({disabledButton: false});
