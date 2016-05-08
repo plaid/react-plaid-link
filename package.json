@@ -29,8 +29,8 @@
     "react-script-loader": "0.0.1"
   },
   "peerDependencies": {
-    "react": "0.14.0",
-    "react-dom": "0.14.0"
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0"
   },
   "devDependencies": {
     "babel-cli": "6.5.x",
