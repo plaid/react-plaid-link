@@ -89,7 +89,7 @@ const PlaidLink = React.createClass({
     console.error('There was an issue loading the link-initialize.js script');
   },
   onScriptLoaded: function() {
-    this.linkHandler = Plaid.create({
+    window.linkHandler = Plaid.create({
       clientName: this.props.clientName,
       env: this.props.env,
       key: this.props.publicKey,
@@ -111,10 +111,8 @@ const PlaidLink = React.createClass({
   },
   handleOnClick: function() {
     var institution = this.props.institution || null;
-    if (this.state.linkLoaded) {
+    if (window.linkHandler) {
       this.linkHandler.open(institution);
-    } else {
-      // consider a better way to wait for link to load...
     }
   },
   render: function() {
