@@ -11,7 +11,7 @@ const PlaidLink = React.createClass({
       longtail: false,
       selectAccount: false,
       buttonText: 'Open Link',
-      buttonStyles: {
+      style: {
         padding: '6px 4px',
         outline: 'none',
         background: '#FFFFFF',
@@ -71,7 +71,7 @@ const PlaidLink = React.createClass({
     buttonText: React.PropTypes.string,
 
     // Button Styles as an Object
-    styles: React.PropTypes.object,
+    style: React.PropTypes.object,
 
     // Button Class names as a String
     className: React.PropTypes.string,
@@ -83,7 +83,7 @@ const PlaidLink = React.createClass({
     };
   },
   getScriptURL: function() {
-    return 'https://cdn.plaid.com/link/stable/link-initialize.js';
+    return 'https://cdn.plaid.com/link/v2/stable/link-initialize.js';
   },
   onScriptError: function() {
     console.error('There was an issue loading the link-initialize.js script');
@@ -119,9 +119,12 @@ const PlaidLink = React.createClass({
   },
   render: function() {
     return (
-      <button onClick={this.handleOnClick}
-              disabled={this.state.disabledButton}
-              {...this.props} >
+      <button
+        onClick={this.handleOnClick}
+        disabled={this.state.disabledButton}
+        style={this.props.style}
+        className={this.props.className}
+      >
         <span>{this.props.buttonText}</span>
       </button>
     );
