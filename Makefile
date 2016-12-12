@@ -10,11 +10,13 @@ XYZ = $(NPM_ENV_VARS) node_modules/.bin/xyz --repo git@github.com:pbernasconi/re
 .PHONY: build
 build:
 	@mkdir -p dist
-	@$(BABEL) src/PlaidLink.js > dist/PlaidLink.js
+	@$(BABEL) "./src/PlaidLink.js" > "./dist/PlaidLink.js"
+
 
 .PHONY: clean
 clean:
 	@rm -rf dist
+
 
 .PHONY: setup
 setup:
