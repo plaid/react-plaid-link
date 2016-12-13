@@ -112,7 +112,7 @@ const PlaidLink = React.createClass({
   handleOnClick: function() {
     var institution = this.props.institution || null;
     if (window.linkHandler) {
-      this.linkHandler.open(institution);
+      window.linkHandler.open(institution);
     }
   },
   render: function() {
