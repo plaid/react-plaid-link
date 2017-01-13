@@ -115,6 +115,11 @@ const PlaidLink = React.createClass({
       window.linkHandler.open(institution);
     }
   },
+  exit: function exit(configurationObject) {
+    if (window.linkHandler) {
+      window.linkHandler.exit(configurationObject);
+    }
+  },
   render: function() {
     return (
       <button
