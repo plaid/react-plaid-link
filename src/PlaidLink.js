@@ -8,7 +8,6 @@ const PlaidLink = React.createClass({
   getDefaultProps: function() {
     return {
       institution: null,
-      longtail: false,
       selectAccount: false,
       buttonText: 'Open Link',
       style: {
@@ -30,10 +29,6 @@ const PlaidLink = React.createClass({
 
     // Open link to a specific institution, for a more custom solution
     institution: React.PropTypes.string,
-
-    // Set to true to launch Link with longtail institution support enabled.
-    // Longtail institutions are only available with the Connect product.
-    longtail: React.PropTypes.bool,
 
     // The public_key associated with your account; available from
     // the Plaid dashboard (https://dashboard.plaid.com)
@@ -93,7 +88,6 @@ const PlaidLink = React.createClass({
       clientName: this.props.clientName,
       env: this.props.env,
       key: this.props.publicKey,
-      longtail: this.props.longtail,
       onExit: this.props.onExit,
       onLoad: this.handleLinkOnLoad,
       onSuccess: this.props.onSuccess,
