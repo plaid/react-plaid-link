@@ -41,6 +41,7 @@
     "eslint": "2.2.x",
     "eslint-plugin-react": "4.0.x",
     "mocha": "2.3.x",
+    "prop-types": "^15.5.10",
     "react": "0.14.3",
     "react-dom": "0.14.3",
     "react-tools": "0.13.x",

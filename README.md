@@ -49,6 +49,7 @@ a more holistic understanding of the various Link options.
   publicKey="test_key"
   longtail={true}
   product="auth"
+  apiVersion={'v1' | 'v2'}
   token="test,wells,connected"
   selectAccount={true}
   webhook="https://webhooks.test.com"
