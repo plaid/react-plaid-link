@@ -1,6 +1,7 @@
 'use strict';
 
 const React = require('react');
+const PropTypes = require('prop-types');
 const ReactScriptLoaderMixin = require('react-script-loader').ReactScriptLoaderMixin;
 
 const PlaidLink = React.createClass({
@@ -21,55 +22,59 @@ const PlaidLink = React.createClass({
   },
   propTypes: {
     // Displayed once a user has successfully linked their account
-    clientName: React.PropTypes.string.isRequired,
+    clientName: PropTypes.string.isRequired,
 
     // The Plaid API environment on which to create user accounts.
     // For development and testing, use tartan. For production, use production
-    env: React.PropTypes.oneOf(['tartan','sandbox','development','production']).isRequired,
+    env: PropTypes.oneOf(['tartan','sandbox','development','production']).isRequired,
 
     // Open link to a specific institution, for a more custom solution
-    institution: React.PropTypes.string,
+    institution: PropTypes.string,
 
     // The public_key associated with your account; available from
     // the Plaid dashboard (https://dashboard.plaid.com)
-    publicKey: React.PropTypes.string.isRequired,
+    publicKey: PropTypes.string.isRequired,
 
     // The Plaid product you wish to use, either auth or connect.
-    product: React.PropTypes.oneOf(['auth', 'connect',]).isRequired,
+    product: PropTypes.oneOfType([['auth', 'connect']).isRequired,
 
     // Specify an existing user's public token to launch Link in update mode.
     // This will cause Link to open directly to the authentication step for
     // that user's institution.
-    token: React.PropTypes.string,
+    token: PropTypes.string,
 
     // Set to true to launch Link with the 'Select Account' pane enabled.
     // Allows users to select an individual account once they've authenticated
-    selectAccount: React.PropTypes.bool,
+    selectAccount: PropTypes.bool,
 
     // Specify a webhook to associate with a user.
-    webhook: React.PropTypes.string,
+    webhook: PropTypes.string,
 
     // A function that is called when a user has successfully onboarded their
     // account. The function should expect two arguments, the public_key and a
     // metadata object
-    onSuccess: React.PropTypes.func.isRequired,
+    onSuccess: PropTypes.func.isRequired,
 
     // A function that is called when a user has specifically exited Link flow
-    onExit: React.PropTypes.func,
+    onExit: PropTypes.func,
 
     // A function that is called when the Link module has finished loading.
     // Calls to plaidLinkHandler.open() prior to the onLoad callback will be
     // delayed until the module is fully loaded.
-    onLoad: React.PropTypes.func,
+    onLoad: PropTypes.func,
 
     // Text to display in the button
-    buttonText: React.PropTypes.string,
+    buttonText: PropTypes.string,
 
     // Button Styles as an Object
-    style: React.PropTypes.object,
+    style: PropTypes.object,
 
     // Button Class names as a String
-    className: React.PropTypes.string,
+    className: PropTypes.string,
+
+    // ApiVersion flag to use new version of Plaid API
+
+    apiVersion: PropTypes.string
   },
   getInitialState: function() {
     return {
@@ -88,6 +93,7 @@ const PlaidLink = React.createClass({
       clientName: this.props.clientName,
       env: this.props.env,
       key: this.props.publicKey,
+      apiVersion: this.props.apiVersion,
       onExit: this.props.onExit,
       onLoad: this.handleLinkOnLoad,
       onSuccess: this.props.onSuccess,
