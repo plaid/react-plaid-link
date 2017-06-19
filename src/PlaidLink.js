@@ -26,7 +26,7 @@ const PlaidLink = React.createClass({
 
     // The Plaid API environment on which to create user accounts.
     // For development and testing, use tartan. For production, use production
-    env: PropTypes.oneOf(['tartan','sandbox','development','production']).isRequired,
+    env: PropTypes.oneOf(['tartan', 'sandbox', 'development', 'production']).isRequired,
 
     // Open link to a specific institution, for a more custom solution
     institution: PropTypes.string,
