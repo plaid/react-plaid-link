@@ -47,7 +47,6 @@ a more holistic understanding of the various Link options.
   env="tartan"
   institution={null}
   publicKey="test_key"
-  longtail={true}
   product="auth"
   apiVersion={'v1' | 'v2'}
   token="test,wells,connected"
