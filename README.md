@@ -38,7 +38,7 @@ var App = React.createClass({
 
 ## All Props
 
-Please refer to the [official Plaid Link docs](https://plaid.com/link/) for
+Please refer to the [official Plaid Link docs](https://plaid.com/docs/link/) for
 a more holistic understanding of the various Link options.
 
 ```jsx
