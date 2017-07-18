@@ -35,8 +35,9 @@ const PlaidLink = React.createClass({
     // the Plaid dashboard (https://dashboard.plaid.com)
     publicKey: PropTypes.string.isRequired,
 
-    // The Plaid product you wish to use, either auth or connect.
-    product: PropTypes.oneOf(['auth', 'connect']).isRequired,
+    // The Plaid products you wish to use, an array containing some of connect, 
+    // auth, identity, income, transactions
+    product: PropTypes.arrayOf(PropTypes.oneOf(['connect', 'auth', 'identity', 'income', 'transactions'])).isRequired,
 
     // Specify an existing user's public token to launch Link in update mode.
     // This will cause Link to open directly to the authentication step for
