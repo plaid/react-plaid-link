@@ -49,5 +49,8 @@
     "webpack": "1.12.x",
     "webpack-dev-server": "1.12.x",
     "xyz": "0.5.x"
+  },
+  "scripts": {
+    "build": "babel -d dist/ src/"
   }
 }
