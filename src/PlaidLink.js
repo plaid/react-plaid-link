@@ -90,21 +90,22 @@ const PlaidLink = React.createClass({
     console.error('There was an issue loading the link-initialize.js script');
   },
   onScriptLoaded: function() {
-    window.linkHandler = Plaid.create({
-      clientName: this.props.clientName,
-      env: this.props.env,
-      key: this.props.publicKey,
-      apiVersion: this.props.apiVersion,
-      onExit: this.props.onExit,
-      onLoad: this.handleLinkOnLoad,
-      onSuccess: this.props.onSuccess,
-      product: this.props.product,
-      selectAccount: this.props.selectAccount,
-      token: this.props.token,
-      webhook: this.props.webhook,
+    this.setState({
+      disabledButton: false,
+      linkHandler: Plaid.create({
+        clientName: this.props.clientName,
+        env: this.props.env,
+        key: this.props.publicKey,
+        apiVersion: this.props.apiVersion,
+        onExit: this.props.onExit,
+        onLoad: this.handleLinkOnLoad,
+        onSuccess: this.props.onSuccess,
+        product: this.props.product,
+        selectAccount: this.props.selectAccount,
+        token: this.props.token,
+        webhook: this.props.webhook,
+      })
     });
-
-    this.setState({disabledButton: false});
   },
   handleLinkOnLoad: function() {
     this.props.onLoad && this.props.onLoad();
@@ -112,13 +113,13 @@ const PlaidLink = React.createClass({
   },
   handleOnClick: function() {
     var institution = this.props.institution || null;
-    if (window.linkHandler) {
-      window.linkHandler.open(institution);
+    if (this.state.linkHandler) {
+      this.state.linkHandler.open(institution);
     }
   },
   exit: function exit(configurationObject) {
-    if (window.linkHandler) {
-      window.linkHandler.exit(configurationObject);
+    if (this.state.linkHandler) {
+      this.state.linkHandler.exit(configurationObject);
     }
   },
   render: function() {
