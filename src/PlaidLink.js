@@ -111,6 +111,7 @@ const PlaidLink = React.createClass({
     this.setState({linkLoaded: true});
   },
   handleOnClick: function() {
+    this.props.onClick && this.props.onClick();
     var institution = this.props.institution || null;
     if (window.linkHandler) {
       window.linkHandler.open(institution);
