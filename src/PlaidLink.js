@@ -1,6 +1,7 @@
+import { Component } from 'react'
+//import Script from "react-load-script";
 const React = require('react')
 const PropTypes = require('prop-types')
-//import Script from 'react-load-script'
 
 class PlaidLink extends Component {
   constructor(props) {
@@ -12,7 +13,7 @@ class PlaidLink extends Component {
     };
   };
 
-  PlaidLink.defaultProps = {
+  static defaultProps = {
     institution: null,
     selectAccount: false,
     buttonText: 'Open Link',
@@ -25,7 +26,7 @@ class PlaidLink extends Component {
     },
   };
 
-  PlaidLink.propTypes = {
+  static propTypes = {
     // Displayed once a user has successfully linked their account
     clientName: PropTypes.string.isRequired,
 
