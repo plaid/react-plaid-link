@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Script from "react-load-script";
+import Script from 'react-load-script';
 import PropTypes from 'prop-types';
 
 class PlaidLink extends Component {
