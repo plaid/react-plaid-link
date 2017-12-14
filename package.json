@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/pbernasconi/react-plaid-link",
   "dependencies": {
-    "react-script-loader": "0.0.1"
+    "react-load-script": "0.0.6"
   },
   "peerDependencies": {
     "react": "^0.14.0 || ^15.0.0-0",
