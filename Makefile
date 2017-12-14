@@ -43,7 +43,7 @@ start:
 
 .PHONY: test
 test:
-	@$(MOCHA) -- test/PlaidLink.spec.js
+	@$(MOCHA) -- test/components/PlaidLink.spec.js
 
 
 .PHONY: release-major release-minor release-patch
