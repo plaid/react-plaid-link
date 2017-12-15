@@ -15,14 +15,14 @@ npm install react-plaid-link
 ## Example Usage
 
 ```jsx
-var React = require('react');
-var PlaidLink = require('react-plaid-link');
+import React, { Component } from 'react'
+import PlaidLink from 'react-plaid-link'
 
-var App = React.createClass({
-  handleOnSuccess: function(token, metadata) {
+class App extends Component {
+  handleOnSuccess(token, metadata) {
     // send token to client server
-  },
-  render: function() {
+  }
+  render() {
     return (
       <PlaidLink
         publicKey="PLAID_PUBLIC_KEY"
@@ -31,9 +31,10 @@ var App = React.createClass({
         clientName="plaidname"
         onSuccess={this.handleOnSuccess}
         />
-    );
+    )
   }
-})
+}
+export default App
 ```
 
 ## All Props
