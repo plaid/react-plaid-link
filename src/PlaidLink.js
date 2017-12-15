@@ -1,32 +1,38 @@
-'use strict';
+import React, { Component } from "react";
+import Script from "react-load-script";
+import PropTypes from "prop-types";
 
-const React = require('react');
-const PropTypes = require('prop-types');
-const ReactScriptLoaderMixin = require('react-script-loader').ReactScriptLoaderMixin;
-
-const PlaidLink = React.createClass({
-  mixins: [ReactScriptLoaderMixin],
-  getDefaultProps: function() {
-    return {
-      institution: null,
-      selectAccount: false,
-      buttonText: 'Open Link',
-      style: {
-        padding: '6px 4px',
-        outline: 'none',
-        background: '#FFFFFF',
-        border: '2px solid #F1F1F1',
-        borderRadius: '4px',
-      },
+class PlaidLink extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      disabledButton: true,
+      linkLoaded: false,
+      initializeURL: "https://cdn.plaid.com/link/v2/stable/link-initialize.js"
     };
-  },
-  propTypes: {
+  }
+
+  static defaultProps = {
+    institution: null,
+    selectAccount: false,
+    buttonText: "Open Link",
+    style: {
+      padding: "6px 4px",
+      outline: "none",
+      background: "#FFFFFF",
+      border: "2px solid #F1F1F1",
+      borderRadius: "4px"
+    }
+  };
+
+  static propTypes = {
     // Displayed once a user has successfully linked their account
     clientName: PropTypes.string.isRequired,
 
     // The Plaid API environment on which to create user accounts.
     // For development and testing, use tartan. For production, use production
-    env: PropTypes.oneOf(['tartan', 'sandbox', 'development', 'production']).isRequired,
+    env: PropTypes.oneOf(["tartan", "sandbox", "development", "production"])
+      .isRequired,
 
     // Open link to a specific institution, for a more custom solution
     institution: PropTypes.string,
@@ -35,9 +41,11 @@ const PlaidLink = React.createClass({
     // the Plaid dashboard (https://dashboard.plaid.com)
     publicKey: PropTypes.string.isRequired,
 
-    // The Plaid products you wish to use, an array containing some of connect, 
+    // The Plaid products you wish to use, an array containing some of connect,
     // auth, identity, income, transactions
-    product: PropTypes.arrayOf(PropTypes.oneOf(['connect', 'auth', 'identity', 'income', 'transactions'])).isRequired,
+    product: PropTypes.arrayOf(
+      PropTypes.oneOf(["connect", "auth", "identity", "income", "transactions"])
+    ).isRequired,
 
     // Specify an existing user's public token to launch Link in update mode.
     // This will cause Link to open directly to the authentication step for
@@ -74,23 +82,15 @@ const PlaidLink = React.createClass({
     className: PropTypes.string,
 
     // ApiVersion flag to use new version of Plaid API
-
     apiVersion: PropTypes.string
-  },
-  getInitialState: function() {
-    return {
-      disabledButton: true,
-      linkLoaded: false,
-    };
-  },
-  getScriptURL: function() {
-    return 'https://cdn.plaid.com/link/v2/stable/link-initialize.js';
-  },
-  onScriptError: function() {
-    console.error('There was an issue loading the link-initialize.js script');
-  },
-  onScriptLoaded: function() {
-    window.linkHandler = Plaid.create({
+  };
+
+  onScriptError = () => {
+    console.error("There was an issue loading the link-initialize.js script");
+  };
+
+  onScriptLoaded = () => {
+    window.linkHandler = window.Plaid.create({
       clientName: this.props.clientName,
       env: this.props.env,
       key: this.props.publicKey,
@@ -101,39 +101,50 @@ const PlaidLink = React.createClass({
       product: this.props.product,
       selectAccount: this.props.selectAccount,
       token: this.props.token,
-      webhook: this.props.webhook,
+      webhook: this.props.webhook
     });
 
-    this.setState({disabledButton: false});
-  },
-  handleLinkOnLoad: function() {
+    this.setState({ disabledButton: false });
+  };
+
+  handleLinkOnLoad = () => {
     this.props.onLoad && this.props.onLoad();
-    this.setState({linkLoaded: true});
-  },
-  handleOnClick: function() {
+    this.setState({ linkLoaded: true });
+  };
+
+  handleOnClick = () => {
     this.props.onClick && this.props.onClick();
     var institution = this.props.institution || null;
     if (window.linkHandler) {
       window.linkHandler.open(institution);
     }
-  },
-  exit: function exit(configurationObject) {
+  };
+
+  exit = configurationObject => {
     if (window.linkHandler) {
       window.linkHandler.exit(configurationObject);
     }
-  },
-  render: function() {
+  };
+
+  render() {
     return (
-      <button
-        onClick={this.handleOnClick}
-        disabled={this.state.disabledButton}
-        style={this.props.style}
-        className={this.props.className}
-      >
-        <span>{this.props.buttonText}</span>
-      </button>
+      <div>
+        <button
+          onClick={this.handleOnClick}
+          disabled={this.state.disabledButton}
+          style={this.props.style}
+          className={this.props.className}
+        >
+          <span>{this.props.buttonText}</span>
+        </button>
+        <Script
+          url={this.state.initializeURL}
+          onError={this.onScriptError}
+          onLoad={this.onScriptLoaded}
+        />
+      </div>
     );
   }
-});
+}
 
-module.exports = PlaidLink;
+export default PlaidLink;

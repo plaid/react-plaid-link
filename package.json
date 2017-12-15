@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/pbernasconi/react-plaid-link",
   "dependencies": {
-    "react-script-loader": "0.0.1"
+    "react-load-script": "0.0.6"
   },
   "peerDependencies": {
     "react": "^0.14.0 || ^15.0.0-0",
@@ -33,6 +33,7 @@
     "babel-core": "6.11.x",
     "babel-eslint": "4.1.x",
     "babel-loader": "6.2.x",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-es2015": "6.5.x",
     "babel-preset-react": "6.5.x",
     "babel-preset-stage-0": "6.5.x",
