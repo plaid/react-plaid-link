@@ -15,25 +15,29 @@ npm install react-plaid-link
 ## Example Usage
 
 ```jsx
-var React = require('react');
-var PlaidLink = require('react-plaid-link');
+import React, { Component } from 'react';
+import PlaidLink from 'react-plaid-link';
 
-var App = React.createClass({
-  handleOnSuccess: function(token, metadata) {
+class Plaid extends Component {
+  handleOnSuccess = (token, metadata) => {
     // send token to client server
-  },
-  render: function() {
-    return (
+  }
+
+  render() {
+    return (   
       <PlaidLink
         publicKey="PLAID_PUBLIC_KEY"
         product="auth"
         env="tartan"
         clientName="plaidname"
         onSuccess={this.handleOnSuccess}
-        />
+        buttonText="Plaid Link"
+      />
     );
   }
-})
+}
+
+export default Plaid;
 ```
 
 ## All Props
@@ -55,6 +59,7 @@ a more holistic understanding of the various Link options.
   onSuccess={this.handleOnSuccess}
   onExit={this.handleOnExit}
   onLoad={this.handleOnLoad}
+  buttonText="Plaid Link"
   />
 ```
 
