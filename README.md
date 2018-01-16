@@ -1,7 +1,5 @@
 # react-plaid-link
 
-**This is still a WIP – stay tuned for updates, and please feel free to open a PR as you see fit**
-
 A simple [React](https://facebook.github.io/react/) component for easy
 integration with the [Plaid Link drop-in module](https://plaid.com/docs/link/)
 
@@ -9,7 +7,7 @@ integration with the [Plaid Link drop-in module](https://plaid.com/docs/link/)
 ## Install
 
 ```
-npm install react-plaid-link
+npm install react-plaid-link --save
 ```
 
 ## Example Usage
@@ -53,9 +51,9 @@ a more holistic understanding of the various Link options.
   env="sandbox"
   institution={null}
   publicKey={PLAID_PUBLIC_KEY}
-  product=["auth", "transactions"]
-  apiVersion={'v1' | 'v2'}
-  token="test,wells,connected"
+  product={['auth', 'transactions']}
+  apiVersion={'v1' || 'v2'}
+  token={'public-token-123...'}
   selectAccount={true} // deprecated – use https://dashboard.plaid.com/link
   webhook="https://webhooks.test.com"
   onEvent={this.handleOnEvent}
