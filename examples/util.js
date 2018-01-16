@@ -35,3 +35,5 @@ var makeRequest = function(options) {
   };
   return request;
 };
+
+export default makeRequest;

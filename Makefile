@@ -14,7 +14,7 @@ SRC_FILES  = $(shell find src -name '*.js' | sort)
 .PHONY: build
 build:
 	@mkdir -p dist
-	@$(BABEL) "./src/PlaidLink.js" > "./dist/PlaidLink.js"
+	@./node_modules/.bin/webpack --config webpack.dist.config.js
 
 
 .PHONY: clean
@@ -24,12 +24,12 @@ clean:
 
 .PHONY: lint
 lint:
-	@$(ESLINT) -- $(SRC) $(TEST_FILES) .eslintrc.js
+	@$(ESLINT) -- $(SRC_FILES) $(TEST_FILES) .eslintrc.js
 
 
 .PHONY: lint-fix
 lint-fix:
-	@$(ESLINT) --fix -- $(LINT_FILES) .eslintrc.js
+	@$(ESLINT) --fix -- $(SRC_FILES) $(TEST_FILES) .eslintrc.js
 
 .PHONY: setup
 setup:

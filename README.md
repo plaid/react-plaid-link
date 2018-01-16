@@ -22,15 +22,20 @@ class App extends Component {
   handleOnSuccess(token, metadata) {
     // send token to client server
   }
+  handleOnExit() {
+    // handle the case when your user exits Link
+  }
   render() {
     return (
       <PlaidLink
+        clientName="Your app name"
+        env="sandbox"
+        product=["auth", "transactions"]
         publicKey="PLAID_PUBLIC_KEY"
-        product="auth"
-        env="tartan"
-        clientName="plaidname"
-        onSuccess={this.handleOnSuccess}
-        />
+        onExit={this.handleOnExit}
+        onSuccess={this.handleOnSuccess}>
+        Open Link and connect your bank!
+      </PlaidLink>
     )
   }
 }
@@ -44,19 +49,21 @@ a more holistic understanding of the various Link options.
 
 ```jsx
 <PlaidLink
-  clientName="plaidname"
-  env="tartan"
+  clientName="Your app name"
+  env="sandbox"
   institution={null}
-  publicKey="test_key"
-  product="auth"
+  publicKey={PLAID_PUBLIC_KEY}
+  product=["auth", "transactions"]
   apiVersion={'v1' | 'v2'}
   token="test,wells,connected"
-  selectAccount={true}
+  selectAccount={true} // deprecated – use https://dashboard.plaid.com/link
   webhook="https://webhooks.test.com"
-  onSuccess={this.handleOnSuccess}
+  onEvent={this.handleOnEvent}
   onExit={this.handleOnExit}
   onLoad={this.handleOnLoad}
-  />
+  onSuccess={this.handleOnSuccess}>
+  Open Link and connect a bank account to Plaid
+</PlaidLink>
 ```
 
 
@@ -66,4 +73,16 @@ Run tests:
 
 ```
 make test
+```
+
+## Development
+
+```bash
+# install dependencies
+make setup
+
+# run a local server
+make start
+
+# open localhost:3000
 ```

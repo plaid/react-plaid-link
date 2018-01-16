@@ -3,7 +3,7 @@ const WARNING = 1;
 const ERROR = 2;
 
 module.exports = {
-  parser: "babel-eslint",
+  parser: 'babel-eslint',
 
   parserOptions: {
     'ecmaVersion': 6,
@@ -60,15 +60,15 @@ module.exports = {
     'keyword-spacing': ERROR,
     'no-bitwise': OFF,
     'no-cond-assign': ERROR,
-    'no-console': [ERROR, { 'allow': ['warn', 'error']}],
+    'no-console': [OFF, { 'allow': ['warn', 'error']}],
     'no-constant-condition': ERROR,
     'no-debugger': ERROR,
     'no-dupe-args': ERROR,
-    'no-extra-boolean-cast': ERROR,
     'no-duplicate-case': ERROR,
     'no-empty-character-class': ERROR,
     'no-empty': ERROR,
     'no-ex-assign': ERROR,
+    'no-extra-boolean-cast': ERROR,
     'no-extra-boolean-cast': ERROR,
     'no-extra-semi': ERROR,
     'no-func-assign': ERROR,
@@ -127,7 +127,7 @@ module.exports = {
     'react/no-did-update-set-state': ERROR,
     'react/no-direct-mutation-state': ERROR,
     'react/no-is-mounted': ERROR,
-    'react/no-set-state': ERROR,
+    'react/no-set-state': OFF,
     'react/no-string-refs': ERROR,
     'react/no-unknown-property': ERROR,
     'react/prefer-es6-class': OFF,
@@ -136,7 +136,7 @@ module.exports = {
     'react/require-render-return': ERROR,
     'react/self-closing-comp': ERROR,
     'react/sort-comp': OFF,
-    'react/sort-prop-types': ERROR,
+    'react/sort-prop-types': OFF,
     'react/wrap-multilines': [ERROR, { 'declaration': true, 'assignment': false }],
   },
 };
