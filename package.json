@@ -1,6 +1,6 @@
 {
   "name": "react-plaid-link",
-  "version": "0.1.9",
+  "version": "1.0.0",
   "description": "A React component for Plaid Link",
   "files": [
     "dist/",
@@ -13,8 +13,8 @@
   },
   "keywords": [
     "react",
-    "plaid",
-    "link"
+    "react-component",
+    "plaid"
   ],
   "license": "MIT",
   "bugs": {
@@ -56,11 +56,6 @@
   },
   "tags": [
     "react",
-    "plaid"
-  ],
-  "keywords": [
-    "react",
-    "react-component",
     "plaid"
   ]
 }
