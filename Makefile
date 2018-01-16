@@ -50,5 +50,5 @@ test:
 
 
 .PHONY: release-major release-minor release-patch
-release-major release-minor release-patch: build
+release-major release-minor release-patch: compile build
 	@$(XYZ) --increment $(@:release-%=%)

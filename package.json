@@ -4,6 +4,7 @@
   "description": "A React component for Plaid Link",
   "files": [
     "dist/",
+    "lib/",
     "LICENSE"
   ],
   "main": "./lib/index.js",
