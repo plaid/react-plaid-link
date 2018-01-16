@@ -1,4 +1,3 @@
-
 NODE = node --harmony
 BABEL = ./node_modules/.bin/babel
 MOCHA = node --harmony node_modules/.bin/mocha --reporter spec --require test/setup.js --compilers js:babel-core/register
@@ -10,16 +9,20 @@ XYZ = $(NPM_ENV_VARS) node_modules/.bin/xyz --repo git@github.com:pbernasconi/re
 TEST_FILES = $(shell find test -name '*.js' | sort)
 SRC_FILES  = $(shell find src -name '*.js' | sort)
 
+compile:
+	@echo "[Compiling source]"
+	$(BABEL) src --out-dir lib
+
 
 .PHONY: build
-build:
+build: compile
 	@mkdir -p dist
 	@./node_modules/.bin/webpack --config webpack.dist.config.js
 
 
 .PHONY: clean
 clean:
-	@rm -rf dist
+	@rm -rf dist lib
 
 
 .PHONY: lint

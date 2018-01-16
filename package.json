@@ -6,7 +6,7 @@
     "dist/",
     "LICENSE"
   ],
-  "main": "./dist/PlaidLink.js",
+  "main": "./lib/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/pbernasconi/react-plaid-link.git"
@@ -21,6 +21,9 @@
     "url": "https://github.com/pbernasconi/react-plaid-link/issues"
   },
   "homepage": "https://github.com/pbernasconi/react-plaid-link",
+  "directories": {
+    "example": "examples"
+  },
   "dependencies": {
     "react-load-script": "0.0.6"
   },
