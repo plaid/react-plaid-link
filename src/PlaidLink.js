@@ -20,8 +20,11 @@ class PlaidLink extends Component {
   }
 
   static defaultProps = {
+    apiVersion: 'v2',
+    env: 'sandbox',
     institution: null,
     selectAccount: false,
+    token: null,
     style: {
       padding: '6px 4px',
       outline: 'none',
@@ -32,6 +35,9 @@ class PlaidLink extends Component {
   };
 
   static propTypes = {
+    // ApiVersion flag to use new version of Plaid API
+    apiVersion: PropTypes.string,
+    
     // Displayed once a user has successfully linked their account
     clientName: PropTypes.string.isRequired,
 
@@ -93,9 +99,6 @@ class PlaidLink extends Component {
 
     // Button Class names as a String
     className: PropTypes.string,
-
-    // ApiVersion flag to use new version of Plaid API
-    apiVersion: PropTypes.string,
   }
 
   onScriptError() {
