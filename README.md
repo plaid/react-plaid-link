@@ -28,7 +28,7 @@ class App extends Component {
       <PlaidLink
         clientName="Your app name"
         env="sandbox"
-        product=["auth", "transactions"]
+        product={["auth", "transactions"]}
         publicKey="PLAID_PUBLIC_KEY"
         onExit={this.handleOnExit}
         onSuccess={this.handleOnSuccess}>
