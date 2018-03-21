@@ -25,19 +25,12 @@ class PlaidLink extends Component {
     institution: null,
     selectAccount: false,
     token: null,
-    style: {
-      padding: '6px 4px',
-      outline: 'none',
-      background: '#FFFFFF',
-      border: '2px solid #F1F1F1',
-      borderRadius: '4px',
-    },
   };
 
   static propTypes = {
     // ApiVersion flag to use new version of Plaid API
     apiVersion: PropTypes.string,
-    
+
     // Displayed once a user has successfully linked their account
     clientName: PropTypes.string.isRequired,
 
@@ -93,12 +86,6 @@ class PlaidLink extends Component {
     // A function that is called during a user's flow in Link.
     // See
     onEvent: PropTypes.func,
-
-    // Button Styles as an Object
-    style: PropTypes.object,
-
-    // Button Class names as a String
-    className: PropTypes.string,
   }
 
   onScriptError() {
@@ -147,16 +134,35 @@ class PlaidLink extends Component {
     }
   }
 
+  // Returns all props but the ones specific to the component plus `children`
+  get htmlProps() {
+    const componentProps = Object.keys(PlaidLink.propTypes).concat('children');
+
+    return Object.keys(this.props)
+      .filter(key => !componentProps.includes(key))
+      .reduce((prev, current) => Object.assign({}, prev, {
+        [current]: this.props[current],
+      })
+  , {});
+  }
+
   render() {
+    const children = this.props.children;
+    const props = Object.assign({}, this.htmlProps, {
+      onClick: this.handleOnClick,
+      disabled: this.state.disabledButton,
+    });
+
+    const mapChildrenTypeToComponent = {
+      string: React.createElement('button', props, children),
+      object: React.cloneElement(children, props)
+    }
+
+    const Link = () => mapChildrenTypeToComponent[typeof children]
+
     return (
       <div>
-        <button
-          onClick={this.handleOnClick}
-          disabled={this.state.disabledButton}
-          style={this.props.style}
-          className={this.props.className}>
-          {this.props.children}
-        </button>
+        <Link />
         <Script
           url={this.state.initializeURL}
           onError={this.onScriptError}
