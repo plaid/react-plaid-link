@@ -107,22 +107,23 @@ class PlaidLink extends Component {
   }
 
   onScriptLoaded() {
-    window.linkHandler = window.Plaid.create({
-      apiVersion: this.props.apiVersion,
-      clientName: this.props.clientName,
-      env: this.props.env,
-      key: this.props.publicKey,
-      onExit: this.props.onExit,
-      onLoad: this.handleLinkOnLoad,
-      onEvent: this.props.onEvent,
-      onSuccess: this.props.onSuccess,
-      product: this.props.product,
-      selectAccount: this.props.selectAccount,
-      token: this.props.token,
-      webhook: this.props.webhook,
+    this.setState({
+      disabledButton: false,
+      linkHandler: window.Plaid.create({
+        apiVersion: this.props.apiVersion,
+        clientName: this.props.clientName,
+        env: this.props.env,
+        key: this.props.publicKey,
+        onExit: this.props.onExit,
+        onLoad: this.handleLinkOnLoad,
+        onEvent: this.onEvent,
+        onSuccess: this.props.onSuccess,
+        product: this.props.product,
+        selectAccount: this.props.selectAccount,
+        token: this.props.token,
+        webhook: this.props.webhook
+      })
     });
-
-    this.setState({ disabledButton: false });
   }
 
   handleLinkOnLoad() {
@@ -137,14 +138,14 @@ class PlaidLink extends Component {
       this.props.onClick();
     }
     const institution = this.props.institution || null;
-    if (window.linkHandler) {
-      window.linkHandler.open(institution);
+    if (this.state.linkHandler) {
+      this.state.linkHandler.open(institution);
     }
   }
 
   exit(configurationObject) {
-    if (window.linkHandler) {
-      window.linkHandler.exit(configurationObject);
+    if (this.state.linkHandler) {
+      this.state.linkHandler.exit(configurationObject);
     }
   }
 
