@@ -53,7 +53,7 @@ class PlaidLink extends Component {
     publicKey: PropTypes.string.isRequired,
 
     // The Plaid products you wish to use, an array containing some of connect,
-    // auth, identity, income, transactions
+    // auth, identity, income, transactions, assets
     product: PropTypes.arrayOf(
       PropTypes.oneOf([
         'connect',  // legacy product name
@@ -62,6 +62,7 @@ class PlaidLink extends Component {
         'identity',
         'income',
         'transactions',
+        'assets',
       ])
     ).isRequired,
 
