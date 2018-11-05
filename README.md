@@ -42,7 +42,7 @@ export default App
 
 ## All Props
 
-Please refer to the [official Plaid Link docs](https://plaid.com/docs/link/) for
+Please refer to the [official Plaid Link docs](https://plaid.com/docs/#creating-items-with-plaid-link) for
 a more holistic understanding of the various Link options.
 
 ```jsx
