@@ -1,7 +1,7 @@
 # react-plaid-link [![npm version](https://badge.fury.io/js/react-plaid-link.svg)](http://badge.fury.io/js/react-plaid-link)
 
 A simple [React](https://facebook.github.io/react/) component for easy
-integration with the [Plaid Link drop-in module](https://plaid.com/docs/link/)
+integration with the [Plaid Link drop-in module](https://blog.plaid.com/plaid-link/)
 
 
 ## Install
@@ -42,7 +42,7 @@ export default App
 
 ## All Props
 
-Please refer to the [official Plaid Link docs](https://plaid.com/docs/link/) for
+Please refer to the [official Plaid Link docs](https://plaid.com/docs/#creating-items-with-plaid-link) for
 a more holistic understanding of the various Link options.
 
 ```jsx
