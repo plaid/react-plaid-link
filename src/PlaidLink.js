@@ -5,19 +5,12 @@ import PropTypes from 'prop-types';
 
 
 class PlaidLink extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      disabledButton: true,
-      linkLoaded: false,
-      initializeURL: 'https://cdn.plaid.com/link/v2/stable/link-initialize.js',
-    };
-
-    this.onScriptError = this.onScriptError.bind(this);
-    this.onScriptLoaded = this.onScriptLoaded.bind(this);
-    this.handleLinkOnLoad = this.handleLinkOnLoad.bind(this);
-    this.handleOnClick = this.handleOnClick.bind(this);
+  state = {
+    disabledButton: true,
+    linkLoaded: false,
+    initializeURL: 'https://cdn.plaid.com/link/v2/stable/link-initialize.js',
   }
+  mounted = true;
 
   static defaultProps = {
     apiVersion: 'v2',
@@ -37,7 +30,7 @@ class PlaidLink extends Component {
   static propTypes = {
     // ApiVersion flag to use new version of Plaid API
     apiVersion: PropTypes.string,
-    
+
     // Displayed once a user has successfully linked their account
     clientName: PropTypes.string.isRequired,
 
@@ -102,11 +95,23 @@ class PlaidLink extends Component {
     className: PropTypes.string,
   }
 
-  onScriptError() {
+  componentDidMount() {
+    this.mounted = true;
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
+  onScriptError = () => {
     console.error('There was an issue loading the link-initialize.js script');
   }
 
-  onScriptLoaded() {
+  onScriptLoaded = () => {
+    if (!this.mounted) {
+      return;
+    }
+
     window.linkHandler = window.Plaid.create({
       apiVersion: this.props.apiVersion,
       clientName: this.props.clientName,
@@ -125,14 +130,18 @@ class PlaidLink extends Component {
     this.setState({ disabledButton: false });
   }
 
-  handleLinkOnLoad() {
+  handleLinkOnLoad = () => {
+    if (!this.mounted) {
+      return;
+    }
+
     if (this.props.onLoad != null) {
       this.props.onLoad();
     }
     this.setState({ linkLoaded: true });
   }
 
-  handleOnClick() {
+  handleOnClick = () => {
     if (this.props.onClick != null) {
       this.props.onClick();
     }
