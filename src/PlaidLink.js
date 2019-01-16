@@ -132,9 +132,9 @@ class PlaidLink extends Component {
     this.setState({ linkLoaded: true });
   }
 
-  handleOnClick() {
+  handleOnClick(event) {
     if (this.props.onClick != null) {
-      this.props.onClick();
+      this.props.onClick(event);
     }
     const institution = this.props.institution || null;
     if (window.linkHandler) {
