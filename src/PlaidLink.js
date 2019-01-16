@@ -37,7 +37,7 @@ class PlaidLink extends Component {
   static propTypes = {
     // ApiVersion flag to use new version of Plaid API
     apiVersion: PropTypes.string,
-    
+
     // Displayed once a user has successfully linked their account
     clientName: PropTypes.string.isRequired,
 
@@ -100,6 +100,9 @@ class PlaidLink extends Component {
 
     // Button Class names as a String
     className: PropTypes.string,
+
+    // If true, the Link module will be opened after it has finished loading
+    openOnLoad: PropTypes.bool,
   }
 
   onScriptError() {
@@ -123,6 +126,10 @@ class PlaidLink extends Component {
     });
 
     this.setState({ disabledButton: false });
+
+    if (this.props.openOnLoad) {
+      window.linkHandler.open();
+    }
   }
 
   handleLinkOnLoad() {

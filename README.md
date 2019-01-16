@@ -31,7 +31,9 @@ class App extends Component {
         product={["auth", "transactions"]}
         publicKey="PLAID_PUBLIC_KEY"
         onExit={this.handleOnExit}
-        onSuccess={this.handleOnSuccess}>
+        onSuccess={this.handleOnSuccess}
+        openOnLoad={false}
+      >
         Open Link and connect your bank!
       </PlaidLink>
     )
