@@ -128,7 +128,7 @@ class PlaidLink extends Component {
     this.setState({ disabledButton: false });
 
     if (this.props.openOnLoad) {
-      window.linkHandler.open();
+      this.handleOnClick();
     }
   }
 
@@ -158,7 +158,7 @@ class PlaidLink extends Component {
   render() {
     return (
       <div>
-        {this.props.openOnLoad && (
+        {!this.props.openOnLoad && (
           <button
             onClick={this.handleOnClick}
             disabled={this.state.disabledButton}
