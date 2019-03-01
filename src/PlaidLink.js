@@ -37,7 +37,7 @@ class PlaidLink extends Component {
   static propTypes = {
     // ApiVersion flag to use new version of Plaid API
     apiVersion: PropTypes.string,
-    
+
     // Displayed once a user has successfully linked their account
     clientName: PropTypes.string.isRequired,
 
@@ -63,6 +63,7 @@ class PlaidLink extends Component {
         'income',
         'transactions',
         'assets',
+        'holdings',
       ])
     ).isRequired,
 
@@ -70,6 +71,16 @@ class PlaidLink extends Component {
     // This will cause Link to open directly to the authentication step for
     // that user's institution.
     token: PropTypes.string,
+
+    // Specify a user object to enable all Auth features. Reach out to your
+    // account manager or integrations@plaid.com to get enabled. See the Auth
+    // [https://plaid.com/docs#auth] docs for integration details.
+    user: PropTypes.shape({
+      // Your user's legal first and last name
+      legalName: PropTypes.string,
+      // Your user's associated email address
+      emailAddress: PropTypes.string,
+    }),
 
     // Set to true to launch Link with the 'Select Account' pane enabled.
     // Allows users to select an individual account once they've authenticated
@@ -112,6 +123,7 @@ class PlaidLink extends Component {
       clientName: this.props.clientName,
       env: this.props.env,
       key: this.props.publicKey,
+      user: this.props.user,
       onExit: this.props.onExit,
       onLoad: this.handleLinkOnLoad,
       onEvent: this.props.onEvent,
