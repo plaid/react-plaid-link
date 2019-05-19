@@ -23,6 +23,7 @@ class PlaidLink extends Component {
     apiVersion: 'v2',
     env: 'sandbox',
     institution: null,
+    countryCodes: ['US'],
     selectAccount: false,
     token: null,
     style: {
@@ -82,6 +83,13 @@ class PlaidLink extends Component {
       emailAddress: PropTypes.string,
     }),
 
+    // Allows users to set the country code for localization
+    countryCodes: PropTypes.arrayOf(
+      PropTypes.oneOf([
+        'US', 
+        'CA',
+     ])),
+
     // Set to true to launch Link with the 'Select Account' pane enabled.
     // Allows users to select an individual account once they've authenticated
     selectAccount: PropTypes.bool,
@@ -129,6 +137,7 @@ class PlaidLink extends Component {
       onEvent: this.props.onEvent,
       onSuccess: this.props.onSuccess,
       product: this.props.product,
+      countryCodes: this.props.countryCodes,
       selectAccount: this.props.selectAccount,
       token: this.props.token,
       webhook: this.props.webhook,
