@@ -51,6 +51,15 @@ class PlaidLink extends Component {
     // The public_key associated with your account; available from
     // the Plaid dashboard (https://dashboard.plaid.com)
     publicKey: PropTypes.string.isRequired,
+    
+    // The country code allows you to select your bank of choice from
+    // your country of choosing (You can add you own country codes)
+    country: PropTypes.arrayOf(
+      PropTypes.oneOf([
+        'US',
+        'CA',
+      ])
+    ),
 
     // The Plaid products you wish to use, an array containing some of connect,
     // auth, identity, income, transactions, assets
@@ -132,6 +141,7 @@ class PlaidLink extends Component {
       selectAccount: this.props.selectAccount,
       token: this.props.token,
       webhook: this.props.webhook,
+      countryCode: this.props.country,
     });
 
     this.setState({ disabledButton: false });
