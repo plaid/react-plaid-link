@@ -1,0 +1,65 @@
+{
+  "name": "react-plaid-link",
+  "version": "1.2.0",
+  "description": "A React component for Plaid Link",
+  "files": [
+    "dist/",
+    "lib/",
+    "LICENSE"
+  ],
+  "main": "./lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pbernasconi/react-plaid-link.git"
+  },
+  "keywords": [
+    "react",
+    "react-component",
+    "plaid"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pbernasconi/react-plaid-link/issues"
+  },
+  "homepage": "https://github.com/pbernasconi/react-plaid-link",
+  "directories": {
+    "example": "examples"
+  },
+  "dependencies": {
+    "react-load-script": "0.0.6"
+  },
+  "peerDependencies": {
+    "react": "^0.14.0 || ^15.0.0 || ^16",
+    "react-dom": "^0.14.0 || ^15.0.0 || ^16"
+  },
+  "devDependencies": {
+    "babel-cli": "6.26.x",
+    "babel-core": "6.25.x",
+    "babel-eslint": "8.0.x",
+    "babel-loader": "7.1.x",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-es2015": "6.5.x",
+    "babel-preset-react": "6.5.x",
+    "babel-preset-stage-0": "6.5.x",
+    "babel-register": "6.5.x",
+    "enzyme": "1.5.x",
+    "eslint": "3.12.x",
+    "eslint-plugin-react": "5.2.x",
+    "mocha": "2.3.x",
+    "prop-types": "^15.5.10",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-tools": "0.13.x",
+    "sinon": "1.17.x",
+    "webpack": "^3.6.0",
+    "webpack-dev-server": "2.8.2",
+    "xyz": "0.5.x"
+  },
+  "scripts": {
+    "build": "babel -d dist/ src/"
+  },
+  "tags": [
+    "react",
+    "plaid"
+  ]
+}
