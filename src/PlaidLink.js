@@ -54,9 +54,8 @@ class PlaidLink extends Component {
     
     // The country code allows you to select your bank of choice from
     // your country of choosing (You can add you own country codes)
-    country: PropTypes.arrayOf(
+    countryCodes: PropTypes.arrayOf(
       PropTypes.oneOf([
-        'US',
         'CA',
       ])
     ),
@@ -141,7 +140,7 @@ class PlaidLink extends Component {
       selectAccount: this.props.selectAccount,
       token: this.props.token,
       webhook: this.props.webhook,
-      countryCode: this.props.country,
+      countryCode: this.props.countryCode,
     });
 
     this.setState({ disabledButton: false });
