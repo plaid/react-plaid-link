@@ -65,6 +65,7 @@ class PlaidLink extends Component {
         'assets',
         'holdings',
         'liabilities',
+        'investments',
       ])
     ).isRequired,
 
