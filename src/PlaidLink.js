@@ -39,6 +39,9 @@ class PlaidLink extends Component {
     // Displayed once a user has successfully linked their account
     clientName: PropTypes.string.isRequired,
 
+    // List of countries to initialize Link with
+    countryCodes: PropTypes.array,
+
     // The Plaid API environment on which to create user accounts.
     // For development and testing, use tartan. For production, use production
     env: PropTypes.oneOf(['tartan', 'sandbox', 'development', 'production']).isRequired,
@@ -62,6 +65,9 @@ class PlaidLink extends Component {
         'investments',
       ])
     ).isRequired,
+
+    // List of countries to initialize Link with
+    language: PropTypes.string,
 
     // Specify an existing user's public token to launch Link in update mode.
     // This will cause Link to open directly to the authentication step for
@@ -117,16 +123,18 @@ class PlaidLink extends Component {
     this.linkHandler = window.Plaid.create({
       apiVersion: this.props.apiVersion,
       clientName: this.props.clientName,
+      countryCodes: this.props.countryCodes,
+      language: this.props.language,
       env: this.props.env,
       key: this.props.publicKey,
-      user: this.props.user,
+      onEvent: this.props.onEvent,
       onExit: this.props.onExit,
       onLoad: this.handleLinkOnLoad,
-      onEvent: this.props.onEvent,
       onSuccess: this.props.onSuccess,
       product: this.props.product,
       selectAccount: this.props.selectAccount,
       token: this.props.token,
+      user: this.props.user,
       webhook: this.props.webhook,
     });
 
