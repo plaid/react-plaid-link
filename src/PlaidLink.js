@@ -120,7 +120,7 @@ class PlaidLink extends Component {
   }
 
   onScriptLoaded() {
-    window.linkHandler = window.Plaid.create({
+    this.linkHandler = window.Plaid.create({
       apiVersion: this.props.apiVersion,
       clientName: this.props.clientName,
       env: this.props.env,
@@ -151,14 +151,14 @@ class PlaidLink extends Component {
       this.props.onClick(event);
     }
     const institution = this.props.institution || null;
-    if (window.linkHandler) {
-      window.linkHandler.open(institution);
+    if (this.linkHandler) {
+      this.linkHandler.open(institution);
     }
   }
 
   exit(configurationObject) {
-    if (window.linkHandler) {
-      window.linkHandler.exit(configurationObject);
+    if (this.linkHandler) {
+      this.linkHandler.exit(configurationObject);
     }
   }
 
