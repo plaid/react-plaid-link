@@ -20,9 +20,7 @@ class PlaidLink extends Component {
   }
 
   static defaultProps = {
-    apiVersion: 'v2',
     env: 'sandbox',
-    institution: null,
     selectAccount: false,
     token: null,
     style: {
@@ -45,9 +43,6 @@ class PlaidLink extends Component {
     // For development and testing, use tartan. For production, use production
     env: PropTypes.oneOf(['tartan', 'sandbox', 'development', 'production']).isRequired,
 
-    // Open link to a specific institution, for a more custom solution
-    institution: PropTypes.string,
-
     // The public_key associated with your account; available from
     // the Plaid dashboard (https://dashboard.plaid.com)
     publicKey: PropTypes.string.isRequired,
@@ -63,7 +58,6 @@ class PlaidLink extends Component {
         'income',
         'transactions',
         'assets',
-        'holdings',
         'liabilities',
         'investments',
       ])
@@ -150,9 +144,8 @@ class PlaidLink extends Component {
     if (this.props.onClick != null) {
       this.props.onClick(event);
     }
-    const institution = this.props.institution || null;
     if (this.linkHandler) {
-      this.linkHandler.open(institution);
+      this.linkHandler.open();
     }
   }
 
