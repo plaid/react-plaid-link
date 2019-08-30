@@ -11,7 +11,7 @@
   "main": "./lib/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pbernasconi/react-plaid-link.git"
+    "url": "https://github.com/plaid/react-plaid-link.git"
   },
   "keywords": [
     "react",
@@ -20,9 +20,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pbernasconi/react-plaid-link/issues"
+    "url": "https://github.com/plaid/react-plaid-link/issues"
   },
-  "homepage": "https://github.com/pbernasconi/react-plaid-link",
+  "homepage": "https://github.com/plaid/react-plaid-link",
   "directories": {
     "example": "examples"
   },
