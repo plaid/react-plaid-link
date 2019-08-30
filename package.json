@@ -6,7 +6,7 @@
     "dist/",
     "LICENSE"
   ],
-  "main": "./dist/index.js",
+  "main": "./lib/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/pbernasconi/react-plaid-link.git"
