@@ -27,11 +27,12 @@
     "example": "examples"
   },
   "dependencies": {
-    "react-load-script": "0.0.6"
+    "react-load-script": "0.0.6",
+    "react-script-hook": "^1.0.11"
   },
   "peerDependencies": {
-    "react": "^0.14.0 || ^15.0.0 || ^16",
-    "react-dom": "^0.14.0 || ^15.0.0 || ^16"
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
   },
   "devDependencies": {
     "babel-cli": "6.26.x",
@@ -48,8 +49,8 @@
     "eslint-plugin-react": "5.2.x",
     "mocha": "2.3.x",
     "prop-types": "^15.5.10",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2",
     "react-tools": "0.13.x",
     "sinon": "1.17.x",
     "webpack": "^3.6.0",
