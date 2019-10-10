@@ -1,223 +1,145 @@
-import React, { Component } from 'react';
-import Script from 'react-load-script';
+import React, { forwardRef, useImperativeHandle } from 'react';
 import PropTypes from 'prop-types';
+import { usePlaidLink } from './usePlaidLink';
 
+const PlaidLink = forwardRef(function PlaidLink(props, ref) {
+  const {
+    clientName,
+    countryCodes,
+    env,
+    publicKey,
+    product,
+    language,
+    token,
+    userEmailAddress,
+    userLegalName,
+    webhook,
+    onSuccess,
+    onExit,
+    onLoad,
+    onEvent,
+    children,
+    action,
+    ...rest
+  } = props;
+  const { error, open, exit } = usePlaidLink({
+    clientName,
+    countryCodes,
+    env,
+    key: publicKey,
+    product,
+    language,
+    token,
+    userEmailAddress,
+    userLegalName,
+    webhook,
+    onSuccess,
+    onExit,
+    onLoad,
+    onEvent,
+  });
 
-
-class PlaidLink extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      disabledButton: true,
-      linkLoaded: false,
-      initializeURL: 'https://cdn.plaid.com/link/v2/stable/link-initialize.js',
-    };
-
-    this.onScriptError = this.onScriptError.bind(this);
-    this.onScriptLoaded = this.onScriptLoaded.bind(this);
-    this.handleLinkOnLoad = this.handleLinkOnLoad.bind(this);
-    this.handleOnClick = this.handleOnClick.bind(this);
-  }
-
-  static defaultProps = {
-    env: 'sandbox',
-    selectAccount: false,
-    token: null,
-    style: {
-      padding: '6px 4px',
-      outline: 'none',
-      background: '#FFFFFF',
-      border: '2px solid #F1F1F1',
-      borderRadius: '4px',
-    },
-  };
-
-  static propTypes = {
-    // ApiVersion flag to use new version of Plaid API
-    apiVersion: PropTypes.string,
-
-    // Displayed once a user has successfully linked their account
-    clientName: PropTypes.string.isRequired,
-
-    // List of countries to initialize Link with
-    countryCodes: PropTypes.array,
-
-    // The Plaid API environment on which to create user accounts.
-    // For development and testing, use tartan. For production, use production
-    env: PropTypes.oneOf(['tartan', 'sandbox', 'development', 'production']).isRequired,
-
-    // The public_key associated with your account; available from
-    // the Plaid dashboard (https://dashboard.plaid.com)
-    publicKey: PropTypes.string.isRequired,
-
-    // The Plaid products you wish to use, an array containing some of connect,
-    // auth, identity, income, transactions, assets, liabilities
-    product: PropTypes.arrayOf(
-      PropTypes.oneOf([
-        'connect',  // legacy product name
-        'info',     // legacy product name
-        'auth',
-        'identity',
-        'income',
-        'transactions',
-        'assets',
-        'liabilities',
-        'investments',
-        'payment_initiation',
-      ])
-    ).isRequired,
-
-    // List of countries to initialize Link with
-    language: PropTypes.string,
-
-    // Specify an existing user's public token to launch Link in update mode.
-    // This will cause Link to open directly to the authentication step for
-    // that user's institution.
-    token: PropTypes.string,
-
-    // Specify a user object to enable all Auth features. Reach out to your
-    // account manager or integrations@plaid.com to get enabled. See the Auth
-    // [https://plaid.com/docs#auth] docs for integration details.
-    user: PropTypes.shape({
-      // Your user's legal first and last name
-      legalName: PropTypes.string,
-      // Your user's associated email address
-      emailAddress: PropTypes.string,
+  useImperativeHandle(
+    action,
+    () => ({
+      open,
+      exit,
     }),
+    [open, exit],
+  );
 
-    // Set to true to launch Link with the 'Select Account' pane enabled.
-    // Allows users to select an individual account once they've authenticated
-    selectAccount: PropTypes.bool,
+  return (
+    <button
+      disabled={Boolean(error)}
+      style={{
+        padding: '6px 4px',
+        outline: 'none',
+        background: '#FFFFFF',
+        border: '2px solid #F1F1F1',
+        borderRadius: '4px',
+      }}
+      {...rest}
+      ref={ref}
+      onClick={e => {
+        if (props.onClick) {
+          props.onClick(e);
+        }
+        if (e.isDefaultPrevented()) {
+          return;
+        }
+        open();
+      }}>
+      {children}
+    </button>
+  );
+});
+PlaidLink.propTypes = {
+  // Displayed once a user has successfully linked their account
+  clientName: PropTypes.string.isRequired,
 
-    // Specify a webhook to associate with a user.
-    webhook: PropTypes.string,
+  // List of countries to initialize Link with
+  countryCodes: PropTypes.array,
 
-    // A function that is called when a user has successfully onboarded their
-    // account. The function should expect two arguments, the public_key and a
-    // metadata object
-    onSuccess: PropTypes.func.isRequired,
+  // The Plaid API environment on which to create user accounts.
+  env: PropTypes.oneOf(['sandbox', 'development', 'production']).isRequired,
 
-    // A function that is called when a user has specifically exited Link flow
-    onExit: PropTypes.func,
+  // The public_key associated with your account; available from
+  // the Plaid dashboard (https://dashboard.plaid.com)
+  publicKey: PropTypes.string.isRequired,
 
-    // A function that is called when the Link module has finished loading.
-    // Calls to plaidLinkHandler.open() prior to the onLoad callback will be
-    // delayed until the module is fully loaded.
-    onLoad: PropTypes.func,
+  // The Plaid products you wish to use, an array containing some of connect,
+  // auth, identity, income, transactions, assets, liabilities
+  product: PropTypes.arrayOf(
+    PropTypes.oneOf([
+      'connect',  // legacy product name
+      'info',     // legacy product name
+      'auth',
+      'identity',
+      'income',
+      'transactions',
+      'assets',
+      'liabilities',
+      'investments',
+    ])
+  ).isRequired,
 
-    // A function that is called during a user's flow in Link.
-    // See
-    onEvent: PropTypes.func,
+  // List of countries to initialize Link with
+  language: PropTypes.string,
 
-    // Button Styles as an Object
-    style: PropTypes.object,
+  // Specify an existing user's public token to launch Link in update mode.
+  // This will cause Link to open directly to the authentication step for
+  // that user's institution.
+  token: PropTypes.string,
 
-    // Button Class names as a String
-    className: PropTypes.string,
+  // Your user's legal first and last name
+  // Specify to enable all Auth features.
+  // Note that userEmailAddress must also be set.
+  userLegalName: PropTypes.string,
 
-    // An oauthNonce is required to support OAuth authentication flows
-    // when configuring Plaid Link with one or more European country codes.
-    // For security, the nonce must be a unique identifier (such as a UUID)
-    // for each Link session and must be at least 16 characters long.
-    // For more information, see https://plaid.com/docs/#oauth.
-    oauthNonce: PropTypes.string,
+  // Your user's associated email address
+  // Specify to enable all Auth features.
+  // Note that userLegalName must also be set.
+  userEmailAddress: PropTypes.string,
 
-    // An oauthRedirectUri is required to support OAuth authentication flows
-    // when configuring Plaid Link with one or more European country codes.
-    // After the user completes the OAuth flow, Plaid redirects back to the
-    // application via this URI. For security, the URI must be configured via
-    // the developer dashboard at https://dashboard.plaid.com/team/api.
-    // For more information, see https://plaid.com/docs/#oauth.
-    oauthRedirectUri: PropTypes.string,
+  // Specify a webhook to associate with a user.
+  webhook: PropTypes.string,
 
-    // An oauthStateId is required to support OAuth authentication flows
-    // when configuring Plaid Link with one or more European country codes.
-    // After the user completes the OAuth flow, when Plaid redirects back to
-    // the application, the redirect URI includes a query parameter called
-    // oauth_state_id. To complete the authentication flow, Link must be
-    // re-initialized with this query parameter, in addition to the nonce
-    // from the original Link configuration.
-    // For more information, see https://plaid.com/docs/#oauth.
-    oauthStateId: PropTypes.string,
+  // A function that is called when a user has successfully onboarded their
+  // account. The function should expect two arguments, the public_key and a
+  // metadata object
+  onSuccess: PropTypes.func.isRequired,
 
-    // A payment token is required when using the European Payment Initiation product.
-    paymentToken: PropTypes.string,
+  // A function that is called when a user has specifically exited Link flow
+  onExit: PropTypes.func,
 
-    // Specify a link customization name to use a non-default link customization.
-    // For more information, see https://blog.plaid.com/multiple-link-configurations/.
-    linkCustomizationName: PropTypes.string,
-  }
+  // A function that is called when the Link module has finished loading.
+  // Calls to plaidLinkHandler.open() prior to the onLoad callback will be
+  // delayed until the module is fully loaded.
+  onLoad: PropTypes.func,
 
-  onScriptError() {
-    console.error('There was an issue loading the link-initialize.js script');
-  }
-
-  onScriptLoaded() {
-    this.linkHandler = window.Plaid.create({
-      apiVersion: this.props.apiVersion,
-      clientName: this.props.clientName,
-      countryCodes: this.props.countryCodes,
-      language: this.props.language,
-      env: this.props.env,
-      key: this.props.publicKey,
-      onEvent: this.props.onEvent,
-      onExit: this.props.onExit,
-      onLoad: this.handleLinkOnLoad,
-      onSuccess: this.props.onSuccess,
-      product: this.props.product,
-      selectAccount: this.props.selectAccount,
-      token: this.props.token,
-      user: this.props.user,
-      webhook: this.props.webhook,
-      oauthNonce: this.props.oauthNonce,
-      oauthRedirectUri: this.props.oauthRedirectUri,
-      oauthStateId: this.props.oauthStateId,
-      paymentToken: this.props.paymentToken,
-      linkCustomizationName: this.props.linkCustomizationName,
-    });
-
-    this.setState({ disabledButton: false });
-  }
-
-  handleLinkOnLoad() {
-    if (this.props.onLoad != null) {
-      this.props.onLoad();
-    }
-    this.setState({ linkLoaded: true });
-  }
-
-  handleOnClick(event) {
-    if (this.props.onClick != null) {
-      this.props.onClick(event);
-    }
-    if (this.linkHandler) {
-      this.linkHandler.open();
-    }
-  }
-
-  exit(configurationObject) {
-    if (this.linkHandler) {
-      this.linkHandler.exit(configurationObject);
-    }
-  }
-
-  render() {
-    return (
-      <div>
-        <button
-          onClick={this.handleOnClick}
-          disabled={this.state.disabledButton}
-          style={this.props.style}
-          className={this.props.className}>
-          {this.props.children}
-        </button>
-        <Script
-          url={this.state.initializeURL}
-          onError={this.onScriptError}
-          onLoad={this.onScriptLoaded} />
-      </div>
-    );
-  }
-}
+  // A function that is called during a user's flow in Link.
+  // See
+  onEvent: PropTypes.func,
+};
 
 export default PlaidLink;

@@ -39,7 +39,6 @@ class App extends Component {
         product={['auth', 'transactions']}
         publicKey="614be98f819e9bd8d0db9abec1c08a"
         className="some-class-name"
-        apiVersion="v2"
         onSuccess={this.handleOnSuccess}
         onExit={this.handleOnExit}
         onEvent={this.handleOnEvent}
