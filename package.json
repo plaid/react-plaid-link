@@ -27,7 +27,6 @@
     "example": "examples"
   },
   "dependencies": {
-    "react-load-script": "0.0.6",
     "react-script-hook": "^1.0.11"
   },
   "peerDependencies": {
