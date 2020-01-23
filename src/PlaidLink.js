@@ -165,7 +165,7 @@ class PlaidLink extends Component {
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         <button
           onClick={this.handleOnClick}
           disabled={this.state.disabledButton}
@@ -177,7 +177,7 @@ class PlaidLink extends Component {
           url={this.state.initializeURL}
           onError={this.onScriptError}
           onLoad={this.onScriptLoaded} />
-      </div>
+      </React.Fragment>
     );
   }
 }
