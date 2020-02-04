@@ -49,8 +49,7 @@ a more holistic understanding of the various Link options.
 <PlaidLink
   clientName="Your app name"
   env="sandbox"
-  institution={null}
-  publicKey={PLAID_PUBLIC_KEY}
+  key={PLAID_PUBLIC_KEY}
   product={['auth', 'transactions']}
   apiVersion={'v1' || 'v2'}
   token={'public-token-123...'}
@@ -59,7 +58,16 @@ a more holistic understanding of the various Link options.
   onEvent={this.handleOnEvent}
   onExit={this.handleOnExit}
   onLoad={this.handleOnLoad}
-  onSuccess={this.handleOnSuccess}>
+  onSuccess={this.handleOnSuccess}
+  style={{width: '100px'}}
+  countryCodes={['US', 'CA']}
+  language="en"
+  user={{legalName: 'Jane Doe', emailAddress: 'jane@example.com'}}
+  webhook="https://example.com/plaid-webhook"
+  oauthNonce={'627ddf99...'}
+  oauthRedirectUri="https://example.com/plaid-oauth-callback"
+  oauthStateId={'1b748f9e...'}
+  paymentToken={'payment-token-sandbox-1b748f9e...'}>
   Open Link and connect a bank account to Plaid
 </PlaidLink>
 ```
