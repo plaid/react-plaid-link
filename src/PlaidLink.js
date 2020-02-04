@@ -48,7 +48,7 @@ class PlaidLink extends Component {
 
     // The public_key associated with your account; available from
     // the Plaid dashboard (https://dashboard.plaid.com)
-    publicKey: PropTypes.string.isRequired,
+    key: PropTypes.string.isRequired,
 
     // The Plaid products you wish to use, an array containing some of connect,
     // auth, identity, income, transactions, assets, liabilities
@@ -155,7 +155,7 @@ class PlaidLink extends Component {
       countryCodes: this.props.countryCodes,
       language: this.props.language,
       env: this.props.env,
-      key: this.props.publicKey,
+      key: this.props.key,
       onEvent: this.props.onEvent,
       onExit: this.props.onExit,
       onLoad: this.handleLinkOnLoad,
