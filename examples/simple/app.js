@@ -37,7 +37,7 @@ class App extends Component {
         clientName="Plaid Client"
         env="sandbox"
         product={['auth', 'transactions']}
-        publicKey="614be98f819e9bd8d0db9abec1c08a"
+        key="614be98f819e9bd8d0db9abec1c08a"
         className="some-class-name"
         apiVersion="v2"
         onSuccess={this.handleOnSuccess}
