@@ -63,6 +63,7 @@ class PlaidLink extends Component {
         'assets',
         'liabilities',
         'investments',
+        'payment_initiation',
       ])
     ).isRequired,
 
@@ -113,6 +114,34 @@ class PlaidLink extends Component {
 
     // Button Class names as a String
     className: PropTypes.string,
+
+    // An oauthNonce is required to support OAuth authentication flows
+    // when configuring Plaid Link with one or more European country codes.
+    // For security, the nonce must be a unique identifier (such as a UUID)
+    // for each Link session and must be at least 16 characters long.
+    // For more information, see https://plaid.com/docs/#oauth.
+    oauthNonce: PropTypes.string,
+
+    // An oauthRedirectUri is required to support OAuth authentication flows
+    // when configuring Plaid Link with one or more European country codes.
+    // After the user completes the OAuth flow, Plaid redirects back to the
+    // application via this URI. For security, the URI must be configured via
+    // the developer dashboard at https://dashboard.plaid.com/team/api.
+    // For more information, see https://plaid.com/docs/#oauth.
+    oauthRedirectUri: PropTypes.string,
+
+    // An oauthStateId is required to support OAuth authentication flows
+    // when configuring Plaid Link with one or more European country codes.
+    // After the user completes the OAuth flow, when Plaid redirects back to
+    // the application, the redirect URI includes a query parameter called
+    // oauth_state_id. To complete the authentication flow, Link must be
+    // re-initialized with this query parameter, in addition to the nonce
+    // from the original Link configuration.
+    // For more information, see https://plaid.com/docs/#oauth.
+    oauthStateId: PropTypes.string,
+
+    // A payment token is required when using the European Payment Initiation product.
+    paymentToken: PropTypes.string,
   }
 
   onScriptError() {
@@ -136,6 +165,10 @@ class PlaidLink extends Component {
       token: this.props.token,
       user: this.props.user,
       webhook: this.props.webhook,
+      oauthNonce: this.props.oauthNonce,
+      oauthRedirectUri: this.props.oauthRedirectUri,
+      oauthStateId: this.props.oauthStateId,
+      paymentToken: this.props.paymentToken,
     });
 
     this.setState({ disabledButton: false });
