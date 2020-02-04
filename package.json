@@ -1,6 +1,6 @@
 {
   "name": "react-plaid-link",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "A React component for Plaid Link",
   "files": [
     "dist/",
