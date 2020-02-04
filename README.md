@@ -29,7 +29,7 @@ class App extends Component {
         clientName="Your app name"
         env="sandbox"
         product={["auth", "transactions"]}
-        publicKey="PLAID_PUBLIC_KEY"
+        key="PLAID_PUBLIC_KEY"
         onExit={this.handleOnExit}
         onSuccess={this.handleOnSuccess}>
         Open Link and connect your bank!
