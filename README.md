@@ -49,7 +49,7 @@ a more holistic understanding of the various Link options.
 <PlaidLink
   clientName="Your app name"
   env="sandbox"
-  key={PLAID_PUBLIC_KEY}
+  publicKey={PLAID_PUBLIC_KEY}
   product={['auth', 'transactions']}
   apiVersion={'v1' || 'v2'}
   token={'public-token-123...'}
