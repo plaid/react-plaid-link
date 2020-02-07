@@ -27,6 +27,7 @@
     "example": "examples"
   },
   "dependencies": {
+    "prop-types": "^15.5.10",
     "react-load-script": "0.0.6"
   },
   "peerDependencies": {
@@ -47,7 +48,6 @@
     "eslint": "6.6.x",
     "eslint-plugin-react": "5.2.x",
     "mocha": "2.3.x",
-    "prop-types": "^15.5.10",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-tools": "0.13.x",
