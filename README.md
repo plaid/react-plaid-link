@@ -60,6 +60,7 @@ a more holistic understanding of the various Link options.
   onLoad={this.handleOnLoad}
   onSuccess={this.handleOnSuccess}
   style={{width: '100px'}}
+  className='custom-class'
   countryCodes={['US', 'CA']}
   language="en"
   user={{legalName: 'Jane Doe', emailAddress: 'jane@example.com'}}
