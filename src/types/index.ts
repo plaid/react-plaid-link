@@ -47,6 +47,7 @@ export interface PlaidLinkOptions {
 
 export interface PlaidLinkPropTypes extends PlaidLinkOptions {
   children: ReactNode;
+  className?: string;
   style?: object;
 }
 
