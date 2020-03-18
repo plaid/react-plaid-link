@@ -34,6 +34,7 @@ export interface PlaidLinkOptions {
   oauthNonce?: string;
   oauthRedirectUri?: string;
   oauthStateId?: string;
+  paymentToken?: string;
   // A callback that is called when a user has specifically exited Link flow
   onExit?: Function;
   // A callbac that is called when the Link module has finished loading.

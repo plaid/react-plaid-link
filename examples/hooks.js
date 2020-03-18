@@ -26,7 +26,7 @@ const App = props => {
     onSuccess,
     onEvent,
     onExit,
-    // // optional
+    // –– optional parameters
     // webhook: props.webhook || null,
     // countryCodes: props.countryCodes || ['US'],
     // language: props.language || 'en',
