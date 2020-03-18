@@ -36,7 +36,7 @@ rules:
   react/forbid-prop-types: 0
   react/no-unused-prop-types: 0
   react-hooks/rules-of-hooks: 2
-  react-hooks/exhaustive-deps: 1
+  react-hooks/exhaustive-deps: 0
   '@typescript-eslint/no-explicit-any': 0
   '@typescript-eslint/no-empty-interface': 0
   '@typescript-eslint/explicit-function-return-type': 0

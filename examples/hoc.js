@@ -1,6 +1,6 @@
 import React from 'react';
 
-import PlaidLink from '../src';
+import { PlaidLink } from '../src';
 
 const App = props => {
   const onExit = (error, metadata) => console.log('onExit', error, metadata);

@@ -51,7 +51,7 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
 
     // on component unmount – destroy the Plaid iframe factory
     return next.destroy;
-  }, [loading, error, options]);
+  }, [loading, error]);
 
   return {
     error,

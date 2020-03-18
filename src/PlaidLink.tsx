@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { PlaidLinkPropTypes } from './types';
 import { usePlaidLink } from './usePlaidLink';
 
-const PlaidLink = (props: PlaidLinkPropTypes) => {
+export const PlaidLink = (props: PlaidLinkPropTypes) => {
   const { children, style, ...config } = props;
   const { error, open } = usePlaidLink({ ...config });
 
@@ -26,6 +26,7 @@ const PlaidLink = (props: PlaidLinkPropTypes) => {
   );
 };
 
+PlaidLink.displayName = 'PlaidLink';
 PlaidLink.propTypes = {
   clientName: PropTypes.string.isRequired,
   env: PropTypes.string.isRequired,
@@ -43,6 +44,3 @@ PlaidLink.propTypes = {
   webhook: PropTypes.string,
   children: PropTypes.element,
 };
-
-PlaidLink.displayName = 'PlaidLink';
-export default PlaidLink;

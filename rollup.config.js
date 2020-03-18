@@ -29,7 +29,7 @@ export default [
     external: ['react'],
     output: [
       {
-        name: 'ReactStripe',
+        name: 'PlaidLink',
         file: pkg.browser,
         format: 'umd',
         globals: {
@@ -52,7 +52,7 @@ export default [
     external: ['react'],
     output: [
       {
-        name: 'ReactStripe',
+        name: 'PlaidLink',
         file: pkg['browser:min'],
         format: 'umd',
         globals: {

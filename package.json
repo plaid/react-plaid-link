@@ -4,15 +4,19 @@
   "description": "A React component for Plaid Link",
   "files": [
     "dist",
-    "lib",
     "src",
     "LICENSE"
   ],
-  "main": "./lib/index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "jsnext:main": "dist/index.esm.js",
+  "browser:min": "dist/index.umd.min.js",
+  "browser": "dist/index.umd.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/plaid/react-plaid-link.git"
   },
+  "types": "dist/index.d.ts",
   "keywords": [
     "react",
     "react-component",
@@ -27,7 +31,8 @@
     "example": "examples"
   },
   "dependencies": {
-    "react-script-hook": "^1.0.15"
+    "react-script-hook": "^1.0.15",
+    "prop-types": "^15.7.2"
   },
   "peerDependencies": {
     "react": "^16.8.0",
@@ -64,7 +69,6 @@
     "eslint-plugin-react-hooks": "^2.5.0",
     "mocha": "2.3.x",
     "prettier": "^1.19.1",
-    "prop-types": "^15.5.10",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-tools": "0.13.x",

@@ -1,5 +1,2 @@
-import PlaidLink from './PlaidLink';
-import { usePlaidLink } from './usePlaidLink';
-
-export { usePlaidLink };
-export default PlaidLink;
+export { usePlaidLink } from './usePlaidLink';
+export { PlaidLink } from './PlaidLink';

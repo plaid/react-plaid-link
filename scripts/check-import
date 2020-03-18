@@ -22,5 +22,5 @@ checkImport() {
     esac
 }
 
-checkImport "/dist/react-stripe.d.ts" 'import [^*{]' 'Please only use * or named imports for types' && \
-checkImport "/dist/react-stripe.esm.js" 'import.*{' 'Please do not use named imports for dependencies'
+checkImport "/dist/index.d.ts" 'import [^*{]' 'Please only use * or named imports for types' && \
+checkImport "/dist/index.esm.js" 'import.*{' 'Please do not use named imports for dependencies'
