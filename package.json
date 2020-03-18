@@ -30,9 +30,14 @@
   "directories": {
     "example": "examples"
   },
+  "scripts": {
+    "storybook": "start-storybook -p 9001",
+    "deploy-storybook": "storybook-to-ghpages",
+    "build-storybook": "build-storybook -s public"
+  },
   "dependencies": {
-    "react-script-hook": "^1.0.15",
-    "prop-types": "^15.7.2"
+    "prop-types": "^15.7.2",
+    "react-script-hook": "^1.0.15"
   },
   "peerDependencies": {
     "react": "^16.8.0",
@@ -50,6 +55,7 @@
     "@storybook/addons": "^5.3.17",
     "@storybook/preset-typescript": "^2.1.0",
     "@storybook/react": "^5.3.17",
+    "@storybook/storybook-deployer": "^2.8.3",
     "@types/enzyme": "^3.10.4",
     "@types/react": "^16.9.19",
     "@types/react-dom": "^16.9.5",
@@ -84,9 +90,6 @@
     "webpack": "^3.6.0",
     "webpack-dev-server": "2.8.2",
     "xyz": "0.5.x"
-  },
-  "scripts": {
-    "build": "babel -d dist/ src/"
   },
   "tags": [
     "react",

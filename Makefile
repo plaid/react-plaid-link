@@ -4,6 +4,7 @@ MOCHA = node --harmony node_modules/.bin/mocha --reporter spec --require test/se
 ESLINT = node_modules/.bin/eslint
 ROLLUP = node_modules/.bin/rollup
 PRETTIER = node_modules/.bin/prettier
+STORYBOOK_TO_PAGES = node_modules/.bin/storybook-to-ghpages
 NPM_ENV_VARS = npm_config_registry=https://registry.npmjs.org
 NPM = $(NPM_ENV_VARS) npm
 XYZ = $(NPM_ENV_VARS) node_modules/.bin/xyz --repo git@github.com:plaid/react-plaid-link.git
@@ -57,6 +58,11 @@ storybook:
 	@$(STORYBOOK) -p 6006
 
 
+.PHONY: storybook-deploy
+storybook-deploy:
+	$(STORYBOOK_TO_PAGES)
+
+	
 .PHONY: release-major release-minor release-patch
 release-major release-minor release-patch: compile build
 	@$(XYZ) --increment $(@:release-%=%)
