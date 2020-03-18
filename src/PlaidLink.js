@@ -142,6 +142,10 @@ class PlaidLink extends Component {
 
     // A payment token is required when using the European Payment Initiation product.
     paymentToken: PropTypes.string,
+
+    // Specify a link customization name to use a non-default link customization.
+    // For more information, see https://blog.plaid.com/multiple-link-configurations/.
+    linkCustomizationName: PropTypes.string,
   }
 
   onScriptError() {
@@ -169,6 +173,7 @@ class PlaidLink extends Component {
       oauthRedirectUri: this.props.oauthRedirectUri,
       oauthStateId: this.props.oauthStateId,
       paymentToken: this.props.paymentToken,
+      linkCustomizationName: this.props.linkCustomizationName,
     });
 
     this.setState({ disabledButton: false });
