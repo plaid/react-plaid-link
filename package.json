@@ -88,7 +88,7 @@
     "ts-loader": "^6.2.1",
     "typescript": "^3.8.3",
     "webpack": "^3.6.0",
-    "webpack-dev-server": "2.8.2",
+    "webpack-dev-server": "3.1.11",
     "xyz": "0.5.x"
   },
   "tags": [
