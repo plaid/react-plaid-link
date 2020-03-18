@@ -1,11 +1,11 @@
 {
   "name": "react-plaid-link",
-  "version": "1.5.1",
+  "version": "2.0.0",
   "description": "A React component for Plaid Link",
   "files": [
-    "dist/",
-    "lib/",
-    "src/",
+    "dist",
+    "lib",
+    "src",
     "LICENSE"
   ],
   "main": "./lib/index.js",
@@ -53,16 +53,6 @@
     "@wessberg/rollup-plugin-ts": "^1.2.21",
     "babel-loader": "^8.0.6",
     "babel-plugin-transform-class-properties": "^6.24.1",
-<<<<<<< HEAD
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-es2015": "6.5.x",
-    "babel-preset-react": "6.5.x",
-    "babel-preset-stage-0": "6.5.x",
-    "babel-register": "6.5.x",
-    "enzyme": "1.5.x",
-    "eslint": "6.6.x",
-    "eslint-plugin-react": "5.2.x",
-=======
     "eslint": "6.6.0",
     "eslint-config-airbnb": "18.0.1",
     "eslint-config-prettier": "^6.10.0",
@@ -72,7 +62,6 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^2.5.0",
->>>>>>> 2.0-rc
     "mocha": "2.3.x",
     "prettier": "^1.19.1",
     "prop-types": "^15.5.10",
