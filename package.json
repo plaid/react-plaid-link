@@ -31,9 +31,15 @@
     "example": "examples"
   },
   "scripts": {
+    "lint": "eslint '{src,examples}/**/*.{ts,tsx,js,jsx}' --ignore-path .gitignore",
     "storybook": "start-storybook -p 9001",
     "deploy-storybook": "storybook-to-ghpages",
     "build-storybook": "build-storybook -s public"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run lint"
+    }
   },
   "dependencies": {
     "prop-types": "^15.7.2",
@@ -73,6 +79,7 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^2.5.0",
+    "husky": "^4.2.3",
     "mocha": "2.3.x",
     "prettier": "^1.19.1",
     "react": "^16.13.0",
@@ -87,8 +94,6 @@
     "sinon": "1.17.x",
     "ts-loader": "^6.2.1",
     "typescript": "^3.8.3",
-    "webpack": "^3.6.0",
-    "webpack-dev-server": "2.8.2",
     "xyz": "0.5.x"
   },
   "tags": [

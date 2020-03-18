@@ -5,12 +5,14 @@ import { PlaidLinkPropTypes } from './types';
 import { usePlaidLink } from './usePlaidLink';
 
 export const PlaidLink = (props: PlaidLinkPropTypes) => {
-  const { children, style, ...config } = props;
+  const { children, style, className, ...config } = props;
   const { error, open } = usePlaidLink({ ...config });
 
   return (
     <button
       disabled={Boolean(error)}
+      type="button"
+      className={className}
       style={{
         padding: '6px 4px',
         outline: 'none',
@@ -28,6 +30,7 @@ export const PlaidLink = (props: PlaidLinkPropTypes) => {
 
 PlaidLink.displayName = 'PlaidLink';
 PlaidLink.propTypes = {
+  className: PropTypes.string.isRequired,
   clientName: PropTypes.string.isRequired,
   env: PropTypes.string.isRequired,
   key: PropTypes.string.isRequired,
