@@ -8,7 +8,7 @@ export interface PlaidFactory {
 
 interface FactoryInternalState {
   plaid: Plaid | null;
-  iframe: any;
+  iframe: Element | null;
   open: boolean;
 }
 

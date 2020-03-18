@@ -39,15 +39,11 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
       return;
     }
 
-    // if (iframeLoaded) {
-    //   setIframeLoaded(false);
-    // }
-
     const next = createPlaid({
       ...options,
       onLoad: () => {
-        options.onLoad && options.onLoad();
         setIframeLoaded(true);
+        options.onLoad && options.onLoad();
       },
     });
 
@@ -55,17 +51,12 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
 
     // on component unmount – destroy the Plaid iframe factory
     return next.destroy;
-  }, [
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    loading,
-    error,
-    // ...options
-  ]);
+  }, [loading, error]);
 
   return {
-    loading: loading || !iframeLoaded,
     error,
-    open: plaid ? plaid.open : noop,
+    ready: loading || !iframeLoaded,
     exit: plaid ? plaid.exit : noop,
+    open: plaid ? plaid.open : noop,
   };
 };
