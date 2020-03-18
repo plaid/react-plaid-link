@@ -62,7 +62,7 @@ storybook:
 storybook-deploy:
 	$(STORYBOOK_TO_PAGES)
 
-	
+
 .PHONY: release-major release-minor release-patch
-release-major release-minor release-patch: compile build
+release-major release-minor release-patch: build
 	@$(XYZ) --increment $(@:release-%=%)
