@@ -12,7 +12,8 @@
 
 #### Breaking changes
 
-For the `PlaidLink` button component, we've removed the default import:
+- Remove support for React versions below `<16.8.x`
+- For the `PlaidLink` button component, we've removed the default import:
 
 ##### Before:
 

@@ -27,8 +27,8 @@ a more holistic understanding of the various Link options.
 Head to the `react-plaid-link` [storybook]() to try it out for yourself, or
 checkout:
 
-- `/examples/hooks.js`
-- `/examples/hoc.js`
+- [`/examples/hooks.js`](./examples/hooks.js)
+- [`/examples/hoc.js`](./examples/hoc.js)
 
 ### Using React hooks
 
@@ -90,37 +90,35 @@ const App = () => {
 export default App;
 ```
 
-### All Props
+#### All available Link configuration options
 
 Please refer to the [official Plaid Link docs](https://plaid.com/docs/#creating-items-with-plaid-link) for
 a more holistic understanding of the various Link options.
 
-```jsx
-<PlaidLink
-  clientName="Your app name"
-  env="sandbox"
-  publicKey={PLAID_PUBLIC_KEY}
-  product={['auth', 'transactions']}
-  apiVersion={'v1' || 'v2'}
-  token={'public-token-123...'}
-  selectAccount={true} // deprecated – use https://dashboard.plaid.com/link
-  webhook="https://webhooks.test.com"
-  onEvent={this.handleOnEvent}
-  onExit={this.handleOnExit}
-  onLoad={this.handleOnLoad}
-  onSuccess={this.handleOnSuccess}
-  style={{ width: '100px' }}
-  countryCodes={['US', 'CA']}
-  language="en"
-  user={{ legalName: 'Jane Doe', emailAddress: 'jane@example.com' }}
-  webhook="https://example.com/plaid-webhook"
-  oauthNonce={'627ddf99...'}
-  oauthRedirectUri="https://example.com/plaid-oauth-callback"
-  oauthStateId={'1b748f9e...'}
-  paymentToken={'payment-token-sandbox-1b748f9e...'}
->
-  Open Link and connect a bank account to Plaid
-</PlaidLink>
+```ts
+// src/types/index.ts
+interface PlaidLinkOptions {
+  clientName: string;
+  env: string;
+  publicKey: string;
+  product: Array<string>;
+  onSuccess: Function;
+  // optional
+  onExit?: Function;
+  onLoad?: Function;
+  onEvent?: Function;
+  countryCodes?: Array<string>;
+  language?: string;
+  token?: string;
+  userEmailAddress?: string;
+  userLegalName?: string;
+  webhook?: string;
+  linkCustomizationName?: string;
+  oauthNonce?: string;
+  oauthRedirectUri?: string;
+  oauthStateId?: string;
+  paymentToken?: string;
+}
 ```
 
 ## Typescript support
