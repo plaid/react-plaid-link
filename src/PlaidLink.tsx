@@ -11,6 +11,7 @@ export const PlaidLink = (props: PlaidLinkPropTypes) => {
   return (
     <button
       disabled={Boolean(error)}
+      type="button"
       style={{
         padding: '6px 4px',
         outline: 'none',
