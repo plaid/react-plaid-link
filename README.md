@@ -24,9 +24,10 @@ a more holistic understanding of the various Link options.
 
 ### Examples
 
-Head to the `react-plaid-link` [storybook]() to try it out for yourself, or
+Head to the `react-plaid-link` [storybook](https://plaid.github.io/react-plaid-link) to try it out for yourself, or
 checkout:
 
+- [Storybook](https://plaid.github.io/react-plaid-link)
 - [`/examples/hooks.js`](./examples/hooks.js)
 - [`/examples/hoc.js`](./examples/hoc.js)
 
