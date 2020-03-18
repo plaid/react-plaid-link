@@ -45,7 +45,7 @@ const PlaidLink = forwardRef(function PlaidLink(props, ref) {
       open,
       exit,
     }),
-    [open, exit],
+    [open, exit]
   );
 
   return (
@@ -68,7 +68,8 @@ const PlaidLink = forwardRef(function PlaidLink(props, ref) {
           return;
         }
         open();
-      }}>
+      }}
+    >
       {children}
     </button>
   );
@@ -91,8 +92,6 @@ PlaidLink.propTypes = {
   // auth, identity, income, transactions, assets, liabilities
   product: PropTypes.arrayOf(
     PropTypes.oneOf([
-      'connect',  // legacy product name
-      'info',     // legacy product name
       'auth',
       'identity',
       'income',

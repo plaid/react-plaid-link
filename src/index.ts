@@ -1,4 +1,4 @@
 import PlaidLink from './PlaidLink';
-
 export default PlaidLink;
-export * from './usePlaidLink';
+
+export { usePlaidLink } from './usePlaidLink';

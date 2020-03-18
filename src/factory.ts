@@ -1,31 +1,33 @@
+import { PlaidLinkOptions, Plaid } from './types';
+
+export interface PlaidFactory {
+  open: Function;
+  exit: Function;
+  destroy: Function;
+}
+
+interface FactoryInternalState {
+  plaid: Plaid | null;
+  iframe: any;
+  open: boolean;
+}
 
 /**
  * Wrap link handler creation and instance to clean up iframe via destroy() method
  */
-export const createPlaid = options => {
-  if (typeof window === 'undefined' || !window.Plaid) {
-    throw new Error('Plaid not loaded');
-  }
-
-  // Use object for state so inner functions can reference
-  // properties created/updated later
-  const state = {
+export const createPlaid = (options: PlaidLinkOptions) => {
+  const state: FactoryInternalState = {
     plaid: null,
     iframe: null,
     open: false,
   };
 
-  state.plaid = window.Plaid.create({
-    ...options,
-    onEvent: (eventName, metadata) => {
-      if (eventName === 'EXIT' || eventName === 'HANDOFF') {
-        state.open = false;
-      }
-      if (options.onEvent) {
-        options.onEvent(eventName, metadata);
-      }
-    },
-  });
+  // If Plaid is not available, throw an Error
+  if (typeof window === 'undefined' || !window.Plaid) {
+    throw new Error('Plaid not loaded');
+  }
+
+  state.plaid = window.Plaid.create({ ...options });
 
   // Keep track of Plaid DOM instance so we can clean up it for them.
   // It's reasonably safe to assume the last plaid iframe will be the one
@@ -41,15 +43,17 @@ export const createPlaid = options => {
     state.open = true;
     state.plaid.open();
   };
-  const exit = opts => {
+
+  const exit = (exitOptions: any) => {
     if (!state.open || !state.plaid) {
       return;
     }
-    state.plaid.exit(opts);
-    if (opts && opts.force) {
+    state.plaid.exit(exitOptions);
+    if (exitOptions && exitOptions.force) {
       state.open = false;
     }
   };
+
   const destroy = () => {
     const wasOpen = state.open;
     exit({ force: true });
