@@ -22,7 +22,7 @@ const App = props => {
     clientName: props.clientName || '',
     env: props.env || 'sandbox',
     product: props.product || ['auth'],
-    key: props.key || 'a9536dd5db33d7bbbdb096c56a1593',
+    publicKey: props.publicKey,
     onSuccess,
     onEvent,
     onExit,
@@ -33,7 +33,7 @@ const App = props => {
     // ...
   };
 
-  const { open, loading, error } = usePlaidLink(config);
+  const { open, ready, error } = usePlaidLink(config);
 
   return (
     <>
@@ -41,7 +41,7 @@ const App = props => {
         type="button"
         className="button"
         onClick={() => open()}
-        disabled={loading}
+        disabled={!ready || error}
       >
         Open Plaid Link
       </button>

@@ -12,6 +12,16 @@ interface FactoryInternalState {
   open: boolean;
 }
 
+const renameKeyInObject = (
+  o: { [index: string]: any },
+  oldKey: string,
+  newKey: string
+): object => {
+  const newObject = {};
+  delete Object.assign(newObject, o, { [newKey]: o[oldKey] })[oldKey];
+  return newObject;
+};
+
 /**
  * Wrap link handler creation and instance to clean up iframe via destroy() method
  */
@@ -27,7 +37,9 @@ export const createPlaid = (options: PlaidLinkOptions) => {
     throw new Error('Plaid not loaded');
   }
 
-  state.plaid = window.Plaid.create({ ...options });
+  const config = renameKeyInObject(options, 'publicKey', 'key');
+  console.log(config);
+  state.plaid = window.Plaid.create(config);
 
   // Keep track of Plaid DOM instance so we can clean up it for them.
   // It's reasonably safe to assume the last plaid iframe will be the one

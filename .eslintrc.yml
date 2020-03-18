@@ -25,7 +25,7 @@ env:
 rules:
   no-console: 0
   func-style: 2
-  consistent-return: 2
+  consistent-return: 0
   prefer-arrow-callback:
     - 2
     - allowNamedFunctions: false
