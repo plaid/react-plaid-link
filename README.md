@@ -1,94 +1,126 @@
 # react-plaid-link [![npm version](https://badge.fury.io/js/react-plaid-link.svg)](http://badge.fury.io/js/react-plaid-link)
 
-A simple [React](https://facebook.github.io/react/) component for easy
-integration with the [Plaid Link drop-in module](https://blog.plaid.com/plaid-link/)
+[React](https://facebook.github.io/react/) hooks and components for
+integrating with the [Plaid Link drop module](https://blog.plaid.com/plaid-link/)
 
+### Install
 
-## Install
+With `npm`:
 
 ```
 npm install react-plaid-link --save
 ```
 
-## Example Usage
+With `yarn`
 
-```jsx
-import React, { Component } from 'react'
-import PlaidLink from 'react-plaid-link'
-
-class App extends Component {
-  handleOnSuccess(token, metadata) {
-    // send token to client server
-  }
-  handleOnExit() {
-    // handle the case when your user exits Link
-  }
-  render() {
-    return (
-      <PlaidLink
-        clientName="Your app name"
-        env="sandbox"
-        product={["auth", "transactions"]}
-        publicKey="PLAID_PUBLIC_KEY"
-        onExit={this.handleOnExit}
-        onSuccess={this.handleOnSuccess}>
-        Open Link and connect your bank!
-      </PlaidLink>
-    )
-  }
-}
-export default App
+```
+yarn add -S react-plaid-link
 ```
 
-## All Props
+## Documentation
 
 Please refer to the [official Plaid Link docs](https://plaid.com/docs/#creating-items-with-plaid-link) for
 a more holistic understanding of the various Link options.
 
+### Examples
+
+Head to the `react-plaid-link` [storybook]() to try it out for yourself, or
+checkout:
+
+- [`/examples/hooks.js`](./examples/hooks.js)
+- [`/examples/hoc.js`](./examples/hoc.js)
+
+### Using React hooks
+
+This is the new and preferred approach for integrating with Plaid Link in React.
+
 ```jsx
-<PlaidLink
-  clientName="Your app name"
-  env="sandbox"
-  publicKey={PLAID_PUBLIC_KEY}
-  product={['auth', 'transactions']}
-  apiVersion={'v1' || 'v2'}
-  token={'public-token-123...'}
-  selectAccount={true} // deprecated – use https://dashboard.plaid.com/link
-  webhook="https://webhooks.test.com"
-  onEvent={this.handleOnEvent}
-  onExit={this.handleOnExit}
-  onLoad={this.handleOnLoad}
-  onSuccess={this.handleOnSuccess}
-  style={{width: '100px'}}
-  countryCodes={['US', 'CA']}
-  language="en"
-  user={{legalName: 'Jane Doe', emailAddress: 'jane@example.com'}}
-  webhook="https://example.com/plaid-webhook"
-  oauthNonce={'627ddf99...'}
-  oauthRedirectUri="https://example.com/plaid-oauth-callback"
-  oauthStateId={'1b748f9e...'}
-  paymentToken={'payment-token-sandbox-1b748f9e...'}>
-  Open Link and connect a bank account to Plaid
-</PlaidLink>
+import React, { useCallback } from 'react';
+import { usePlaidLink } from 'react-plaid-link';
+
+const App = () => {
+  const onSuccess = useCallback((token, metadata) => {
+    // send token to server
+  }, []);
+
+  const config = {
+    clientName: 'Your app name',
+    env: 'sandbox',
+    product: ['auth', 'transactions'],
+    publicKey: '<YOUR_PLAID_PUBLIC_KEY>',
+    onSuccess,
+    // ...
+  };
+
+  const { open, ready, error } = usePlaidLink(config);
+
+  return (
+    <MyButton onClick={() => open()} disabled={!ready}>
+      Connect a bank account
+    </MyButton>
+  );
+};
+export default App;
 ```
 
+### Using a React component
 
-## Contributing
+```jsx
+import React from 'react';
+import { PlaidLink } from 'react-plaid-link';
 
-Run tests:
-
+const App = () => {
+  const onSuccess = (token, metadata) => {
+    // send token to server
+  }
+  render() {
+    return (
+      <PlaidLink
+        clientName='Your app name'
+        env='sandbox'
+        product={['auth', 'transactions']}
+        publicKey='<YOUR_PLAID_PUBLIC_KEY>'
+        onSuccess={onSuccess}
+      >
+        Connect a bank account
+      </PlaidLink>
+    );
+  }
+}
+export default App;
 ```
-make test
+
+#### All available Link configuration options
+
+Please refer to the [official Plaid Link docs](https://plaid.com/docs/#creating-items-with-plaid-link) for
+a more holistic understanding of the various Link options.
+
+```ts
+// src/types/index.ts
+interface PlaidLinkOptions {
+  clientName: string;
+  env: string;
+  publicKey: string;
+  product: Array<string>;
+  onSuccess: Function;
+  // optional
+  onExit?: Function;
+  onLoad?: Function;
+  onEvent?: Function;
+  countryCodes?: Array<string>;
+  language?: string;
+  token?: string;
+  userEmailAddress?: string;
+  userLegalName?: string;
+  webhook?: string;
+  linkCustomizationName?: string;
+  oauthNonce?: string;
+  oauthRedirectUri?: string;
+  oauthStateId?: string;
+  paymentToken?: string;
+}
 ```
 
-## Development
+## Typescript support
 
-```bash
-# install dependencies
-make setup
-
-# run a local server
-make start
-
-# open localhost:3000
-```
+Typescript definitions for `react-plaid-link` are built into the npm packge.
