@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import React from 'react';
 
 export interface PlaidLinkOptions {
   // Displayed once a user has successfully linked their account
@@ -46,9 +46,9 @@ export interface PlaidLinkOptions {
 }
 
 export interface PlaidLinkPropTypes extends PlaidLinkOptions {
-  children: ReactNode;
+  children: React.ReactNode;
   className?: string;
-  style?: object;
+  style?: React.CSSProperties;
 }
 
 export interface Plaid {

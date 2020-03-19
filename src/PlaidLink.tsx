@@ -1,10 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { PlaidLinkPropTypes } from './types';
 import { usePlaidLink } from './usePlaidLink';
 
-export const PlaidLink = (props: PlaidLinkPropTypes) => {
+export const PlaidLink: React.FC<PlaidLinkPropTypes> = props => {
   const { children, style, className, ...config } = props;
   const { error, open } = usePlaidLink({ ...config });
 
@@ -29,21 +28,3 @@ export const PlaidLink = (props: PlaidLinkPropTypes) => {
 };
 
 PlaidLink.displayName = 'PlaidLink';
-PlaidLink.propTypes = {
-  className: PropTypes.string.isRequired,
-  clientName: PropTypes.string.isRequired,
-  env: PropTypes.string.isRequired,
-  key: PropTypes.string.isRequired,
-  product: PropTypes.arrayOf(PropTypes.string).isRequired,
-  onSuccess: PropTypes.func.isRequired,
-  countryCodes: PropTypes.array,
-  language: PropTypes.string,
-  onEvent: PropTypes.func,
-  onExit: PropTypes.func,
-  onLoad: PropTypes.func,
-  token: PropTypes.string,
-  userEmailAddress: PropTypes.string,
-  userLegalName: PropTypes.string,
-  webhook: PropTypes.string,
-  children: PropTypes.element,
-};
