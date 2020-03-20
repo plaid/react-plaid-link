@@ -70,7 +70,7 @@ export default App;
 import React from 'react';
 import { PlaidLink } from 'react-plaid-link';
 
-const App = () => {
+class App extends React.Component {
   const onSuccess = (token, metadata) => {
     // send token to server
   }
