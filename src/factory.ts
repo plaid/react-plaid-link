@@ -8,7 +8,6 @@ export interface PlaidFactory {
 
 interface FactoryInternalState {
   plaid: Plaid | null;
-  iframe: Element | null;
   open: boolean;
 }
 
@@ -28,7 +27,6 @@ const renameKeyInObject = (
 export const createPlaid = (options: PlaidLinkOptions) => {
   const state: FactoryInternalState = {
     plaid: null,
-    iframe: null,
     open: false,
   };
 
@@ -39,13 +37,6 @@ export const createPlaid = (options: PlaidLinkOptions) => {
 
   const config = renameKeyInObject(options, 'publicKey', 'key');
   state.plaid = window.Plaid.create(config);
-
-  // Keep track of Plaid DOM instance so we can clean up it for them.
-  // It's reasonably safe to assume the last plaid iframe will be the one
-  // just created by the line above.
-  state.iframe = document.querySelector(
-    'iframe[id^="plaid-link-iframe-"]:last-child'
-  );
 
   const open = () => {
     if (!state.plaid) {
@@ -69,13 +60,14 @@ export const createPlaid = (options: PlaidLinkOptions) => {
     const wasOpen = state.open;
     exit({ force: true });
     const cleanup = () => {
-      if (state.iframe) {
-        state.iframe.remove();
-        state.iframe = null;
+      if (state.plaid) {
+        // Removes the iframe from the DOM
+        state.plaid.destroy();
+        state.plaid = null;
       }
     };
     // If was open give Plaid some time to finish before killing iframe.
-    if (wasOpen && state.iframe) {
+    if (wasOpen && state.plaid) {
       setTimeout(cleanup, 1000);
     } else {
       cleanup();
