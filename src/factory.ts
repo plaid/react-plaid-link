@@ -38,7 +38,6 @@ export const createPlaid = (options: PlaidLinkOptions) => {
   }
 
   const config = renameKeyInObject(options, 'publicKey', 'key');
-  console.log(config);
   state.plaid = window.Plaid.create(config);
 
   // Keep track of Plaid DOM instance so we can clean up it for them.
