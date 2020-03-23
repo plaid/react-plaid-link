@@ -1,6 +1,19 @@
 # Changelog
 
-## v2.0
+## 2.0.3
+
+- Add `accountSubtypes` prop to configuration options (#91)
+
+## 2.0.2
+
+- Fix `publicKey` prop and auto-generate PropTypes for React component (#87)
+
+## 2.0.1
+
+- Add `className` prop to `PlaidLink` React component (#83)
+- Add `type=button` to `PlaidLink` React component (#83)
+
+## 2.0.0
 
 #### New
 
