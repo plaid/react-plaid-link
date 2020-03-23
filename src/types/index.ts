@@ -31,6 +31,7 @@ export interface PlaidLinkOptions {
   // Specify a webhook to associate with a user.
   webhook?: string;
   linkCustomizationName?: string;
+  accountSubtypes?: { [key: string]: Array<string> };
   oauthNonce?: string;
   oauthRedirectUri?: string;
   oauthStateId?: string;
