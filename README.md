@@ -108,17 +108,18 @@ interface PlaidLinkOptions {
   onExit?: Function;
   onLoad?: Function;
   onEvent?: Function;
+  accountSubtypes?: { [key: string]: Array<string> };
   countryCodes?: Array<string>;
   language?: string;
-  token?: string;
-  userEmailAddress?: string;
-  userLegalName?: string;
-  webhook?: string;
   linkCustomizationName?: string;
   oauthNonce?: string;
   oauthRedirectUri?: string;
   oauthStateId?: string;
   paymentToken?: string;
+  token?: string;
+  userEmailAddress?: string;
+  userLegalName?: string;
+  webhook?: string;
 }
 ```
 
