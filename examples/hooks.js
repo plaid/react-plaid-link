@@ -9,12 +9,12 @@ const App = props => {
   );
 
   const onEvent = useCallback(
-    (token, metadata) => console.log('onEvent', token, metadata),
+    (eventName, metadata) => console.log('onEvent', eventName, metadata),
     []
   );
 
   const onExit = useCallback(
-    (token, metadata) => console.log('onExit', token, metadata),
+    (err, metadata) => console.log('onExit', err, metadata),
     []
   );
 
@@ -23,6 +23,7 @@ const App = props => {
     env: props.env || 'sandbox',
     product: props.product || ['auth'],
     publicKey: props.publicKey,
+    token: props.token,
     onSuccess,
     onEvent,
     onExit,

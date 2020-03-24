@@ -18,6 +18,7 @@ const App = props => {
         env={props.env || 'sandbox'}
         product={props.product || ['auth', 'transactions']}
         publicKey={props.publicKey || '...'}
+        token={props.token}
         onExit={onExit}
         onSuccess={onSuccess}
         onEvent={onEvent}

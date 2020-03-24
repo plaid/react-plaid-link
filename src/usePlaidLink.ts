@@ -39,6 +39,12 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
       return;
     }
 
+    // if an old plaid instance exists, destroy it before
+    // creating a new one
+    if (plaid != null) {
+      plaid.destroy();
+    }
+
     const next = createPlaid({
       ...options,
       onLoad: () => {
@@ -51,7 +57,7 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
 
     // on component unmount – destroy the Plaid iframe factory
     return next.destroy;
-  }, [loading, error]);
+  }, [loading, error, options.token]);
 
   return {
     error,
