@@ -64,6 +64,5 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
     ready: !loading || iframeLoaded,
     exit: plaid ? plaid.exit : noop,
     open: plaid ? plaid.open : noop,
-    destroy: plaid ? plaid.destroy : noop,
   };
 };
