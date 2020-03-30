@@ -9,7 +9,7 @@ export interface PlaidFactory {
 interface FactoryInternalState {
   plaid: Plaid | null;
   open: boolean;
-  onExitCallback: Function | null,
+  onExitCallback: Function | null;
 }
 
 const renameKeyInObject = (
@@ -37,7 +37,11 @@ export const createPlaid = (options: PlaidLinkOptions) => {
     throw new Error('Plaid not loaded');
   }
 
-  const config = renameKeyInObject(options, 'publicKey', 'key') as PlaidLinkOptions;
+  const config = renameKeyInObject(
+    options,
+    'publicKey',
+    'key'
+  ) as PlaidLinkOptions;
 
   state.plaid = window.Plaid.create({
     ...config,

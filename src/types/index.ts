@@ -41,20 +41,20 @@ interface CommonPlaidLinkOptions {
 
 // Either the publicKey or the token field must be configured
 export type PlaidLinkOptions =
-  CommonPlaidLinkOptions & {
-    // The public_key associated with your account; available from
-    // the Plaid dashboard (https://dashboard.plaid.com)
-    publicKey: string;
-    token?: string;
-  } |
-  CommonPlaidLinkOptions & {
-    // Specify an item add token to launch link in normal mode.
-    // 
-    // Specify an existing user's public token to launch Link in update mode.
-    // This will cause Link to open directly to the authentication step for
-    // that user's institution.
-    token: string;
-  };
+  | (CommonPlaidLinkOptions & {
+      // The public_key associated with your account; available from
+      // the Plaid dashboard (https://dashboard.plaid.com)
+      publicKey: string;
+      token?: string;
+    })
+  | (CommonPlaidLinkOptions & {
+      // Specify an item add token to launch link in normal mode.
+      //
+      // Specify an existing user's public token to launch Link in update mode.
+      // This will cause Link to open directly to the authentication step for
+      // that user's institution.
+      token: string;
+    });
 
 export type PlaidLinkPropTypes = PlaidLinkOptions & {
   children: React.ReactNode;

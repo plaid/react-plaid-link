@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.0
+
+- Allows public_key to be optional if a token is provided (#95)
+- Fix `token` initialization (#95)
+- Use the new link handler `.destroy()` method instead of custom internal method (#95)
+
 ## 2.0.3
 
 - Add `accountSubtypes` prop to configuration options (#91)
