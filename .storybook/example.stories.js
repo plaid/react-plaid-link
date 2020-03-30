@@ -31,6 +31,7 @@ stories.add('hooks', () => {
     clientName: text('clientName', 'YOUR_CLIENT_NAME'),
     env: select('env', ['sandbox', 'development', 'production'], 'sandbox'),
     publicKey: text('publicKey', '<SANDBOX_PUBLIC_KEY>'),
+    token: text('token', '<LINK_TOKEN>'),
     product: options(
       'product',
       { auth: 'auth', transactions: 'transactions' },
@@ -53,6 +54,7 @@ stories.add('HOC', () => {
     clientName: text('clientName', 'YOUR_CLIENT_NAME'),
     env: select('env', ['sandbox', 'development', 'production'], 'sandbox'),
     publicKey: text('publicKey', '<SANDBOX_PUBLIC_KEY>'),
+    token: text('token', '<LINK_TOKEN>'),
     product: options(
       'product',
       { auth: 'auth', transactions: 'transactions' },
@@ -62,6 +64,7 @@ stories.add('HOC', () => {
   };
 
   button('Save Link configuration', reRender);
+
   return (
     <div key={counter}>
       <ExampleComponent file="hoc" {...props} />

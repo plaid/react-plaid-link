@@ -1,13 +1,10 @@
 import React from 'react';
 
-export interface PlaidLinkOptions {
+interface CommonPlaidLinkOptions {
   // Displayed once a user has successfully linked their account
   clientName: string;
   // The Plaid API environment on which to create user accounts.
   env: string;
-  // The public_key associated with your account; available from
-  // the Plaid dashboard (https://dashboard.plaid.com)
-  publicKey: string;
   // The Plaid products you wish to use, an array containing some of connect,
   // auth, identity, income, transactions, assets, liabilities
   product: Array<string>;
@@ -18,10 +15,6 @@ export interface PlaidLinkOptions {
   countryCodes?: Array<string>;
   // A local string to change the default Link display language
   language?: string;
-  // Specify an existing user's public token to launch Link in update mode.
-  // This will cause Link to open directly to the authentication step for
-  // that user's institution.
-  token?: string;
   // Your user's associated email address - specify to enable all Auth features.
   // Note that userLegalName must also be set.
   userEmailAddress?: string;
@@ -46,16 +39,34 @@ export interface PlaidLinkOptions {
   onEvent?: Function;
 }
 
-export interface PlaidLinkPropTypes extends PlaidLinkOptions {
+// Either the publicKey or the token field must be configured
+export type PlaidLinkOptions =
+  CommonPlaidLinkOptions & {
+    // The public_key associated with your account; available from
+    // the Plaid dashboard (https://dashboard.plaid.com)
+    publicKey: string;
+    token?: string;
+  } |
+  CommonPlaidLinkOptions & {
+    // Specify an item add token to launch link in normal mode.
+    // 
+    // Specify an existing user's public token to launch Link in update mode.
+    // This will cause Link to open directly to the authentication step for
+    // that user's institution.
+    token: string;
+  };
+
+export type PlaidLinkPropTypes = PlaidLinkOptions & {
   children: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
-}
+};
 
 export interface Plaid {
   open: Function;
   exit: Function;
   create: Function;
+  destroy: Function;
 }
 
 declare global {
