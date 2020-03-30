@@ -9,6 +9,7 @@ export interface PlaidFactory {
 interface FactoryInternalState {
   plaid: Plaid | null;
   open: boolean;
+  onExitCallback: Function | null,
 }
 
 const renameKeyInObject = (
@@ -28,6 +29,7 @@ export const createPlaid = (options: PlaidLinkOptions) => {
   const state: FactoryInternalState = {
     plaid: null,
     open: false,
+    onExitCallback: null,
   };
 
   // If Plaid is not available, throw an Error
@@ -35,21 +37,31 @@ export const createPlaid = (options: PlaidLinkOptions) => {
     throw new Error('Plaid not loaded');
   }
 
-  const config = renameKeyInObject(options, 'publicKey', 'key');
-  state.plaid = window.Plaid.create(config);
+  const config = renameKeyInObject(options, 'publicKey', 'key') as PlaidLinkOptions;
+
+  state.plaid = window.Plaid.create({
+    ...config,
+    onExit: (...params: any) => {
+      config.onExit && config.onExit(...params);
+      state.onExitCallback && state.onExitCallback();
+    },
+  });
 
   const open = () => {
     if (!state.plaid) {
       return;
     }
     state.open = true;
+    state.onExitCallback = null;
     state.plaid.open();
   };
 
-  const exit = (exitOptions: any) => {
+  const exit = (exitOptions: any, callback: Function) => {
     if (!state.open || !state.plaid) {
+      callback && callback();
       return;
     }
+    state.onExitCallback = callback;
     state.plaid.exit(exitOptions);
     if (exitOptions && exitOptions.force) {
       state.open = false;
@@ -57,21 +69,12 @@ export const createPlaid = (options: PlaidLinkOptions) => {
   };
 
   const destroy = () => {
-    const wasOpen = state.open;
-    exit({ force: true });
-    const cleanup = () => {
-      if (state.plaid) {
-        // Removes the iframe from the DOM
-        state.plaid.destroy();
-        state.plaid = null;
-      }
-    };
-    // If was open give Plaid some time to finish before killing iframe.
-    if (wasOpen && state.plaid) {
-      setTimeout(cleanup, 1000);
-    } else {
-      cleanup();
+    if (!state.plaid) {
+      return;
     }
+
+    state.plaid.destroy();
+    state.plaid = null;
   };
 
   return {
