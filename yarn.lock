@@ -9104,11 +9104,6 @@ react-inspector@^4.0.0:
     is-dom "^1.0.9"
     prop-types "^15.6.1"
 
-react-is-mounted-hook@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/react-is-mounted-hook/-/react-is-mounted-hook-1.0.3.tgz#297e3ccc9f3c5eb2e3a867576e1c9e5c59c3d39e"
-  integrity sha512-YCCYcTVYMPfTi6WhWIwM9EYBcpHoivjjkE90O5ScsE9wXSbeXGZvLDMGt4mdSNcWshhc8JD0AzgBmsleCSdSFA==
-
 react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4:
   version "16.13.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.0.tgz#0f37c3613c34fe6b37cd7f763a0d6293ab15c527"
@@ -9140,12 +9135,10 @@ react-popper@^1.3.6:
     typed-styles "^0.0.7"
     warning "^4.0.2"
 
-react-script-hook@^1.0.15:
-  version "1.0.15"
-  resolved "https://registry.yarnpkg.com/react-script-hook/-/react-script-hook-1.0.15.tgz#42f02bd68b6ac5718a454ec7b650387920332560"
-  integrity sha512-wQLXuz9XiRqgL6An9khL/zNV73AzxLx+oJi4G3agwxlEiCDqRzailKmO9sh+QrTXWpdVZXtfR5P+A0bY1aeufw==
-  dependencies:
-    react-is-mounted-hook "^1.0.3"
+react-script-hook@1.0.17:
+  version "1.0.17"
+  resolved "https://npm.plaid.com/r/react-script-hook/_attachments/react-script-hook-1.0.17.tgz#9c3c3bd196d677d48838ac09134c912d555c67a9"
+  integrity sha512-maLLOqAfHcbcQPwDo9wuqdCzHSbyL/uDhULtb7Yrvh8IrbNN24LRXluHnti8Y+bk0LNn3s15esl3wDVeCMjbIg==
 
 react-select@^3.0.8:
   version "3.0.8"
