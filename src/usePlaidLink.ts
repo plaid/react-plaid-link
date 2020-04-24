@@ -16,7 +16,7 @@ const noop = () => {};
  * This will destroy the Plaid UI on un-mounting so it's up to you to be
  * graceful to the user.
  *
- * A new Plaid instance is created every time the individual options change.
+ * A new Plaid instance is created every time the token and products options change.
  * It's up to you to prevent unnecessary re-creations on re-render.
  */
 export const usePlaidLink = (options: PlaidLinkOptions) => {
