@@ -135,6 +135,7 @@ You'll need npm publishing rights for this package for your npm user.
 npm version <version specifier>
 git push origin head:<your branch> 
 # create a PR to ensure everyone's happy with the version
+# < WAIT FOR APPROVAL > 
 git push --tags origin <your new tag>
 # this is important - ensure you have the latest version's dependencies
 npm install
@@ -142,4 +143,4 @@ make build
 npm publish --registry=https://registry.npmjs.org
 ```
 
-Read [semver](https://semver.org/) to determine what type of version bump to use.
+Read [semver](https://semver.org/) to determine what type of version bump to use. You can use the prerelease versions - e.g `npm version preminor --preid alpha` - to safely release preproduction versions.
