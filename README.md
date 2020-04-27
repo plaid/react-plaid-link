@@ -126,3 +126,20 @@ interface PlaidLinkOptions {
 ## Typescript support
 
 Typescript definitions for `react-plaid-link` are built into the npm packge.
+
+## Publishing new versions
+
+You'll need npm publishing rights for this package for your npm user.
+
+```
+npm version <version specifier>
+git push origin head:<your branch> 
+# create a PR to ensure everyone's happy with the version
+git push --tags origin <your new tag>
+# this is important - ensure you have the latest version's dependencies
+npm install
+make build
+npm publish --registry=https://registry.npmjs.org
+```
+
+Read [semver](https://semver.org/) to determine what type of version bump to use.
