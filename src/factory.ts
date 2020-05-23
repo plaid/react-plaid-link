@@ -51,13 +51,15 @@ export const createPlaid = (options: PlaidLinkOptions) => {
     },
   });
 
-  const open = () => {
+  // Depending on settings configured, some use cases might support open method to take in some arugments
+  // Ex. Passing institution_type to open institution directly
+  const open = (...args: any[]) => {
     if (!state.plaid) {
       return;
     }
     state.open = true;
     state.onExitCallback = null;
-    state.plaid.open();
+    state.plaid.open(...args);
   };
 
   const exit = (exitOptions: any, callback: Function) => {
