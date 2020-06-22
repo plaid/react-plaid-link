@@ -2,7 +2,7 @@ import React from 'react';
 
 interface CommonPlaidLinkOptions {
   // Displayed once a user has successfully linked their account
-  clientName?: string;
+  clientName: string;
   // The Plaid API environment on which to create user accounts.
   env?: string;
   // The Plaid products you wish to use, an array containing some of connect,
