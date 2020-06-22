@@ -2,12 +2,12 @@ import React from 'react';
 
 interface CommonPlaidLinkOptions {
   // Displayed once a user has successfully linked their account
-  clientName: string;
+  clientName?: string;
   // The Plaid API environment on which to create user accounts.
-  env: string;
+  env?: string;
   // The Plaid products you wish to use, an array containing some of connect,
   // auth, identity, income, transactions, assets, liabilities
-  product: Array<string>;
+  product?: Array<string>;
   // A function that is called when a user has successfully connecter an Item.
   // The function should expect two arguments, the public_key and a metadata object
   onSuccess: Function;
