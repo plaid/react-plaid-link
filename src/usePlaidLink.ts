@@ -21,7 +21,7 @@ const noop = () => {};
  */
 export const usePlaidLink = (options: PlaidLinkOptions) => {
   // Asynchronously load the plaid/link/stable url into the DOM
-  const [loading, error] = useScript({ src: PLAID_LINK_STABLE_URL });
+  const [loading, error] = useScript({ src: PLAID_LINK_STABLE_URL, checkForExisting: true });
 
   // internal state
   const [plaid, setPlaid] = useState<PlaidFactory | null>(null);
