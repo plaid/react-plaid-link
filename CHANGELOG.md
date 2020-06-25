@@ -1,5 +1,23 @@
 # Changelog
 
+## 2.2.3
+
+- (Internal) Bump websocket-extensions from 0.1.3 to 0.1.4 (#114)
+
+## 2.2.2
+
+- Ensure Plaid link-initialize.js is embedded only once (#109)
+- Config `product` prop updates should refresh instance on change (#104)
+
+## 2.2.1
+
+- (Internal) Bump yarn.lock dependencies for react-script-hook version bump (#99)
+
+## 2.2.0
+
+- Pull in version 1.0.17 of react-script-hook (#97)
+  - Fix race condition between script load and rerenders ([react-script-hook#10](https://github.com/hupe1980/react-script-hook/pull/10))
+
 ## 2.1.0
 
 - Allows public_key to be optional if a token is provided (#95)
