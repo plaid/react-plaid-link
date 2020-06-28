@@ -56,7 +56,6 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
 
     setPlaid(next);
 
-
     // destroy the Plaid iframe factory
     return () => next.exit({ force: true }, () => next.destroy());
   }, [loading, error, options.token, products]);
