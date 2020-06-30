@@ -12,7 +12,6 @@ interface CommonPlaidLinkOptions {
   onLoad?: Function;
   // A callback that is called during a user's flow in Link.
   onEvent?: Function;
-  oauthStateId?: string;
 }
 
 export type PlaidLinkOptionsWithPublicKey = (CommonPlaidLinkOptions & {
@@ -44,6 +43,7 @@ export type PlaidLinkOptionsWithPublicKey = (CommonPlaidLinkOptions & {
   accountSubtypes?: { [key: string]: Array<string> };
   oauthNonce?: string;
   oauthRedirectUri?: string;
+  oauthStateId?: string;
   paymentToken?: string;
 });
 
