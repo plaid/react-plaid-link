@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import useScript from 'react-script-hook';
 
 import { createPlaid, PlaidFactory } from './factory';
-import { PlaidLinkOptions } from './types';
+import { PlaidLinkOptions, PlaidLinkOptionsWithPublicKey } from './types';
 
 const PLAID_LINK_STABLE_URL =
   'https://cdn.plaid.com/link/v2/stable/link-initialize.js';
@@ -26,6 +26,7 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
   // internal state
   const [plaid, setPlaid] = useState<PlaidFactory | null>(null);
   const [iframeLoaded, setIframeLoaded] = useState(false);
+  const products = ((options as PlaidLinkOptionsWithPublicKey).product || []).slice().sort().join(',');
 
   useEffect(() => {
     // If the link.js script is still loading, return prematurely
@@ -57,7 +58,7 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
 
     // destroy the Plaid iframe factory
     return () => next.exit({ force: true }, () => next.destroy());
-    }, [loading, error, options.token, (options.product || []).slice().sort().join(',')]);
+  }, [loading, error, options.token, products]);
 
   return {
     error,
