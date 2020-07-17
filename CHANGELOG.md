@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.0
+
+- Add Link token options to initialization and move onEvent types to their own interface. (#116)
+
 ## 2.2.3
 
 - (Internal) Bump websocket-extensions from 0.1.3 to 0.1.4 (#114)
