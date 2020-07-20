@@ -45,10 +45,7 @@ const App = () => {
   }, []);
 
   const config = {
-    clientName: 'Your app name',
-    env: 'sandbox',
-    product: ['auth', 'transactions'],
-    publicKey: '<YOUR_PLAID_PUBLIC_KEY>',
+    token: '<GENERATED_LINK_TOKEN>',
     onSuccess,
     // ...
   };
@@ -77,10 +74,7 @@ const App = props => {
 
   return (
     <PlaidLink
-      clientName="Your app name"
-      env="sandbox"
-      product={['auth', 'transactions']}
-      publicKey="<YOUR_PLAID_PUBLIC_KEY>"
+      token="<GENERATED_LINK_TOKEN>"
       onSuccess={onSuccess}
       {...}
     >
@@ -94,33 +88,20 @@ export default App;
 #### All available Link configuration options
 
 Please refer to the [official Plaid Link docs](https://plaid.com/docs/#creating-items-with-plaid-link) for
-a more holistic understanding of the various Link options.
+a more holistic understanding of the various Link options and the [link_token](https://plaid.com/docs/#create-link-token).
 
 ```ts
 // src/types/index.ts
-interface PlaidLinkOptions {
-  clientName: string;
-  env: string;
-  publicKey: string;
-  product: Array<string>;
+interface PlaidLinkOptionsWithLinkToken = {
+  token: string;
   onSuccess: Function;
-  // optional
   onExit?: Function;
   onLoad?: Function;
   onEvent?: Function;
-  accountSubtypes?: { [key: string]: Array<string> };
-  countryCodes?: Array<string>;
-  language?: string;
-  linkCustomizationName?: string;
-  oauthNonce?: string;
-  oauthRedirectUri?: string;
-  oauthStateId?: string;
-  paymentToken?: string;
-  token?: string;
-  userEmailAddress?: string;
-  userLegalName?: string;
-  webhook?: string;
+  receivedRedirectUri?: string;
 }
+
+type PlaidLinkOptions = PlaidLinkOptionsWithLinkToken;
 ```
 
 ## Typescript support
