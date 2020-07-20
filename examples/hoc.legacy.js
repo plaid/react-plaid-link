@@ -14,6 +14,10 @@ const App = props => {
       <PlaidLink
         className="CustomButton"
         style={{ padding: '20px', fontSize: '16px', cursor: 'pointer' }}
+        clientName={props.clientName || 'Your app name'}
+        env={props.env || 'sandbox'}
+        product={props.product || ['auth', 'transactions']}
+        publicKey={props.publicKey || '...'}
         token={props.token}
         onExit={onExit}
         onSuccess={onSuccess}

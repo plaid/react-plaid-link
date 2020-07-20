@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  stories: ['./example.stories.js'],
+  stories: ['./example.stories.js', './example.legacy.stories.js'],
   addons: [
     {
       name: '@storybook/preset-typescript',

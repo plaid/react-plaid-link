@@ -23,33 +23,51 @@ const ExampleComponent = ({ file, ...props }) => {
   return example;
 };
 
-const stories = storiesOf('react-plaid-link', module);
+const stories = storiesOf('react-plaid-link-legacy', module);
 stories.addDecorator(withKnobs);
 
 stories.add('hooks', () => {
   const props = {
+    clientName: text('clientName', 'YOUR_CLIENT_NAME'),
+    env: select('env', ['sandbox', 'development', 'production'], 'sandbox'),
+    publicKey: text('publicKey', '<SANDBOX_PUBLIC_KEY>'),
     token: text('token', '<LINK_TOKEN>'),
+    product: options(
+      'product',
+      { auth: 'auth', transactions: 'transactions' },
+      ['auth', 'transactions'],
+      { display: 'multi-select' }
+    ),
   };
 
   button('Save Link configuration', reRender);
 
   return (
     <div key={counter}>
-      <ExampleComponent file="hooks" {...props} />
+      <ExampleComponent file="hooks.legacy" {...props} />
     </div>
   );
 });
 
 stories.add('HOC', () => {
   const props = {
+    clientName: text('clientName', 'YOUR_CLIENT_NAME'),
+    env: select('env', ['sandbox', 'development', 'production'], 'sandbox'),
+    publicKey: text('publicKey', '<SANDBOX_PUBLIC_KEY>'),
     token: text('token', '<LINK_TOKEN>'),
+    product: options(
+      'product',
+      { auth: 'auth', transactions: 'transactions' },
+      ['auth', 'transactions'],
+      { display: 'multi-select' }
+    ),
   };
 
   button('Save Link configuration', reRender);
 
   return (
     <div key={counter}>
-      <ExampleComponent file="hoc" {...props} />
+      <ExampleComponent file="hoc.legacy" {...props} />
     </div>
   );
 });

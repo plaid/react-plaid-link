@@ -19,12 +19,18 @@ const App = props => {
   );
 
   const config = {
+    clientName: props.clientName || '',
+    env: props.env || 'sandbox',
+    product: props.product || ['auth'],
+    publicKey: props.publicKey,
     token: props.token,
     onSuccess,
     onEvent,
     onExit,
     // –– optional parameters
-    // receivedRedirectUri: props.receivedRedirectUri || null,
+    // webhook: props.webhook || null,
+    // countryCodes: props.countryCodes || ['US'],
+    // language: props.language || 'en',
     // ...
   };
 
