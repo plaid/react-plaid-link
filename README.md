@@ -107,3 +107,13 @@ type PlaidLinkOptions = PlaidLinkOptionsWithLinkToken;
 ## Typescript support
 
 Typescript definitions for `react-plaid-link` are built into the npm packge.
+
+## Publishing
+
+You'll need NPM publishing rights for your NPM user. Then you can run:
+
+```
+make release-(patch|minor|major)
+```
+
+Read [semver](https://semver.org/) to determine what type of version bump to use.
