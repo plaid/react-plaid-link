@@ -40,8 +40,8 @@ import React, { useCallback } from 'react';
 import { usePlaidLink } from 'react-plaid-link';
 
 const App = () => {
-  const onSuccess = useCallback((token, metadata) => {
-    // send token to server
+  const onSuccess = useCallback((publicToken, metadata) => {
+    // send public token to server
   }, []);
 
   const config = {
@@ -68,8 +68,8 @@ import React from 'react';
 import { PlaidLink } from 'react-plaid-link';
 
 const App = props => {
-  const onSuccess = (token, metadata) => {
-    // send token to server
+  const onSuccess = (publicToken, metadata) => {
+    // send public token to server
   };
 
   return (
