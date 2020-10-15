@@ -46,6 +46,7 @@ export const createPlaid = (options: PlaidLinkOptions) => {
   state.plaid = window.Plaid.create({
     ...config,
     onExit: (...params: any) => {
+      state.open = false;
       config.onExit && config.onExit(...params);
       state.onExitCallback && state.onExitCallback();
     },
