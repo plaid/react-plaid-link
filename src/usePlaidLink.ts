@@ -34,7 +34,7 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
       return;
     }
 
-    if (error || !window.Plaid) {
+    if (error) {
       // eslint-disable-next-line no-console
       console.error('Error loading Plaid', error);
       return;
