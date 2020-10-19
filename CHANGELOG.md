@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.1.0
+- Ensure Link is destroyed correctly (#146)
+- Export `PlaidLinkOptions` typescript types (#134)
+- (Internal) Bump node-fetch from 2.6.0 to 2.6.1 (#136)
+- (Internal) Bump elliptic from 6.5.2 to 6.5.3 (#127)
+- (Internal) Bump lodash from 4.17.15 to 4.17.19 (#124)
+
 ## 3.0.0
 
 - Add Link token options to initialization and move onEvent types to their own interface. (#116)
