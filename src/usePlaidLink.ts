@@ -62,7 +62,7 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
 
   return {
     error,
-    ready: !loading || iframeLoaded,
+    ready: (!loading || iframeLoaded) && !!plaid,
     exit: plaid ? plaid.exit : noop,
     open: plaid ? plaid.open : noop,
   };
