@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.1.1
+- Fix a bug with the usePlaidLink `ready` state (#163)
+
 ## 3.1.0
 - Ensure Link is destroyed correctly (#146)
 - Export `PlaidLinkOptions` typescript types (#134)
