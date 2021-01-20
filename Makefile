@@ -9,6 +9,7 @@ NPM_ENV_VARS = npm_config_registry=https://registry.npmjs.org
 NPM = $(NPM_ENV_VARS) npm
 XYZ = $(NPM_ENV_VARS) node_modules/.bin/xyz --repo git@github.com:plaid/react-plaid-link.git
 STORYBOOK = node_modules/.bin/start-storybook
+RELEASE_BRANCH = release
 
 SRC_FILES  = $(shell find src -name '*.js|*.tsx|*.ts' | sort)
 
@@ -65,4 +66,4 @@ storybook-deploy:
 
 .PHONY: release-major release-minor release-patch
 release-major release-minor release-patch: build
-	@$(XYZ) --increment $(@:release-%=%)
+	@$(XYZ) --increment $(@:release-%=%) --branch $(RELEASE_BRANCH)
