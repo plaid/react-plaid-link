@@ -65,4 +65,4 @@ storybook-deploy:
 
 .PHONY: release-major release-minor release-patch
 release-major release-minor release-patch: build
-	@$(XYZ) --increment $(@:release-%=%)
+	@$(XYZ) --increment $(@:release-%=%) branch= $(branch) --dry-run
