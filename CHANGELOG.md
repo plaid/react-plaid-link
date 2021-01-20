@@ -1,7 +1,7 @@
 # Changelog
 
-## 3.1.1
-- Fix a bug with the usePlaidLink `ready` state (#163)
+## 3.2.0
+- Fix an issue with the usePlaidLink `ready` state (#163)
 
 ## 3.1.0
 - Ensure Link is destroyed correctly (#146)
