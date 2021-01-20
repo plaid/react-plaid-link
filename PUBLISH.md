@@ -13,8 +13,7 @@ git reset --hard origin/master
 git push origin release
 ```
 
-
-You'll need NPM publishing rights for your NPM user. Then you can run:
+3. Release from the `release` branch.
 
 ```
 make release-(patch|minor|major)
