@@ -1,6 +1,11 @@
 # Changelog
 
+## 3.1.1
+
+- Allow React 17 in `peerDependencies` (#171)
+
 ## 3.1.0
+
 - Ensure Link is destroyed correctly (#146)
 - Export `PlaidLinkOptions` typescript types (#134)
 - (Internal) Bump node-fetch from 2.6.0 to 2.6.1 (#136)
