@@ -19,3 +19,26 @@ make release-(patch|minor|major)
 ```
 
 5. Merge the branch
+
+#### **Manually publish to NPM**
+
+If `make release-*` from above errors out with an authentication issue,
+you may need to `npm login` or otherwise manually set up your `~/.npmrc` file to
+make sure you have access to publish to npm.
+
+Once you have done that, the following command will publish the latest version
+(already bumped and pushed in step 4) to the NPM registry:
+
+1. Publish to npm manually
+
+```bash
+npm --registry=https://registry.npmjs.com publish
+```
+
+2. Push tags manually
+
+```bash
+git push --follow-tags
+```
+
+Also, under [github releases page](https://github.com/plaid/react-plaid-link/releases), draft a new release corresponding to the tag of the latest version.
