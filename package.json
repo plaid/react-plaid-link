@@ -3,11 +3,7 @@
   "version": "3.2.0",
   "description": "A React component for Plaid Link",
   "registry": "https://registry.npmjs.org",
-  "files": [
-    "dist",
-    "src",
-    "LICENSE"
-  ],
+  "files": ["dist", "src", "LICENSE"],
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "jsnext:main": "dist/index.esm.js",
@@ -18,11 +14,7 @@
     "url": "https://github.com/plaid/react-plaid-link.git"
   },
   "types": "dist/index.d.ts",
-  "keywords": [
-    "react",
-    "react-component",
-    "plaid"
-  ],
+  "keywords": ["react", "react-component", "plaid"],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/plaid/react-plaid-link/issues"
@@ -52,10 +44,10 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.14.3",
+    "@babel/plugin-proposal-class-properties": "^7.14.3",
     "@babel/core": "^7.14.3",
-    "@babel/plugin-proposal-class-properties": "^7.13.0",
-    "@babel/preset-env": "^7.14.2",
-    "@babel/preset-react": "^7.13.13",
+    "@babel/preset-react": "^7.14.3",
+    "@babel/preset-env": "^7.14.3",
     "@storybook/addon-actions": "^5.3.17",
     "@storybook/addon-console": "^1.2.1",
     "@storybook/addon-knobs": "^5.3.17",
@@ -98,8 +90,5 @@
     "typescript": "^3.8.3",
     "xyz": "0.5.x"
   },
-  "tags": [
-    "react",
-    "plaid"
-  ]
+  "tags": ["react", "plaid"]
 }
