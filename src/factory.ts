@@ -37,6 +37,10 @@ export const createPlaid = (options: PlaidLinkOptions) => {
     throw new Error('Plaid not loaded');
   }
 
+  // Pass jss nonce if it's set
+  const nonceNode = document.querySelector('meta[property="csp-nonce"]')
+  options.nonce = nonceNode ? nonceNode.getAttribute('content') : null
+
   const config = renameKeyInObject(
     options,
     'publicKey',

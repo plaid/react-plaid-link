@@ -12,6 +12,8 @@ interface CommonPlaidLinkOptions {
   onLoad?: Function;
   // A callback that is called during a user's flow in Link.
   onEvent?: Function;
+  // jss nonce setting from the page if the user has set it.
+  nonce?: string | null
 }
 
 export type PlaidLinkOptionsWithPublicKey = (CommonPlaidLinkOptions & {
