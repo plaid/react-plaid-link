@@ -1,9 +1,9 @@
 import { PlaidLinkOptions, Plaid } from './types';
 
 export interface PlaidFactory {
-  open: Function;
-  exit: Function;
-  destroy: Function;
+  open: () => void;
+  exit: (force?: boolean) => void;
+  destroy: () => void;
 }
 
 interface FactoryInternalState {

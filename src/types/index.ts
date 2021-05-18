@@ -1,20 +1,81 @@
 import React from 'react';
 
+export interface PlaidAccount {
+  id: string;
+  name: string;
+  mask: string;
+  type: string;
+  subtype: string;
+  verification_status: string;
+}
+
+export interface PlaidInstitution {
+  name: string;
+  institution_id: string;
+}
+
+export interface PlaidLinkError {
+  error_type: string;
+  error_code: string;
+  error_message: string;
+  display_message: string;
+}
+
+export interface PlaidLinkOnSuccessMetadata {
+  institution: PlaidInstitution;
+  accounts: Array<PlaidAccount>;
+  link_session_id: string;
+}
+
+export interface PlaidLinkOnExitMetadata {
+  institution: null | PlaidInstitution;
+  // see possible values for status at https://plaid.com/docs/link/web/#link-web-onexit-status
+  status: null | string;
+  link_session_id: string;
+  request_id: string;
+}
+
+export interface PlaidLinkOnEventMetadata {
+  error_type: null | string;
+  error_code: null | string;
+  error_message: null | string;
+  exit_status: null | string;
+  institution_id: null | string;
+  institution_name: null | string;
+  institution_search_query: null | string;
+  mfa_type: null | string;
+  // see possible values for view_name at https://plaid.com/docs/link/web/#link-web-onevent-view-name
+  view_name: null | string;
+  // see possible values for selection at https://plaid.com/docs/link/web/#link-web-onevent-selection
+  selection: null | string;
+  // ISO 8601 format timestamp
+  timestamp: string;
+  link_session_id: string;
+  request_id: string;
+}
+
 interface CommonPlaidLinkOptions {
   // A function that is called when a user has successfully connecter an Item.
   // The function should expect two arguments, the public_key and a metadata object
-  onSuccess: Function;
+  onSuccess: (
+    public_token: string,
+    metadata: PlaidLinkOnSuccessMetadata
+  ) => void;
   // A callback that is called when a user has specifically exited Link flow
-  onExit?: Function;
+  onExit?: (
+    error: null | PlaidLinkError,
+    metadata: PlaidLinkOnExitMetadata
+  ) => void;
   // A callback that is called when the Link module has finished loading.
   // Calls to plaidLinkHandler.open() prior to the onLoad callback will be
   // delayed until the module is fully loaded.
-  onLoad?: Function;
+  onLoad?: () => void;
   // A callback that is called during a user's flow in Link.
-  onEvent?: Function;
+  // See all values for eventName here https://plaid.com/docs/link/web/#link-web-onevent-eventName
+  onEvent?: (eventName: string, metadata: PlaidLinkOnEventMetadata) => void;
 }
 
-export type PlaidLinkOptionsWithPublicKey = (CommonPlaidLinkOptions & {
+export type PlaidLinkOptionsWithPublicKey = CommonPlaidLinkOptions & {
   // The public_key associated with your account; available from
   // the Plaid dashboard (https://dashboard.plaid.com)
   publicKey: string;
@@ -45,21 +106,22 @@ export type PlaidLinkOptionsWithPublicKey = (CommonPlaidLinkOptions & {
   oauthRedirectUri?: string;
   oauthStateId?: string;
   paymentToken?: string;
-});
+};
 
-export type PlaidLinkOptionsWithLinkToken = (CommonPlaidLinkOptions & {
+export type PlaidLinkOptionsWithLinkToken = CommonPlaidLinkOptions & {
   // Provide a link_token associated with your account. Create one
   // using the /link/token/create endpoint.
   token: string;
   // receivedRedirectUri is required on the second-initialization of link when using Link
   // with a redirect_uri to support OAuth flows.
   receivedRedirectUri?: string;
-});
+};
 
 // Either the publicKey or the token field must be configured. The publicKey
 // is deprecated so prefer to initialize Link with a Link Token instead.
-export type PlaidLinkOptions = 
-  PlaidLinkOptionsWithPublicKey | PlaidLinkOptionsWithLinkToken;
+export type PlaidLinkOptions =
+  | PlaidLinkOptionsWithPublicKey
+  | PlaidLinkOptionsWithLinkToken;
 
 export type PlaidLinkPropTypes = PlaidLinkOptions & {
   children: React.ReactNode;
@@ -68,10 +130,10 @@ export type PlaidLinkPropTypes = PlaidLinkOptions & {
 };
 
 export interface Plaid {
-  open: Function;
-  exit: Function;
-  create: Function;
-  destroy: Function;
+  open: () => void;
+  exit: (force?: boolean) => void;
+  create: (config: PlaidLinkOptions) => void;
+  destroy: () => void;
 }
 
 declare global {

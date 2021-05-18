@@ -33,48 +33,129 @@ checkout:
 
 ### Using React hooks
 
-This is the new and preferred approach for integrating with Plaid Link in React.
+This is the preferred approach for integrating with Plaid Link in React.
+
+Note: `link_token` cannot be null when passed to `usePlaidLink`. Generate your link_token
+outside of the component where the hook is initialized.
 
 ```jsx
-import React, { useCallback } from 'react';
-import { usePlaidLink } from 'react-plaid-link';
+import React, { useCallback, useEffect } from "react";
+import { usePlaidLink } from "react-plaid-link";
 
-const App = () => {
-  const onSuccess = useCallback((token, metadata) => {
-    // send token to server
+const LinkButton = ({ token }) => {
+  const onSuccess = useCallback((public_token, metadata) => {
+    // send public_token to server
   }, []);
 
   const config = {
-    token: '<GENERATED_LINK_TOKEN>',
+    token,
     onSuccess,
-    // ...
+    // onExit
+    // onEvent
   };
 
   const { open, ready, error } = usePlaidLink(config);
 
   return (
-    <MyButton onClick={() => open()} disabled={!ready}>
+    <button onClick={() => open()} disabled={!ready}>
       Connect a bank account
-    </MyButton>
+    </button>
   );
 };
+
+const App = () => {
+  const [token, setToken] = useState(null);
+
+  // generate a link_token
+  React.useEffect(() => {
+    async function createLinkToken() {
+      let response = await fetch("/api/create_link_token");
+      response = await response.json();
+      setToken(response.data.link_token);
+    }
+    createLinkToken()
+  }, []);
+
+  // only initialize Link once our token exists
+  return token == null ? (
+    <div className="loader"></div>
+  ) : (
+    <LinkButton token={token} />
+  );
+};
+
 export default App;
 ```
 
-### Using a React component
+#### Opening Link without a button click
+
+This can be helpful for handling OAuth redirects or simply if you want Link to open immediately when your page or component renders.
 
 ```jsx
-import React from 'react';
-import { PlaidLink } from 'react-plaid-link';
+import React, { useCallback, useEffect } from "react";
+import { usePlaidLink } from "react-plaid-link";
 
-const App = props => {
-  const onSuccess = (token, metadata) => {
-    // send token to server
+const OpenLink = ({ token }) => {
+  const onSuccess = useCallback((public_token, metadata) => {
+    // send public_token to server
+  }, []);
+
+  const config = {
+    // for OAuth redirects, token must be the same token used
+    // to open Link before the redirect
+    token,
+    onSuccess,
+    // receivedRedirectUri,
+    // onExit
+    // onEvent
   };
 
-  return (
+  const { open, ready, error } = usePlaidLink(config);
+
+  // this opens link as soon as it's ready
+  useEffect(() => {
+    if (!ready) {
+      return;
+    }
+    open();
+  }, [ready, open]);
+
+  // don't render anything, just open Link
+  return <></>;
+};
+
+export default OpenLink;
+```
+
+
+### Using the pre-built component instead of the usePlaidLink hook
+
+```jsx
+import React, { useCallback, useEffect } from "react";
+import { PlaidLink } from "react-plaid-link";
+
+const App = () => {
+  const [token, setToken] = useState(null);
+
+  // generate a link_token
+  React.useEffect(() => {
+    async function createLinkToken() {
+      let response = await fetch("/api/create_link_token");
+      response = await response.json();
+      setToken(response.data.link_token);
+    }
+    createLinkToken()
+  }, []);
+
+  // The pre-built PlaidLink component uses the usePlaidLink hook under the hood.
+  // It renders a styled button element and accepts a `className` and/or `style` prop
+  // to override the default styles. It accepts any Link config option as a prop such
+  // as receivedRedirectUri, onEvent, onExit, onLoad, etc.
+  return token == null ? (
+    <div className="loader"></div>
+  ) : (
     <PlaidLink
-      token="<GENERATED_LINK_TOKEN>"
+      token={token}
       onSuccess={onSuccess}
       {...}
     >
@@ -82,13 +163,14 @@ const App = props => {
     </PlaidLink>
   );
 };
+
 export default App;
 ```
 
 #### All available Link configuration options
 
-Please refer to the [official Plaid Link docs](https://plaid.com/docs/#creating-items-with-plaid-link) for
-a more holistic understanding of the various Link options and the [link_token](https://plaid.com/docs/#create-link-token).
+Please refer to the [official Plaid Link docs](https://plaid.com/docs/link) for
+a more holistic understanding of the various Link options and the [link_token](https://plaid.com/docs/api/tokens/#linktokencreate).
 
 ```ts
 // src/types/index.ts
