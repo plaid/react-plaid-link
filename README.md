@@ -74,7 +74,7 @@ const LinkButton: FunctionComponent<Props> = ({ token }) => {
   );
 };
 
-const App = () => {
+const App: FunctionComponent = () => {
   const [token, setToken] = useState<string | null>(null);
 
   // generate a link_token
