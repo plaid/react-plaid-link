@@ -39,15 +39,26 @@ This is the preferred approach for integrating with Plaid Link in React.
 outside of the component where the hook is initialized.
 
 ```tsx
-import React, { useCallback, useEffect } from "react";
-import { usePlaidLink } from "react-plaid-link";
+import React, { useCallback, useState, FunctionComponent } from "react";
+import {
+  usePlaidLink,
+  PlaidLinkOptions,
+  PlaidLinkOnSuccess,
+} from "react-plaid-link";
 
-const LinkButton: React.FC<{token: string}> = ({ token }) => {
-  const onSuccess = useCallback<CommonPlaidLinkOptions['onSuccess']>((public_token, metadata) => {
-    // send public_token to server
-  }, []);
+interface Props {
+  token: string;
+}
 
-  const config = {
+const LinkButton: FunctionComponent<Props> = ({ token }) => {
+  const onSuccess = useCallback<PlaidLinkOnSuccess>(
+    (public_token, metadata) => {
+      // send public_token to server
+    },
+    []
+  );
+
+  const config: PlaidLinkOptions = {
     token,
     onSuccess,
     // onExit
@@ -64,16 +75,16 @@ const LinkButton: React.FC<{token: string}> = ({ token }) => {
 };
 
 const App = () => {
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState<string | null>(null);
 
   // generate a link_token
   React.useEffect(() => {
     async function createLinkToken() {
       let response = await fetch("/api/create_link_token");
-      response = await response.json();
-      setToken(response.data.link_token);
+      const { link_token } = await response.json();
+      setToken(link_token);
     }
-    createLinkToken()
+    createLinkToken();
   }, []);
 
   // only initialize Link once our token exists
@@ -92,20 +103,31 @@ export default App;
 This can be helpful for handling OAuth redirects or simply if you want Link to open immediately when your page or component renders.
 
 ```tsx
-import React, { useCallback, useEffect } from "react";
-import { usePlaidLink } from "react-plaid-link";
+import React, { useCallback, useEffect, FunctionComponent } from "react";
+import {
+  usePlaidLink,
+  PlaidLinkOptions,
+  PlaidLinkOnSuccess,
+} from "react-plaid-link";
 
-const OpenLink = ({ token }) => {
-  const onSuccess = useCallback((public_token, metadata) => {
-    // send public_token to server
-  }, []);
+interface Props {
+  token: string;
+}
 
-  const config: PlaidLinkOptionsWithPublicKey  = {
-    // for OAuth redirects, token must be the same token used
-    // to open Link before the redirect
+const OpenLink: FunctionComponent<Props> = ({ token }) => {
+  const onSuccess = useCallback<PlaidLinkOnSuccess>(
+    (public_token, metadata) => {
+      // send public_token to server
+    },
+    []
+  );
+
+  const config: PlaidLinkOptions = {
+    // When re-initializing Link after OAuth redirection, the same
+    // Link token from the first initialization must be used
     token,
     onSuccess,
-    // receivedRedirectUri,
+    // receivedRedirectUri: document.location.href, // required for OAuth
     // onExit
     // onEvent
   };
@@ -130,22 +152,29 @@ export default OpenLink;
 
 ### Using the pre-built component instead of the usePlaidLink hook
 
-```jsx
-import React, { useCallback, useEffect } from "react";
-import { PlaidLink } from "react-plaid-link";
+```tsx
+import React, { useCallback, useState, FunctionComponent } from "react";
+import { PlaidLink, PlaidLinkOnSuccess } from "react-plaid-link";
 
-const App = () => {
+const App: FunctionComponent = () => {
   const [token, setToken] = useState<string | null>(null);
 
   // generate a link_token
   React.useEffect(() => {
     async function createLinkToken() {
       let response = await fetch("/api/create_link_token");
-      response = await response.json();
-      setToken(response.data.link_token);
+      const { link_token } = await response.json();
+      setToken(link_token);
     }
-    createLinkToken()
+    createLinkToken();
   }, []);
+
+  const onSuccess = useCallback<PlaidLinkOnSuccess>(
+    (public_token, metadata) => {
+      // send public_token to server
+    },
+    []
+  );
 
   // The pre-built PlaidLink component uses the usePlaidLink hook under the hood.
   // It renders a styled button element and accepts a `className` and/or `style` prop
@@ -157,7 +186,8 @@ const App = () => {
     <PlaidLink
       token={token}
       onSuccess={onSuccess}
-      {...}
+      // onExit={...}
+      // onEvent={...}
     >
       Connect a bank account
     </PlaidLink>

@@ -54,25 +54,36 @@ export interface PlaidLinkOnEventMetadata {
   request_id: string;
 }
 
+export type PlaidLinkOnSuccess = (
+  public_token: string,
+  metadata: PlaidLinkOnSuccessMetadata
+) => void;
+
+export type PlaidLinkOnExit = (
+  error: null | PlaidLinkError,
+  metadata: PlaidLinkOnExitMetadata
+) => void;
+
+export type PlaidLinkOnEvent = (
+  eventName: string,
+  metadata: PlaidLinkOnEventMetadata
+) => void;
+
+export type PlaidLinkOnLoad = () => void;
+
 interface CommonPlaidLinkOptions {
   // A function that is called when a user has successfully connecter an Item.
   // The function should expect two arguments, the public_key and a metadata object
-  onSuccess: (
-    public_token: string,
-    metadata: PlaidLinkOnSuccessMetadata
-  ) => void;
+  onSuccess: PlaidLinkOnSuccess;
   // A callback that is called when a user has specifically exited Link flow
-  onExit?: (
-    error: null | PlaidLinkError,
-    metadata: PlaidLinkOnExitMetadata
-  ) => void;
+  onExit?: PlaidLinkOnExit;
   // A callback that is called when the Link module has finished loading.
   // Calls to plaidLinkHandler.open() prior to the onLoad callback will be
   // delayed until the module is fully loaded.
-  onLoad?: () => void;
+  onLoad?: PlaidLinkOnLoad;
   // A callback that is called during a user's flow in Link.
   // See all values for eventName here https://plaid.com/docs/link/web/#link-web-onevent-eventName
-  onEvent?: (eventName: string, metadata: PlaidLinkOnEventMetadata) => void;
+  onEvent?: PlaidLinkOnEvent;
 }
 
 export type PlaidLinkOptionsWithPublicKey = CommonPlaidLinkOptions & {
