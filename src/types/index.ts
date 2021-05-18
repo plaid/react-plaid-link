@@ -132,7 +132,7 @@ export type PlaidLinkPropTypes = PlaidLinkOptions & {
 export interface Plaid {
   open: () => void;
   exit: (force?: boolean) => void;
-  create: (config: PlaidLinkOptions) => void;
+  create: (config: PlaidLinkOptions) => Plaid;
   destroy: () => void;
 }
 

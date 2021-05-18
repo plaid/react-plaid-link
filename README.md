@@ -172,16 +172,24 @@ export default App;
 Please refer to the [official Plaid Link docs](https://plaid.com/docs/link) for
 a more holistic understanding of the various Link options and the [link_token](https://plaid.com/docs/api/tokens/#linktokencreate).
 
-See also [src/types/index.ts](https://github.com/plaid/react-plaid-link/blob/master/src/types/index.ts) for types 
+See also [src/types/index.ts](https://github.com/plaid/react-plaid-link/blob/master/src/types/index.ts) for exported types.
 
 ```ts
-// src/types/index.ts
 interface PlaidLinkOptionsWithLinkToken = {
   token: string;
-  onSuccess: Function;
-  onExit?: Function;
-  onLoad?: Function;
-  onEvent?: Function;
+  onSuccess: (
+    public_token: string,
+    metadata: PlaidLinkOnSuccessMetadata
+  ) => void;
+  onExit?: (
+    error: null | PlaidLinkError,
+    metadata: PlaidLinkOnExitMetadata
+  ) => void;
+  onEvent?: (
+    eventName: string,
+    metadata: PlaidLinkOnEventMetadata
+  ) => void;
+  onLoad?: () => void;
   receivedRedirectUri?: string;
 }
 
@@ -190,5 +198,4 @@ type PlaidLinkOptions = PlaidLinkOptionsWithLinkToken;
 
 ## Typescript support
 
-Typescript definitions for `react-plaid-link` are built into the npm packge.
-
+Typescript definitions for `react-plaid-link` are built into the npm package. If you have previously installed `@types/react-plaid-link` before this package had types, please uninstall it in favor of built-in types.
