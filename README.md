@@ -35,7 +35,7 @@ checkout:
 
 This is the preferred approach for integrating with Plaid Link in React.
 
-Note: `link_token` cannot be null when passed to `usePlaidLink`. Generate your link_token
+ℹ️ Note: `link_token` cannot be null when passed to `usePlaidLink`. Generate your link_token
 outside of the component where the hook is initialized.
 
 ```jsx
@@ -77,7 +77,7 @@ const App = () => {
   }, []);
 
   // only initialize Link once our token exists
-  return token == null ? (
+  return token === null ? (
     <div className="loader"></div>
   ) : (
     <LinkButton token={token} />
@@ -151,7 +151,7 @@ const App = () => {
   // It renders a styled button element and accepts a `className` and/or `style` prop
   // to override the default styles. It accepts any Link config option as a prop such
   // as receivedRedirectUri, onEvent, onExit, onLoad, etc.
-  return token == null ? (
+  return token === null ? (
     <div className="loader"></div>
   ) : (
     <PlaidLink
