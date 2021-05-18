@@ -38,12 +38,12 @@ This is the preferred approach for integrating with Plaid Link in React.
 ℹ️ Note: `link_token` cannot be null when passed to `usePlaidLink`. Generate your link_token
 outside of the component where the hook is initialized.
 
-```jsx
+```tsx
 import React, { useCallback, useEffect } from "react";
 import { usePlaidLink } from "react-plaid-link";
 
-const LinkButton = ({ token }) => {
-  const onSuccess = useCallback((public_token, metadata) => {
+const LinkButton: React.FC<{token: string}> = ({ token }) => {
+  const onSuccess = useCallback<CommonPlaidLinkOptions['onSuccess']>((public_token, metadata) => {
     // send public_token to server
   }, []);
 
@@ -91,7 +91,7 @@ export default App;
 
 This can be helpful for handling OAuth redirects or simply if you want Link to open immediately when your page or component renders.
 
-```jsx
+```tsx
 import React, { useCallback, useEffect } from "react";
 import { usePlaidLink } from "react-plaid-link";
 
@@ -100,7 +100,7 @@ const OpenLink = ({ token }) => {
     // send public_token to server
   }, []);
 
-  const config = {
+  const config: PlaidLinkOptionsWithPublicKey  = {
     // for OAuth redirects, token must be the same token used
     // to open Link before the redirect
     token,
@@ -135,7 +135,7 @@ import React, { useCallback, useEffect } from "react";
 import { PlaidLink } from "react-plaid-link";
 
 const App = () => {
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState<string | null>(null);
 
   // generate a link_token
   React.useEffect(() => {
@@ -171,6 +171,8 @@ export default App;
 
 Please refer to the [official Plaid Link docs](https://plaid.com/docs/link) for
 a more holistic understanding of the various Link options and the [link_token](https://plaid.com/docs/api/tokens/#linktokencreate).
+
+See also [src/types/index.ts](https://github.com/plaid/react-plaid-link/blob/master/src/types/index.ts) for types 
 
 ```ts
 // src/types/index.ts
