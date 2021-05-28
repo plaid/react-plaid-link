@@ -22,14 +22,9 @@ yarn add -S react-plaid-link
 Please refer to the [official Plaid Link docs](https://plaid.com/docs/#creating-items-with-plaid-link) for
 a more holistic understanding of the various Link options.
 
-### Examples
+## Examples
 
-Head to the `react-plaid-link` [storybook](https://plaid.github.io/react-plaid-link) to try it out for yourself, or
-checkout:
-
-- [Storybook](https://plaid.github.io/react-plaid-link)
-- [`/examples/hooks.js`](./examples/hooks.js)
-- [`/examples/hoc.js`](./examples/hoc.js)
+Head to the `react-plaid-link` [storybook](https://plaid.github.io/react-plaid-link) to try out a live demo.
 
 ### Using React hooks
 
@@ -50,7 +45,7 @@ interface Props {
   token: string;
 }
 
-const LinkButton: FunctionComponent<Props> = ({ token }) => {
+const PlaidLink: FunctionComponent<Props> = ({ token }) => {
   const onSuccess = useCallback<PlaidLinkOnSuccess>(
     (public_token, metadata) => {
       // send public_token to server
@@ -91,16 +86,18 @@ const App: FunctionComponent = () => {
   return token === null ? (
     <div className="loader"></div>
   ) : (
-    <LinkButton token={token} />
+    <PlaidLink token={token} />
   );
 };
 
 export default App;
 ```
 
-#### Opening Link without a button click
+#### OAuth / opening Link without a button click
 
-This can be helpful for handling OAuth redirects or simply if you want Link to open immediately when your page or component renders.
+Handling OAuth redirects requires opening link without any user input. This can
+also be useful if usimply if you want Link to open immediately when your page
+or component renders.
 
 ```tsx
 import React, { useCallback, useEffect, FunctionComponent } from "react";
@@ -114,7 +111,7 @@ interface Props {
   token: string;
 }
 
-const OpenLink: FunctionComponent<Props> = ({ token }) => {
+const OpenPlaidLink: FunctionComponent<Props> = ({ token }) => {
   const onSuccess = useCallback<PlaidLinkOnSuccess>(
     (public_token, metadata) => {
       // send public_token to server
@@ -146,7 +143,7 @@ const OpenLink: FunctionComponent<Props> = ({ token }) => {
   return <></>;
 };
 
-export default OpenLink;
+export default OpenPlaidLink;
 ```
 
 
