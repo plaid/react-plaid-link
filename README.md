@@ -30,7 +30,7 @@ Head to the `react-plaid-link` [storybook](https://plaid.github.io/react-plaid-l
 
 This is the preferred approach for integrating with Plaid Link in React.
 
-ℹ️ Note: `link_token` cannot be null when passed to `usePlaidLink`. Generate your link_token
+ℹ️ Note: `link_token` cannot be null when passed to `usePlaidLink`. Generate your `link_token`
 outside of the component where the hook is initialized.
 
 ```tsx
@@ -95,8 +95,8 @@ export default App;
 
 #### OAuth / opening Link without a button click
 
-Handling OAuth redirects requires opening link without any user input. This can
-also be useful if usimply if you want Link to open immediately when your page
+Handling OAuth redirects requires opening Link without any user input. This can
+also be useful if you simply if you want Link to open immediately when your page
 or component renders.
 
 ```tsx
@@ -197,7 +197,7 @@ export default App;
 #### All available Link configuration options
 
 Please refer to the [official Plaid Link docs](https://plaid.com/docs/link) for
-a more holistic understanding of the various Link options and the [link_token](https://plaid.com/docs/api/tokens/#linktokencreate).
+a more holistic understanding of the various Link options and the [`link_token`](https://plaid.com/docs/api/tokens/#linktokencreate).
 
 See also [src/types/index.ts](https://github.com/plaid/react-plaid-link/blob/master/src/types/index.ts) for exported types.
 
@@ -225,4 +225,4 @@ type PlaidLinkOptions = PlaidLinkOptionsWithLinkToken;
 
 ## Typescript support
 
-Typescript definitions for `react-plaid-link` are built into the npm package. If you have previously installed `@types/react-plaid-link` before this package had types, please uninstall it in favor of built-in types.
+TypeScript definitions for `react-plaid-link` are built into the npm package. If you have previously installed `@types/react-plaid-link` before this package had types, please uninstall it in favor of built-in types.
