@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.2.0
+
+- Improve TypeScript types (may cause minor TS errors)
+
 ## 3.1.1
 
 - Allow React 17 in `peerDependencies` (#171)
