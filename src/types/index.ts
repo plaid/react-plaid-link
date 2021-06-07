@@ -22,7 +22,7 @@ export interface PlaidLinkError {
 }
 
 export interface PlaidLinkOnSuccessMetadata {
-  institution: PlaidInstitution;
+  institution: null | PlaidInstitution;
   accounts: Array<PlaidAccount>;
   link_session_id: string;
 }
@@ -86,6 +86,10 @@ interface CommonPlaidLinkOptions {
   onEvent?: PlaidLinkOnEvent;
 }
 
+/**
+ * @deprecated Public key integrations are deprecated and should not be used.
+ * https://plaid.com/docs/link/link-token-migration-guide/
+ */
 export type PlaidLinkOptionsWithPublicKey = CommonPlaidLinkOptions & {
   // The public_key associated with your account; available from
   // the Plaid dashboard (https://dashboard.plaid.com)

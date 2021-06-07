@@ -84,6 +84,7 @@ const App: FunctionComponent = () => {
 
   // only initialize Link once our token exists
   return token === null ? (
+    // insert your loading animation here
     <div className="loader"></div>
   ) : (
     <PlaidLink token={token} />
@@ -140,7 +141,7 @@ const OpenPlaidLink: FunctionComponent<Props> = ({ token }) => {
   }, [ready, open]);
 
   // don't render anything, just open Link
-  return <></>;
+  return null;
 };
 
 export default OpenPlaidLink;
@@ -178,6 +179,7 @@ const App: FunctionComponent = () => {
   // to override the default styles. It accepts any Link config option as a prop such
   // as receivedRedirectUri, onEvent, onExit, onLoad, etc.
   return token === null ? (
+    // insert your loading animation here
     <div className="loader"></div>
   ) : (
     <PlaidLink
