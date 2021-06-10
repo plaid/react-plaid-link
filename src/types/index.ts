@@ -64,8 +64,21 @@ export type PlaidLinkOnExit = (
   metadata: PlaidLinkOnExitMetadata
 ) => void;
 
+// The following event names are stable and will not be deprecated or changed
+export enum PlaidLinkStableEvent {
+  OPEN = 'OPEN',
+  EXIT = 'EXIT',
+  HANDOFF = 'HANDOFF',
+  SELECT_INSTITUTION = 'SELECT_INSTITUTION',
+  ERROR = 'ERROR',
+}
+
 export type PlaidLinkOnEvent = (
-  eventName: string,
+  // see possible values for eventName at
+  // https://plaid.com/docs/link/web/#link-web-onevent-eventName.
+  // Events other than stable events are informational and subject to change,
+  // and therefore should not be used to customize your product experience.
+  eventName: PlaidLinkStableEvent | string,
   metadata: PlaidLinkOnEventMetadata
 ) => void;
 
