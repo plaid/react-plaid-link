@@ -8,13 +8,13 @@ integrating with the [Plaid Link drop module](https://blog.plaid.com/plaid-link/
 With `npm`:
 
 ```
-npm install react-plaid-link --save
+npm install --save react-plaid-link
 ```
 
 With `yarn`
 
 ```
-yarn add -S react-plaid-link
+yarn add react-plaid-link
 ```
 
 ## Documentation
