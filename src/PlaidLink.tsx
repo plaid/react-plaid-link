@@ -5,11 +5,11 @@ import { usePlaidLink } from './usePlaidLink';
 
 export const PlaidLink: React.FC<PlaidLinkPropTypes> = props => {
   const { children, style, className, ...config } = props;
-  const { error, open } = usePlaidLink({ ...config });
+  const { ready, error, open } = usePlaidLink({ ...config });
 
   return (
     <button
-      disabled={Boolean(error)}
+      disabled={Boolean(error) || !ready}
       type="button"
       className={className}
       style={{

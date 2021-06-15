@@ -33,9 +33,9 @@
   },
   "scripts": {
     "lint": "eslint '{src,examples}/**/*.{ts,tsx,js,jsx}' --ignore-path .gitignore",
-    "storybook": "start-storybook -p 9001",
+    "storybook": "start-storybook -p 6006",
     "deploy-storybook": "storybook-to-ghpages",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook"
   },
   "husky": {
     "hooks": {
@@ -56,14 +56,11 @@
     "@babel/plugin-proposal-class-properties": "^7.13.0",
     "@babel/preset-env": "^7.14.2",
     "@babel/preset-react": "^7.13.13",
-    "@storybook/addon-actions": "^5.3.17",
-    "@storybook/addon-console": "^1.2.1",
-    "@storybook/addon-knobs": "^5.3.17",
-    "@storybook/addon-links": "^5.3.17",
-    "@storybook/addons": "^5.3.17",
-    "@storybook/preset-typescript": "^2.1.0",
-    "@storybook/react": "^5.3.17",
-    "@storybook/storybook-deployer": "^2.8.3",
+    "@storybook/addon-actions": "^6.2.9",
+    "@storybook/addon-essentials": "^6.2.9",
+    "@storybook/addon-knobs": "^6.2.9",
+    "@storybook/addon-links": "^6.2.9",
+    "@storybook/react": "^6.2.9",
     "@types/react": "^17.0.9",
     "@types/react-dom": "^17.0.6",
     "@typescript-eslint/eslint-plugin": "^2.24.0",
