@@ -215,7 +215,7 @@ interface PlaidLinkOptionsWithLinkToken = {
     metadata: PlaidLinkOnExitMetadata
   ) => void;
   onEvent?: (
-    eventName: string,
+    eventName: PlaidLinkStableEvent | string,
     metadata: PlaidLinkOnEventMetadata
   ) => void;
   onLoad?: () => void;

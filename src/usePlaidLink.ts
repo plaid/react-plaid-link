@@ -34,6 +34,11 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
       return;
     }
 
+    // If the token is undefined, return prematurely
+    if (!options.token) {
+      return;
+    }
+
     if (error || !window.Plaid) {
       // eslint-disable-next-line no-console
       console.error('Error loading Plaid', error);
