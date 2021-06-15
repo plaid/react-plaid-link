@@ -139,7 +139,7 @@ export type PlaidLinkOptionsWithPublicKey = CommonPlaidLinkOptions & {
 export type PlaidLinkOptionsWithLinkToken = CommonPlaidLinkOptions & {
   // Provide a link_token associated with your account. Create one
   // using the /link/token/create endpoint.
-  token: string;
+  token: string | null;
   // receivedRedirectUri is required on the second-initialization of link when using Link
   // with a redirect_uri to support OAuth flows.
   receivedRedirectUri?: string;

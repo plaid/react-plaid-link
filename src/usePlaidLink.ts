@@ -21,16 +21,27 @@ const noop = () => {};
  */
 export const usePlaidLink = (options: PlaidLinkOptions) => {
   // Asynchronously load the plaid/link/stable url into the DOM
-  const [loading, error] = useScript({ src: PLAID_LINK_STABLE_URL, checkForExisting: true });
+  const [loading, error] = useScript({
+    src: PLAID_LINK_STABLE_URL,
+    checkForExisting: true,
+  });
 
   // internal state
   const [plaid, setPlaid] = useState<PlaidFactory | null>(null);
   const [iframeLoaded, setIframeLoaded] = useState(false);
-  const products = ((options as PlaidLinkOptionsWithPublicKey).product || []).slice().sort().join(',');
+  const products = ((options as PlaidLinkOptionsWithPublicKey).product || [])
+    .slice()
+    .sort()
+    .join(',');
 
   useEffect(() => {
     // If the link.js script is still loading, return prematurely
     if (loading) {
+      return;
+    }
+
+    // If the token is undefined, return prematurely
+    if (!options.token) {
       return;
     }
 
@@ -60,10 +71,20 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
     return () => next.exit({ force: true }, () => next.destroy());
   }, [loading, error, options.token, products]);
 
+  const ready = plaid != null && (!loading || iframeLoaded);
+
+  const openNoOp = () => {
+    if (!options.token) {
+      console.warn(
+        'react-plaid-link: You cannot call open() without a valid token supplied to usePlaidLink. This is a no-op.'
+      );
+    }
+  };
+
   return {
     error,
-    ready: plaid != null && (!loading || iframeLoaded),
+    ready,
     exit: plaid ? plaid.exit : noop,
-    open: plaid ? plaid.open : noop,
+    open: plaid ? plaid.open : openNoOp,
   };
 };

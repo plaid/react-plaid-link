@@ -28,7 +28,7 @@ stories.addDecorator(withKnobs);
 
 stories.add('hooks', () => {
   const props = {
-    token: text('token', '<LINK_TOKEN>'),
+    token: text('token', ''),
   };
 
   button('Save Link configuration', reRender);
@@ -42,7 +42,7 @@ stories.add('hooks', () => {
 
 stories.add('HOC', () => {
   const props = {
-    token: text('token', '<LINK_TOKEN>'),
+    token: text('token', ''),
   };
 
   button('Save Link configuration', reRender);
