@@ -139,9 +139,7 @@ export type PlaidLinkOptionsWithPublicKey = CommonPlaidLinkOptions & {
 export type PlaidLinkOptionsWithLinkToken = CommonPlaidLinkOptions & {
   // Provide a link_token associated with your account. Create one
   // using the /link/token/create endpoint.
-  // If token is null or undefined, the Link iframe will preloaded, but Link
-  // will not be initialized, and `ready` will be false
-  token?: string;
+  token: string;
   // receivedRedirectUri is required on the second-initialization of link when using Link
   // with a redirect_uri to support OAuth flows.
   receivedRedirectUri?: string;

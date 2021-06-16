@@ -33,9 +33,9 @@
   },
   "scripts": {
     "lint": "eslint '{src,examples}/**/*.{ts,tsx,js,jsx}' --ignore-path .gitignore",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "start-storybook -p 9001",
     "deploy-storybook": "storybook-to-ghpages",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook -s public"
   },
   "husky": {
     "hooks": {
