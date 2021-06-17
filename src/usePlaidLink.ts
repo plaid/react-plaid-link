@@ -74,7 +74,7 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
   const ready = plaid != null && (!loading || iframeLoaded);
 
   const preOpen = () => {
-    if (!Boolean(options.token)) {
+    if (options.token == null || options.token === '') {
       console.warn(
         'react-plaid-link: You cannot call open() without a valid token supplied to usePlaidLink'
       );
