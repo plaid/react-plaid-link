@@ -73,10 +73,10 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
 
   const ready = plaid != null && (!loading || iframeLoaded);
 
-  const preOpen = () => {
-    if (options.token == null || options.token === '') {
-      console.warn(
-        'react-plaid-link: You cannot call open() without a valid token supplied to usePlaidLink'
+  const openNoOp = () => {
+    if (!options.token) {
+      console.error(
+        'react-plaid-link: You cannot call open() without a valid token supplied to usePlaidLink. This is a no-op.'
       );
     }
   };
@@ -85,6 +85,6 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
     error,
     ready,
     exit: plaid ? plaid.exit : noop,
-    open: plaid ? plaid.open : preOpen,
+    open: plaid ? plaid.open : openNoOp,
   };
 };
