@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.3.0
+
+- Fix a bug with the usePlaidLink onSuccess callback dependencies array (may cause minor errors)
+
 ## 3.2.0
 
 - Improve TypeScript types (may cause minor TS errors)
