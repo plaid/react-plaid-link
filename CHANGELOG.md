@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.3.0.beta0
+
+- Experimental feature to allow `token` to be `null` ([#197](https://github.com/plaid/react-plaid-link/pull/197))
+
 ## 3.2.0
 
 - Improve TypeScript types (may cause minor TS errors)
