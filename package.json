@@ -1,9 +1,13 @@
 {
   "name": "react-plaid-link",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "A React component for Plaid Link",
   "registry": "https://registry.npmjs.org",
-  "files": ["dist", "src", "LICENSE"],
+  "files": [
+    "dist",
+    "src",
+    "LICENSE"
+  ],
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "jsnext:main": "dist/index.esm.js",
@@ -14,7 +18,11 @@
     "url": "https://github.com/plaid/react-plaid-link.git"
   },
   "types": "dist/index.d.ts",
-  "keywords": ["react", "react-component", "plaid"],
+  "keywords": [
+    "react",
+    "react-component",
+    "plaid"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/plaid/react-plaid-link/issues"
@@ -90,5 +98,8 @@
     "typescript": "^3.8.3",
     "xyz": "0.5.x"
   },
-  "tags": ["react", "plaid"]
+  "tags": [
+    "react",
+    "plaid"
+  ]
 }
