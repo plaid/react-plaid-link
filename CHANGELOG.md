@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.2.1
+
+- (Internal) Fix invalid registry URLs in `yarn.lock`
+
 ## 3.2.0
 
 - Improve TypeScript types (may cause minor TS errors)
