@@ -50,6 +50,10 @@ export const createPlaid = (options: PlaidLinkOptions) => {
       config.onExit && config.onExit(error, metadata);
       state.onExitCallback && state.onExitCallback();
     },
+    onSuccess: (public_token, metadata) => {
+      state.open = false;
+      options.onSuccess && options.onSuccess(public_token, metadata)
+    },
   });
 
   const open = () => {
