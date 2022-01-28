@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.2.2
+
+- Bump react-script-hook to 1.5.0 to fix 'error loading plaid' msg (#217)
+
 ## 3.2.1
 
 - (Internal) Fix invalid registry URLs in `yarn.lock`
