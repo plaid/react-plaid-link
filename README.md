@@ -97,7 +97,7 @@ export default App;
 #### OAuth / opening Link without a button click
 
 Handling OAuth redirects requires opening Link without any user input. This can
-also be useful if you simply if you want Link to open immediately when your page
+also be useful if you want Link to open immediately when your page
 or component renders.
 
 ```tsx
