@@ -16,14 +16,14 @@ const reRender = () => (counter += 1);
 const ExampleComponent = ({ file, ...props }) => {
   const [example, setExample] = useState(null);
   useEffect(() => {
-    import(`../examples/${file}`).then(({ default: Example }) => {
+    import(`../stories/${file}`).then(({ default: Example }) => {
       setExample(<Example {...props} />);
     });
   }, []);
   return example;
 };
 
-const stories = storiesOf('react-plaid-link-legacy', module);
+const stories = storiesOf('Legacy public key integrations', module);
 stories.addDecorator(withKnobs);
 
 stories.add('hooks', () => {
