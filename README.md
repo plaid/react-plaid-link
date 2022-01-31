@@ -88,12 +88,12 @@ the various Link options and the
 
 #### `usePlaidLink` return value
 
-| key     | type                                                             |
-| ------- | ---------------------------------------------------------------- |
-| `open`  | `() => void`                                                     |
-| `ready` | `boolean`                                                        |
-| `error` | `ErrorEvent \| null`                                             |
-| `exit`  | `(options?: { force?: boolean }, callback?: () => void) => void` |
+| key     | type                                                            |
+| ------- | --------------------------------------------------------------- |
+| `open`  | `() => void`                                                    |
+| `ready` | `boolean`                                                       |
+| `error` | `ErrorEvent \| null`                                            |
+| `exit`  | `(options?: { force: boolean }, callback?: () => void) => void` |
 
 ### OAuth / opening Link without a button click
 
