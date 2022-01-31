@@ -84,16 +84,16 @@ the various Link options and the
 | `onExit`              | `(error: null \| PlaidLinkError, metadata: PlaidLinkOnExitMetadata) => void`              |
 | `onEvent`             | `(eventName: PlaidLinkStableEvent \| string, metadata: PlaidLinkOnEventMetadata) => void` |
 | `onLoad`              | `() => void`                                                                              |
-| `receivedRedirectUri` | `string \| undefined`                                                                     |
+| `receivedRedirectUri` | `string \| null \| undefined`                                                             |
 
 #### `usePlaidLink` return value
 
-| key     | type                        |
-| ------- | --------------------------- |
-| `open`  | `() => void`                |
-| `ready` | `boolean`                   |
-| `error` | `ErrorEvent \| null`        |
-| `exit`  | `(force?: boolean) => void` |
+| key     | type                                                             |
+| ------- | ---------------------------------------------------------------- |
+| `open`  | `() => void`                                                     |
+| `ready` | `boolean`                                                        |
+| `error` | `ErrorEvent \| null`                                             |
+| `exit`  | `(options?: { force?: boolean }, callback?: () => void) => void` |
 
 ### OAuth / opening Link without a button click
 
