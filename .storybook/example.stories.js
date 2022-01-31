@@ -16,14 +16,14 @@ const reRender = () => (counter += 1);
 const ExampleComponent = ({ file, ...props }) => {
   const [example, setExample] = useState(null);
   useEffect(() => {
-    import(`../examples/${file}`).then(({ default: Example }) => {
+    import(`../stories/${file}`).then(({ default: Example }) => {
       setExample(<Example {...props} />);
     });
   }, []);
   return example;
 };
 
-const stories = storiesOf('react-plaid-link', module);
+const stories = storiesOf('Examples', module);
 stories.addDecorator(withKnobs);
 
 stories.add('hooks', () => {
@@ -40,7 +40,7 @@ stories.add('hooks', () => {
   );
 });
 
-stories.add('HOC', () => {
+stories.add('Component', () => {
   const props = {
     token: text('token', ''),
   };
