@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.3.0
+
+Allow `token` to be `null` in `usePlaidLink` config [#197](https://github.com/plaid/react-plaid-link/pull/197)
+
 ## 3.2.2
 
 - Bump react-script-hook to 1.5.0 to fix 'error loading plaid' msg (#217)
