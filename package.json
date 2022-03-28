@@ -33,6 +33,7 @@
   },
   "scripts": {
     "lint": "eslint '{src,examples}/**/*.{ts,tsx,js,jsx}' --ignore-path .gitignore",
+    "test": "NODE_ENV=test BABEL_ENV=testing jest",
     "storybook": "start-storybook -p 9001",
     "deploy-storybook": "storybook-to-ghpages",
     "build-storybook": "build-storybook -s public"
@@ -44,7 +45,7 @@
   },
   "dependencies": {
     "prop-types": "^15.7.2",
-    "react-script-hook": "1.5.0"
+    "react-script-hook": "^1.6.0"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0",
@@ -56,6 +57,7 @@
     "@babel/plugin-proposal-class-properties": "^7.14.3",
     "@babel/preset-env": "^7.14.3",
     "@babel/preset-react": "^7.14.3",
+    "@babel/preset-typescript": "^7.16.7",
     "@storybook/addon-actions": "^5.3.17",
     "@storybook/addon-console": "^1.2.1",
     "@storybook/addon-knobs": "^5.3.17",
@@ -64,6 +66,9 @@
     "@storybook/preset-typescript": "^2.1.0",
     "@storybook/react": "^5.3.17",
     "@storybook/storybook-deployer": "^2.8.3",
+    "@testing-library/react": "^12.1.4",
+    "@testing-library/react-hooks": "^7.0.2",
+    "@types/jest": "^27.4.1",
     "@types/react": "^17.0.9",
     "@types/react-dom": "^17.0.6",
     "@typescript-eslint/eslint-plugin": "^2.24.0",
@@ -82,6 +87,7 @@
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^4.2.0",
     "husky": "^4.2.3",
+    "jest": "^27.5.1",
     "mocha": "2.3.x",
     "prettier": "^1.19.1",
     "react": "^17.0.2",
