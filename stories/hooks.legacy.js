@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 
 import { usePlaidLink } from '../src';
 
-const App = props => {
+const App = (props) => {
   const onSuccess = useCallback(
     (token, metadata) => console.log('onSuccess', token, metadata),
     []

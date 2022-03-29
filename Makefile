@@ -2,6 +2,7 @@ NODE = node --harmony
 BABEL = ./node_modules/.bin/babel
 MOCHA = node --harmony node_modules/.bin/mocha --reporter spec --require test/setup.js --compilers js:babel-core/register
 ESLINT = node_modules/.bin/eslint
+JEST = node_modules/.bin/jest
 ROLLUP = node_modules/.bin/rollup
 PRETTIER = node_modules/.bin/prettier
 STORYBOOK_TO_PAGES = node_modules/.bin/storybook-to-ghpages
@@ -28,11 +29,21 @@ build: clean
 check-import:
 	./scripts/check-import
 
-
 .PHONY: lint
 lint:
 	@$(ESLINT) '{src,examples}/**/*.{ts,tsx,js,jsx}'
 
+.PHONY: test
+test: export NODE_ENV=test
+test: export BABEL_ENV=testing
+test:
+	@$(JEST)
+
+.PHONY: test-watch
+test-watch: export NODE_ENV=test
+test-watch: export BABEL_ENV=testing
+test-watch:
+	@$(JEST) --watch
 
 .PHONY: lint-fix
 lint-fix:
