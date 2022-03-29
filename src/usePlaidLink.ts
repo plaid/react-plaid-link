@@ -40,8 +40,11 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
       return;
     }
 
-    // If the token is undefined, return prematurely
-    if (!options.token) {
+    // If the token and publicKey is undefined, return prematurely
+    if (
+      !options.token &&
+      !(options as PlaidLinkOptionsWithPublicKey).publicKey
+    ) {
       return;
     }
 
@@ -69,7 +72,13 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
 
     // destroy the Plaid iframe factory
     return () => next.exit({ force: true }, () => next.destroy());
-  }, [loading, error, options.token, products]);
+  }, [
+    loading,
+    error,
+    (options as PlaidLinkOptionsWithPublicKey).publicKey,
+    options.token,
+    products,
+  ]);
 
   const ready = plaid != null && (!loading || iframeLoaded);
 
