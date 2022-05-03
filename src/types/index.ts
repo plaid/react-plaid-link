@@ -25,6 +25,7 @@ export interface PlaidLinkOnSuccessMetadata {
   institution: null | PlaidInstitution;
   accounts: Array<PlaidAccount>;
   link_session_id: string;
+  transfer_status?: string;
 }
 
 export interface PlaidLinkOnExitMetadata {
