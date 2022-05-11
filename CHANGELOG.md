@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.3.1
+
+- Fix `usePlaidLink` hook for legacy `publicKey` config [#247](https://github.com/plaid/react-plaid-link/pull/247)
+- Bump `react-script-hook` dependency to 1.6.0 to fix script loading bug [#246](https://github.com/plaid/react-plaid-link/pull/246)
+
 ## 3.3.0
 
 Allow `token` to be `null` in `usePlaidLink` config [#197](https://github.com/plaid/react-plaid-link/pull/197)
