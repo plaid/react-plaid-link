@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.3.2
+
+- Add `transfer_status` to `PlaidLinkOnSuccessMetadata` type [#252](https://github.com/plaid/react-plaid-link/pull/252)
+- Allow React 18 in `peerDependencies` [#256](https://github.com/plaid/react-plaid-link/pull/256)
+
 ## 3.3.1
 
 - Fix `usePlaidLink` hook for legacy `publicKey` config [#247](https://github.com/plaid/react-plaid-link/pull/247)
