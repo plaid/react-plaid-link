@@ -66,6 +66,9 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
         setIframeLoaded(true);
         options.onLoad && options.onLoad();
       },
+      onSuccess: (public_token, metadata) => {
+        options.onSuccess && options.onSuccess(public_token, metadata)
+      },
     });
 
     setPlaid(next);
