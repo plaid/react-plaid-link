@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.3.3
+- Add `forceMobile` to `PlaidAdditionalConfig`
+
 ## 3.3.2
 
 - Add `transfer_status` to `PlaidLinkOnSuccessMetadata` type [#252](https://github.com/plaid/react-plaid-link/pull/252)

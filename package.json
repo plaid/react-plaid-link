@@ -1,6 +1,6 @@
 {
   "name": "react-plaid-link",
-  "version": "3.3.2",
+  "version": "3.3.3",
   "description": "A React component for Plaid Link",
   "registry": "https://registry.npmjs.org",
   "files": [
