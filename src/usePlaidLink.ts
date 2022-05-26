@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import useScript from 'react-script-hook';
 
 import { createPlaid, PlaidFactory } from './factory';
-import { PlaidLinkOptions, PlaidLinkOptionsWithPublicKey } from './types';
+import {PlaidAdditionalConfig, PlaidLinkOptions, PlaidLinkOptionsWithPublicKey} from './types';
 
 const PLAID_LINK_STABLE_URL =
   'https://cdn.plaid.com/link/v2/stable/link-initialize.js';
@@ -19,7 +19,7 @@ const noop = () => {};
  * A new Plaid instance is created every time the token and products options change.
  * It's up to you to prevent unnecessary re-creations on re-render.
  */
-export const usePlaidLink = (options: PlaidLinkOptions) => {
+export const usePlaidLink = (options: PlaidLinkOptions, additionalConfig: PlaidAdditionalConfig | null) => {
   // Asynchronously load the plaid/link/stable url into the DOM
   const [loading, error] = useScript({
     src: PLAID_LINK_STABLE_URL,
@@ -66,7 +66,7 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
         setIframeLoaded(true);
         options.onLoad && options.onLoad();
       },
-    });
+    }, additionalConfig);
 
     setPlaid(next);
 

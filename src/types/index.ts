@@ -137,6 +137,11 @@ export type PlaidLinkOptionsWithPublicKey = CommonPlaidLinkOptions & {
   paymentToken?: string;
 };
 
+export type PlaidAdditionalConfig = {
+  // Specify if we should for the view like on a mobile device
+  forceMobile?: boolean;
+}
+
 export type PlaidLinkOptionsWithLinkToken = CommonPlaidLinkOptions & {
   // Provide a link_token associated with your account. Create one
   // using the /link/token/create endpoint.
@@ -161,7 +166,7 @@ export type PlaidLinkPropTypes = PlaidLinkOptions & {
 export interface Plaid {
   open: () => void;
   exit: (force?: boolean) => void;
-  create: (config: PlaidLinkOptions) => Plaid;
+  create: (config: PlaidLinkOptions, additionalConfig: PlaidAdditionalConfig | null) => Plaid;
   destroy: () => void;
 }
 

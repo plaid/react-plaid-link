@@ -1,4 +1,4 @@
-import { PlaidLinkOptions, Plaid } from './types';
+import {PlaidLinkOptions, Plaid, PlaidAdditionalConfig} from './types';
 
 export interface PlaidFactory {
   open: Function;
@@ -25,7 +25,7 @@ const renameKeyInObject = (
 /**
  * Wrap link handler creation and instance to clean up iframe via destroy() method
  */
-export const createPlaid = (options: PlaidLinkOptions) => {
+export const createPlaid = (options: PlaidLinkOptions, additionalConfig: PlaidAdditionalConfig | null) => {
   const state: FactoryInternalState = {
     plaid: null,
     open: false,
@@ -43,14 +43,17 @@ export const createPlaid = (options: PlaidLinkOptions) => {
     'key'
   ) as PlaidLinkOptions;
 
-  state.plaid = window.Plaid.create({
-    ...config,
-    onExit: (error, metadata) => {
-      state.open = false;
-      config.onExit && config.onExit(error, metadata);
-      state.onExitCallback && state.onExitCallback();
-    },
-  });
+  state.plaid = window.Plaid.create(
+      {
+        ...config,
+        onExit: (error, metadata) => {
+          state.open = false;
+          config.onExit && config.onExit(error, metadata);
+          state.onExitCallback && state.onExitCallback();
+        },
+      },
+      additionalConfig,
+  );
 
   const open = () => {
     if (!state.plaid) {
