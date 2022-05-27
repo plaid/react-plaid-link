@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import useScript from 'react-script-hook';
 
 import { createPlaid, PlaidFactory } from './factory';
-import {PlaidAdditionalConfig, PlaidLinkOptions, PlaidLinkOptionsWithPublicKey} from './types';
+import { PlaidAdditionalConfig, PlaidLinkOptions, PlaidLinkOptionsWithPublicKey } from './types';
 
 const PLAID_LINK_STABLE_URL =
   'https://cdn.plaid.com/link/v2/stable/link-initialize.js';
