@@ -5,7 +5,7 @@ import { usePlaidLink } from './usePlaidLink';
 
 export const PlaidLink: React.FC<PlaidLinkPropTypes> = props => {
   const { children, style, className, ...config } = props;
-  const { error, open } = usePlaidLink({ ...config }, {forceMobile: true});
+  const { error, open } = usePlaidLink({ ...config }, { forceMobile: true });
 
   return (
     <button

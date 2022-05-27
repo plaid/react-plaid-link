@@ -140,7 +140,7 @@ export type PlaidLinkOptionsWithPublicKey = CommonPlaidLinkOptions & {
 export type PlaidAdditionalConfig = {
   // Specify if we should for the view like on a mobile device
   forceMobile?: boolean;
-}
+};
 
 export type PlaidLinkOptionsWithLinkToken = CommonPlaidLinkOptions & {
   // Provide a link_token associated with your account. Create one

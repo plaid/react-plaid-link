@@ -1,4 +1,4 @@
-import {PlaidLinkOptions, Plaid, PlaidAdditionalConfig} from './types';
+import { PlaidLinkOptions, Plaid, PlaidAdditionalConfig } from './types';
 
 export interface PlaidFactory {
   open: Function;
