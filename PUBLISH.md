@@ -15,7 +15,7 @@ git reset --hard origin/master
 4. When ready, publish the new version from the branch before merging
 
 ```
-make release-(patch|minor|major)
+make release-(major|minor|patch)
 ```
 
 5. Merge the branch
