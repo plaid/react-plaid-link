@@ -138,7 +138,7 @@ export type PlaidLinkOptionsWithPublicKey = CommonPlaidLinkOptions & {
 };
 
 export type PlaidAdditionalConfig = {
-  // Specify if we should for the view like on a mobile device
+  // Specify if we should force the view to be as if it was on a mobile device.
   forceMobile?: boolean;
 };
 
