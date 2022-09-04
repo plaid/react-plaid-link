@@ -1,4 +1,10 @@
-import { PlaidLinkOptions, Plaid } from './types';
+import {
+  PlaidLinkOptions,
+  PlaidHandler,
+  CommonPlaidLinkOptions,
+} from './types';
+
+import { EthereumOnboardingOptions } from './types/web3';
 
 export interface PlaidFactory {
   open: Function;
@@ -7,7 +13,7 @@ export interface PlaidFactory {
 }
 
 interface FactoryInternalState {
-  plaid: Plaid | null;
+  plaid: PlaidHandler | null;
   open: boolean;
   onExitCallback: Function | null;
 }
@@ -25,7 +31,10 @@ const renameKeyInObject = (
 /**
  * Wrap link handler creation and instance to clean up iframe via destroy() method
  */
-export const createPlaid = (options: PlaidLinkOptions) => {
+const createPlaidHandler = <T extends CommonPlaidLinkOptions<{}>>(
+  config: T,
+  creator: (config: T) => PlaidHandler
+) => {
   const state: FactoryInternalState = {
     plaid: null,
     open: false,
@@ -37,13 +46,7 @@ export const createPlaid = (options: PlaidLinkOptions) => {
     throw new Error('Plaid not loaded');
   }
 
-  const config = renameKeyInObject(
-    options,
-    'publicKey',
-    'key'
-  ) as PlaidLinkOptions;
-
-  state.plaid = window.Plaid.create({
+  state.plaid = creator({
     ...config,
     onExit: (error, metadata) => {
       state.open = false;
@@ -87,4 +90,24 @@ export const createPlaid = (options: PlaidLinkOptions) => {
     exit,
     destroy,
   };
+};
+
+export const createWeb3Plaid = (
+  options: EthereumOnboardingOptions,
+  creator: (options: EthereumOnboardingOptions) => PlaidHandler
+) => {
+  return createPlaidHandler(options, creator);
+};
+
+export const createPlaid = (
+  options: PlaidLinkOptions,
+  creator: (options: PlaidLinkOptions) => PlaidHandler
+) => {
+  const config = renameKeyInObject(
+    options,
+    'publicKey',
+    'key'
+  ) as PlaidLinkOptions;
+
+  return createPlaidHandler(config, creator);
 };

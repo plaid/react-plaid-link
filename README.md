@@ -120,6 +120,69 @@ React.useEffect(() => {
 return <></>;
 ```
 
+### Usage with Wallet Onboard
+
+Plaid [Wallet Onboard](https://plaid.com/wallet-onboard/) uses similar patterns. See the [Wallet Onboard docs](https://plaid.com/docs/wallet-onboard/) for a holistic understanding on configuration and usage.
+
+ℹ️ See a full source code example of using hooks with Wallet Onboard:
+
+- [examples/web3.tsx](examples/web3.tsx): minimal example of using hooks
+- [src/types/web3.ts][types] for exported types.
+
+```tsx
+import { useEthereumProvider } from 'react-plaid-link/web3';
+
+// ...
+
+const onSuccess = useCallback(
+  async provider => {
+    const accounts = await provider.request({
+      method: 'eth_accounts',
+    });
+    setAccounts(accounts);
+  },
+  [setAccounts]
+);
+
+const { open, ready } = useEthereumProvider({
+  token:
+    'https://plaid.com/docs/wallet-onboard/add-to-app/#enable-wallet-onboard-and-retrieve-a-link-token',
+  chain: {
+    chainId: '0x1',
+    rpcUrl: '',
+  },
+  onSuccess,
+});
+
+return (
+  <button onClick={() => open()} disabled={!ready}>
+    Connect wallet
+  </button>
+);
+```
+
+#### `useEthereumProvider` arguments
+
+| key                   | type                                                                         |
+| --------------------- | ---------------------------------------------------------------------------- |
+| `token`               | `string \| null`                                                             |
+| `chain`               | `ChainOption`                                                                |
+| `onSuccess`           | `(provider: EIP1193Provider) => void`                                        |
+| `onExit`              | `(error: null \| PlaidLinkError, metadata: PlaidLinkOnExitMetadata) => void` |
+| `onLoad`              | `() => void`                                                                 |
+| `receivedRedirectUri` | `string \| null \| undefined`                                                |
+
+#### `useEthereumProvider` return value
+
+| key                          | type                                                                          |
+| ---------------------------- | ----------------------------------------------------------------------------- |
+| `open`                       | `() => void`                                                                  |
+| `ready`                      | `boolean`                                                                     |
+| `error`                      | `ErrorEvent \| null`                                                          |
+| `getCurrentEthereumProvider` | `(chainOption: ChainOption) => Promise<EIP1193Provider \| null \| undefined>` |
+| `isProviderActive`           | `(provider: EIP1193Provider) => Promise<boolean>`                             |
+| `disconnectEthereumProvider` | `(provider: EIP1193Provider) => Promise<void>`                                |
+
 ## Using the pre-built component instead of the usePlaidLink hook
 
 If you cannot use React hooks for legacy reasons such as incompatibility with

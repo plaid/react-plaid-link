@@ -54,6 +54,20 @@ stories.add('Component', () => {
   );
 });
 
+stories.add('web3', () => {
+  const props = {
+    token: text('token', ''),
+  };
+
+  button('Save Link configuration', reRender);
+
+  return (
+    <div key={counter}>
+      <ExampleComponent file="web3" {...props} />
+    </div>
+  );
+});
+
 export default {
   title: 'Storybook Knobs',
   decorators: [withKnobs],

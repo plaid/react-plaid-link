@@ -85,10 +85,10 @@ export type PlaidLinkOnEvent = (
 
 export type PlaidLinkOnLoad = () => void;
 
-interface CommonPlaidLinkOptions {
+export interface CommonPlaidLinkOptions<T> {
   // A function that is called when a user has successfully connecter an Item.
   // The function should expect two arguments, the public_key and a metadata object
-  onSuccess: PlaidLinkOnSuccess;
+  onSuccess: T;
   // A callback that is called when a user has specifically exited Link flow
   onExit?: PlaidLinkOnExit;
   // A callback that is called when the Link module has finished loading.
@@ -104,7 +104,9 @@ interface CommonPlaidLinkOptions {
  * @deprecated Public key integrations are deprecated and should not be used.
  * https://plaid.com/docs/link/link-token-migration-guide/
  */
-export type PlaidLinkOptionsWithPublicKey = CommonPlaidLinkOptions & {
+export type PlaidLinkOptionsWithPublicKey = CommonPlaidLinkOptions<
+  PlaidLinkOnSuccess
+> & {
   // The public_key associated with your account; available from
   // the Plaid dashboard (https://dashboard.plaid.com)
   publicKey: string;
@@ -137,7 +139,9 @@ export type PlaidLinkOptionsWithPublicKey = CommonPlaidLinkOptions & {
   paymentToken?: string;
 };
 
-export type PlaidLinkOptionsWithLinkToken = CommonPlaidLinkOptions & {
+export type PlaidLinkOptionsWithLinkToken = CommonPlaidLinkOptions<
+  PlaidLinkOnSuccess
+> & {
   // Provide a link_token associated with your account. Create one
   // using the /link/token/create endpoint.
   token: string | null;
@@ -158,11 +162,14 @@ export type PlaidLinkPropTypes = PlaidLinkOptions & {
   style?: React.CSSProperties;
 };
 
-export interface Plaid {
+export interface PlaidHandler {
   open: () => void;
   exit: (force?: boolean) => void;
-  create: (config: PlaidLinkOptions) => Plaid;
   destroy: () => void;
+}
+
+export interface Plaid extends PlaidHandler {
+  create: (config: PlaidLinkOptions) => PlaidHandler;
 }
 
 declare global {
