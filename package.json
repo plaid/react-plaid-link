@@ -44,7 +44,6 @@
     }
   },
   "dependencies": {
-    "prop-types": "^15.7.2",
     "react-script-hook": "^1.6.0"
   },
   "peerDependencies": {
