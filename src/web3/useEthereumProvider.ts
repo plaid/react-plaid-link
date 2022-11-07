@@ -1,25 +1,19 @@
 import { useEffect, useState } from 'react';
 import useScript from 'react-script-hook';
 
-import { createPlaid, PlaidFactory } from './factory';
-import { PlaidLinkOptions, PlaidLinkOptionsWithPublicKey } from './types';
+import { createWeb3Plaid, PlaidFactory } from '../factory';
+import {
+  EthereumOnboardingOptions,
+  PlaidWeb3,
+  PlaidGlobalWithWeb3,
+} from '../types/web3';
 
 const PLAID_LINK_STABLE_URL =
   'https://cdn.plaid.com/link/v2/stable/link-initialize.js';
 
 const noop = () => {};
 
-/**
- * This hook loads Plaid script and manages the Plaid Link creation for you.
- * You get easy open & exit methods to call and loading & error states.
- *
- * This will destroy the Plaid UI on un-mounting so it's up to you to be
- * graceful to the user.
- *
- * A new Plaid instance is created every time the token and products options change.
- * It's up to you to prevent unnecessary re-creations on re-render.
- */
-export const usePlaidLink = (options: PlaidLinkOptions) => {
+export const useEthereumProvider = (options: EthereumOnboardingOptions) => {
   // Asynchronously load the plaid/link/stable url into the DOM
   const [loading, error] = useScript({
     src: PLAID_LINK_STABLE_URL,
@@ -27,24 +21,13 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
   });
 
   // internal state
+  const [web3, setWeb3] = useState<PlaidWeb3 | null>(null);
   const [plaid, setPlaid] = useState<PlaidFactory | null>(null);
   const [iframeLoaded, setIframeLoaded] = useState(false);
-  const products = ((options as PlaidLinkOptionsWithPublicKey).product || [])
-    .slice()
-    .sort()
-    .join(',');
 
   useEffect(() => {
     // If the link.js script is still loading, return prematurely
     if (loading) {
-      return;
-    }
-
-    // If the token and publicKey is undefined, return prematurely
-    if (
-      !options.token &&
-      !(options as PlaidLinkOptionsWithPublicKey).publicKey
-    ) {
       return;
     }
 
@@ -54,13 +37,23 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
       return;
     }
 
+    if (!web3) {
+      (window.Plaid as PlaidGlobalWithWeb3).web3().then(setWeb3);
+      return;
+    }
+
+    // If the token is undefined, return prematurely
+    if (!options.token) {
+      return;
+    }
+
     // if an old plaid instance exists, destroy it before
     // creating a new one
     if (plaid != null) {
       plaid.exit({ force: true }, () => plaid.destroy());
     }
 
-    const next = createPlaid(
+    const next = createWeb3Plaid(
       {
         ...options,
         onLoad: () => {
@@ -68,35 +61,35 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
           options.onLoad && options.onLoad();
         },
       },
-      window.Plaid.create
+      web3.createEthereumOnboarding
     );
 
     setPlaid(next);
 
     // destroy the Plaid iframe factory
     return () => next.exit({ force: true }, () => next.destroy());
-  }, [
-    loading,
-    error,
-    (options as PlaidLinkOptionsWithPublicKey).publicKey,
-    options.token,
-    products,
-  ]);
+  }, [loading, error, options.token, web3, setWeb3]);
 
-  const ready = plaid != null && (!loading || iframeLoaded);
+  const ready = plaid != null && (!loading || iframeLoaded) && web3 != null;
 
   const openNoOp = () => {
     if (!options.token) {
       console.warn(
-        'react-plaid-link: You cannot call open() without a valid token supplied to usePlaidLink. This is a no-op.'
+        'react-plaid-link: You cannot call open() without a valid token supplied to useEthereumProvider. This is a no-op.'
       );
     }
   };
 
-  return {
+  const returnValue = {
     error,
     ready,
     exit: plaid ? plaid.exit : noop,
     open: plaid ? plaid.open : openNoOp,
+    getCurrentEthereumProvider:
+      web3 && ready ? web3.getCurrentEthereumProvider : null,
+    isProviderActive: web3 && ready ? web3.isProviderActive : null,
+    disconnectEthereumProvider:
+      web3 && ready ? web3.disconnectEthereumProvider : null,
   };
+  return returnValue;
 };

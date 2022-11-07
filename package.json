@@ -5,6 +5,7 @@
   "registry": "https://registry.npmjs.org",
   "files": [
     "dist",
+    "web3",
     "src",
     "LICENSE"
   ],
@@ -102,7 +103,7 @@
     "sinon": "1.17.x",
     "ts-loader": "^6.2.1",
     "typescript": "^3.8.3",
-    "xyz": "0.5.x"
+    "xyz": "^4.0.x"
   },
   "tags": [
     "react",

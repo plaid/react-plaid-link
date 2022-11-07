@@ -17,7 +17,7 @@ SRC_FILES  = $(shell find src -name '*.js|*.tsx|*.ts' | sort)
 
 .PHONY: clean
 clean:
-	@rm -rf dist lib
+	@rm -rf dist lib web3
 
 
 .PHONY: build
@@ -75,6 +75,6 @@ storybook-deploy:
 	$(STORYBOOK_TO_PAGES)
 
 
-.PHONY: release-major release-minor release-patch
-release-major release-minor release-patch: build
-	@$(XYZ) --increment $(@:release-%=%) --branch $(RELEASE_BRANCH)
+.PHONY: release-major release-minor release-patch release-premajor release-preminor release-prepatch release-prerelease
+release-major release-minor release-patch release-premajor release-preminor release-prepatch release-prerelease: build
+	@$(XYZ) --increment $(@:release-%=%) --branch $(RELEASE_BRANCH) --prerelease-label beta

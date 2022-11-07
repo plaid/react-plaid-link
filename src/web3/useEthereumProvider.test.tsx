@@ -1,6 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { usePlaidLink, PlaidLinkOptions } from './';
+
+import { EthereumOnboardingOptions, PlaidGlobalWithWeb3 } from '../types/web3';
+import { useEthereumProvider } from './useEthereumProvider';
 
 import useScript from 'react-script-hook';
 jest.mock('react-script-hook');
@@ -17,22 +19,35 @@ const ReadyState = {
   NOT_READY: 'NOT_READY',
   ERROR: 'ERROR',
   NO_ERROR: 'NO_ERROR',
+  HAS_PROVIDER_ACTIVE: 'HAS_PROVIDER_ACTIVE',
+  NO_PROVIDER_ACTIVE: 'NO_PROVIDER_ACTIVE',
 };
 
-const HookComponent: React.FC<{ config: PlaidLinkOptions }> = ({ config }) => {
-  const { open, ready, error } = usePlaidLink(config);
+const HookComponent: React.FC<{ config: EthereumOnboardingOptions }> = ({
+  config,
+}) => {
+  const { open, ready, error, isProviderActive } = useEthereumProvider(config);
   return (
     <div>
       <button onClick={() => open()}>Open</button>
       <div>{ready ? ReadyState.READY : ReadyState.NOT_READY}</div>
       <div>{error ? ReadyState.ERROR : ReadyState.NO_ERROR}</div>
+      <div>
+        {isProviderActive != null
+          ? ReadyState.HAS_PROVIDER_ACTIVE
+          : ReadyState.NO_PROVIDER_ACTIVE}{' '}
+      </div>
     </div>
   );
 };
 
-describe('usePlaidLink', () => {
-  const config: PlaidLinkOptions = {
+describe('useEthereumProvider', () => {
+  const config: EthereumOnboardingOptions = {
     token: 'test-token',
+    chain: {
+      chainId: '0x1',
+      rpcUrl: 'https://rpcurl.com',
+    },
     onSuccess: jest.fn(),
   };
 
@@ -51,7 +66,15 @@ describe('usePlaidLink', () => {
       open: jest.fn(),
       exit: jest.fn(),
       destroy: jest.fn(),
-    };
+      web3: jest.fn(() =>
+        Promise.resolve({
+          createEthereumOnboarding: jest.fn(),
+          getCurrentEthereumProvider: jest.fn(),
+          isProviderActive: jest.fn(),
+          disconnectEthereumProvider: jest.fn(),
+        })
+      ),
+    } as PlaidGlobalWithWeb3;
   });
 
   afterEach(() => {
@@ -61,35 +84,23 @@ describe('usePlaidLink', () => {
   it('should render with token', async () => {
     render(<HookComponent config={config} />);
     expect(screen.getByRole('button'));
-    expect(screen.getByText(ReadyState.READY));
-    expect(screen.getByText(ReadyState.NO_ERROR));
-  });
-
-  it('should render with publicKey', async () => {
-    const configWithPubKey: PlaidLinkOptions = {
-      publicKey: 'test-public-key',
-      env: 'sandbox',
-      product: ['auth'],
-      clientName: 'TEST',
-      onSuccess: jest.fn(),
-    };
-    render(<HookComponent config={configWithPubKey} />);
-    expect(screen.getByRole('button'));
-    expect(screen.getByText(ReadyState.READY));
-    expect(screen.getByText(ReadyState.NO_ERROR));
+    await screen.findByText(ReadyState.READY);
+    await screen.findByText(ReadyState.HAS_PROVIDER_ACTIVE);
+    await screen.findByText(ReadyState.NO_ERROR);
   });
 
   it('should not be ready when script is loading', async () => {
     mockedUseScript.mockImplementation(() => ScriptLoadingState.LOADING);
     render(<HookComponent config={config} />);
-    expect(screen.getByText(ReadyState.NOT_READY));
-    expect(screen.getByText(ReadyState.NO_ERROR));
+    await screen.findByText(ReadyState.NOT_READY);
+    await screen.findByText(ReadyState.NO_PROVIDER_ACTIVE);
+    await screen.findByText(ReadyState.NO_ERROR);
   });
 
   it('should not be ready if both token and publicKey are missing', async () => {
     render(<HookComponent config={{ ...config, token: null }} />);
-    expect(screen.getByText(ReadyState.NOT_READY));
-    expect(screen.getByText(ReadyState.NO_ERROR));
+    await screen.findByText(ReadyState.NOT_READY);
+    await screen.findByText(ReadyState.NO_ERROR);
   });
 
   it('should not be ready if script fails to load', async () => {
@@ -99,8 +110,9 @@ describe('usePlaidLink', () => {
     mockedUseScript.mockImplementation(() => ScriptLoadingState.ERROR);
 
     render(<HookComponent config={config} />);
-    expect(screen.getByText(ReadyState.NOT_READY));
-    expect(screen.getByText(ReadyState.ERROR));
+    await screen.findByText(ReadyState.NOT_READY);
+    await screen.findByText(ReadyState.NO_PROVIDER_ACTIVE);
+    await screen.findByText(ReadyState.ERROR);
     expect(consoleSpy).toHaveBeenCalledWith(
       'Error loading Plaid',
       'SCRIPT_LOAD_ERROR'
@@ -108,37 +120,55 @@ describe('usePlaidLink', () => {
   });
 
   it('should be ready if token is generated async', async () => {
+    const config: EthereumOnboardingOptions = {
+      token: 'test-token',
+      chain: {
+        chainId: '0x1',
+        rpcUrl: 'https://rpcurl.com',
+      },
+      onSuccess: jest.fn(),
+    };
+
     const { rerender } = render(
       <HookComponent config={{ ...config, token: null }} />
     );
-    expect(screen.getByText(ReadyState.NOT_READY));
-    expect(screen.getByText(ReadyState.NO_ERROR));
+    await screen.findByText(ReadyState.NOT_READY);
+    await screen.findByText(ReadyState.NO_PROVIDER_ACTIVE);
+    await screen.findByText(ReadyState.NO_ERROR);
     config.token = 'test-token';
     rerender(<HookComponent config={config} />);
-    expect(screen.getByText(ReadyState.READY));
-    expect(screen.getByText(ReadyState.NO_ERROR));
+    await screen.findByText(ReadyState.READY);
+    await screen.findByText(ReadyState.HAS_PROVIDER_ACTIVE);
+    await screen.findByText(ReadyState.NO_ERROR);
   });
 
   it('should be ready if token is generated async and script loads after token', async () => {
     mockedUseScript.mockImplementation(() => ScriptLoadingState.LOADING);
 
-    const c: PlaidLinkOptions = {
+    const c: EthereumOnboardingOptions = {
       token: null,
+      chain: {
+        chainId: '0x1',
+        rpcUrl: 'https://rpcurl.com',
+      },
       onSuccess: jest.fn(),
     };
     const { rerender } = render(<HookComponent config={c} />);
-    expect(screen.getByText(ReadyState.NOT_READY));
-    expect(screen.getByText(ReadyState.NO_ERROR));
+    await screen.findByText(ReadyState.NOT_READY);
+    await screen.findByText(ReadyState.NO_PROVIDER_ACTIVE);
+    await screen.findByText(ReadyState.NO_ERROR);
 
     c.token = 'test-token';
     rerender(<HookComponent config={config} />);
-    expect(screen.getByText(ReadyState.NOT_READY));
-    expect(screen.getByText(ReadyState.NO_ERROR));
+    await screen.findByText(ReadyState.NOT_READY);
+    await screen.findByText(ReadyState.NO_PROVIDER_ACTIVE);
+    await screen.findByText(ReadyState.NO_ERROR);
 
     mockedUseScript.mockImplementation(() => ScriptLoadingState.LOADED);
 
     rerender(<HookComponent config={config} />);
-    expect(screen.getByText(ReadyState.READY));
-    expect(screen.getByText(ReadyState.NO_ERROR));
+    await screen.findByText(ReadyState.READY);
+    await screen.findByText(ReadyState.HAS_PROVIDER_ACTIVE);
+    await screen.findByText(ReadyState.NO_ERROR);
   });
 });

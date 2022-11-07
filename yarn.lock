@@ -10274,11 +10274,6 @@ semver-regex@^3.1.2:
   resolved "https://registry.npmjs.org/semver-regex/-/semver-regex-3.1.3.tgz#b2bcc6f97f63269f286994e297e229b6245d0dc3"
   integrity sha512-Aqi54Mk9uYTjVexLnR67rTyBusmwd04cLkHy9hNvk3+G3nT2Oyg7E0l4XVbOaNwIvQ3hHeYxGcyEy+mKreyBFQ==
 
-semver@4.1.x:
-  version "4.1.1"
-  resolved "https://registry.npmjs.org/semver/-/semver-4.1.1.tgz#8d63e2e90df847e626d48ae068cd65786b0ed3d3"
-  integrity sha1-jWPi6Q34R+Ym1IrgaM1leGsO09M=
-
 semver@5.5.0:
   version "5.5.0"
   resolved "https://registry.npmjs.org/semver/-/semver-5.5.0.tgz#dc4bbc7a6ca9d916dee5d43516f0092b58f7b8ab"
@@ -11879,12 +11874,10 @@ xtend@^4.0.0, xtend@~4.0.1:
   resolved "https://registry.npmjs.org/xtend/-/xtend-4.0.2.tgz#bb72779f5fa465186b1f438f674fa347fdb5db54"
   integrity sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==
 
-xyz@0.5.x:
-  version "0.5.0"
-  resolved "https://registry.npmjs.org/xyz/-/xyz-0.5.0.tgz#af33031349c7a0d523fca22f273ffa498999eeb3"
-  integrity sha1-rzMDE0nHoNUj/KIvJz/6SYmZ7rM=
-  dependencies:
-    semver "4.1.x"
+xyz@^4.0.x:
+  version "4.0.0"
+  resolved "https://registry.npmjs.org/xyz/-/xyz-4.0.0.tgz#981733c1c174c2927f693904156c4d0f6abf6c77"
+  integrity sha512-ZO0vKMAX/sDiadaaMJPeK6eSFEJY5Bz1JmNgjOLZ8S8ow7uXJUeDEZjBJYShOZxo7WxkcJd3LaH9h0Haj1NEWw==
 
 y18n@^4.0.0:
   version "4.0.3"
