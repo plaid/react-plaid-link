@@ -7,6 +7,10 @@ with [Plaid Link](https://plaid.com/docs/link/)
 
 React 16.8+
 
+### Known limitations
+
+The selfie check feature in Plaid Identity Verification is not yet supported.
+
 ### Install
 
 With `npm`:
