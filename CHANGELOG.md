@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.4.0-beta.0
+
+- Add `useEthereumProvider` hook for use with Wallet Onboard [#283](https://github.com/plaid/react-plaid-link/pull/283)
+
 ## 3.3.2
 
 - Add `transfer_status` to `PlaidLinkOnSuccessMetadata` type [#252](https://github.com/plaid/react-plaid-link/pull/252)
