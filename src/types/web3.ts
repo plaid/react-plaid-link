@@ -4,6 +4,9 @@ import { EIP1193Provider as ImportedEIP1193Provider } from './web3Provider';
 
 export interface PlaidWeb3OnSuccessMetadata {
   link_session_id: string;
+  wallet: {
+    name: string;
+  };
 }
 
 export interface ChainInformation {
