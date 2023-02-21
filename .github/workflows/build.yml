@@ -13,7 +13,7 @@ jobs:
         with:
           node-version: 14.x
       - name: Install dependencies
-        uses: borales/actions-yarn@v2.3.0
+        uses: borales/actions-yarn@v3
         with:
           cmd: install # will run `yarn install` command
       - run: make lint
