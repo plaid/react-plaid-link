@@ -83,7 +83,7 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
     products,
   ]);
 
-  const ready = plaid != null && (!loading || iframeLoaded);
+  const ready = plaid != null && !loading && iframeLoaded;
 
   const openNoOp = () => {
     if (!options.token) {
