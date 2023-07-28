@@ -7,15 +7,15 @@ import {
 import { EthereumOnboardingOptions } from './types/web3';
 
 export interface PlaidFactory {
-  open: Function;
-  exit: Function;
-  destroy: Function;
+  open: (() => void) | Function;
+  exit: ((exitOptions: any, callback: () => void) => void) | Function;
+  destroy: (() => void) | Function;
 }
 
 interface FactoryInternalState {
   plaid: PlaidHandler | null;
   open: boolean;
-  onExitCallback: Function | null;
+  onExitCallback: (() => void) | null | Function;
 }
 
 const renameKeyInObject = (
@@ -64,7 +64,7 @@ const createPlaidHandler = <T extends CommonPlaidLinkOptions<{}>>(
     state.plaid.open();
   };
 
-  const exit = (exitOptions: any, callback: Function) => {
+  const exit = (exitOptions: any, callback: (() => void) | Function) => {
     if (!state.open || !state.plaid) {
       callback && callback();
       return;
