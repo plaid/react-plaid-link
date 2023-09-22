@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { usePlaidLink, PlaidLinkOptions } from './';
+import { usePlaidLink, PlaidLinkOptions, PlaidLinkOptionsWithLinkToken } from './';
 
 import useScript from 'react-script-hook';
 jest.mock('react-script-hook');
@@ -79,6 +79,18 @@ describe('usePlaidLink', () => {
     expect(screen.getByText(ReadyState.NO_ERROR));
   });
 
+  it('should render with receivedRedirectUri', async () => {
+    const configWithRedUri: PlaidLinkOptionsWithLinkToken = {
+      token: null,
+      receivedRedirectUri: 'test-received-redirect-uri',
+      onSuccess: jest.fn(),
+    };
+    render(<HookComponent config={configWithRedUri} />);
+    expect(screen.getByRole('button'));
+    expect(screen.getByText(ReadyState.READY));
+    expect(screen.getByText(ReadyState.NO_ERROR));
+  });
+
   it('should not be ready when script is loading', async () => {
     mockedUseScript.mockImplementation(() => ScriptLoadingState.LOADING);
     render(<HookComponent config={config} />);
@@ -86,7 +98,7 @@ describe('usePlaidLink', () => {
     expect(screen.getByText(ReadyState.NO_ERROR));
   });
 
-  it('should not be ready if both token and publicKey are missing', async () => {
+  it('should not be ready if token, publicKey, and receivedRedirectUri are all missing', async () => {
     render(<HookComponent config={{ ...config, token: null }} />);
     expect(screen.getByText(ReadyState.NOT_READY));
     expect(screen.getByText(ReadyState.NO_ERROR));

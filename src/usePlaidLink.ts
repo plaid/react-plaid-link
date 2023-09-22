@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import useScript from 'react-script-hook';
 
 import { createPlaid, PlaidFactory } from './factory';
-import { PlaidLinkOptions, PlaidLinkOptionsWithPublicKey } from './types';
+import { PlaidLinkOptions, PlaidLinkOptionsWithLinkToken, PlaidLinkOptionsWithPublicKey } from './types';
 
 const PLAID_LINK_STABLE_URL =
   'https://cdn.plaid.com/link/v2/stable/link-initialize.js';
@@ -40,10 +40,11 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
       return;
     }
 
-    // If the token and publicKey is undefined, return prematurely
+    // If the token, publicKey, and received redirect URI are undefined, return prematurely
     if (
       !options.token &&
-      !(options as PlaidLinkOptionsWithPublicKey).publicKey
+      !(options as PlaidLinkOptionsWithPublicKey).publicKey &&
+      !(options as PlaidLinkOptionsWithLinkToken).receivedRedirectUri
     ) {
       return;
     }
