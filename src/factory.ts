@@ -55,13 +55,13 @@ const createPlaidHandler = <T extends CommonPlaidLinkOptions<{}>>(
     },
   });
 
-  const open = () => {
+  const open: PlaidHandler['open'] = (...args) => {
     if (!state.plaid) {
       return;
     }
     state.open = true;
     state.onExitCallback = null;
-    state.plaid.open();
+    state.plaid.open(...args);
   };
 
   const exit = (exitOptions: any, callback: (() => void) | Function) => {

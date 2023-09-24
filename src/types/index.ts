@@ -166,7 +166,7 @@ export type PlaidLinkPropTypes = PlaidLinkOptions & {
 };
 
 export interface PlaidHandler {
-  open: () => void;
+  open: (institution_id?: string) => void; // the connect flow skips the 'Select your bank' step if `institution_id` is provided
   exit: (force?: boolean) => void;
   destroy: () => void;
 }
