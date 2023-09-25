@@ -6,26 +6,30 @@ import {
 
 import { EthereumOnboardingOptions } from './types/web3';
 
+export interface ExitOptions {
+  force?: boolean;
+}
+
 export interface PlaidFactory {
-  open: (() => void) | Function;
-  exit: ((exitOptions: any, callback: () => void) => void) | Function;
-  destroy: (() => void) | Function;
+  open: (() => void);
+  exit: ((exitOptions: ExitOptions, callback: () => void) => void);
+  destroy: (() => void);
 }
 
 interface FactoryInternalState {
   plaid: PlaidHandler | null;
   open: boolean;
-  onExitCallback: (() => void) | null | Function;
+  onExitCallback: (() => void) | null;
 }
 
-const renameKeyInObject = (
-  o: { [index: string]: any },
-  oldKey: string,
-  newKey: string
-): object => {
+const renameKeyInObject = <T extends Record<string, unknown>>(
+  o: T,
+  oldKey: keyof T,
+  newKey: keyof T
+): T => {
   const newObject = {};
   delete Object.assign(newObject, o, { [newKey]: o[oldKey] })[oldKey];
-  return newObject;
+  return newObject as T;
 };
 
 /**
@@ -64,7 +68,7 @@ const createPlaidHandler = <T extends CommonPlaidLinkOptions<{}>>(
     state.plaid.open();
   };
 
-  const exit = (exitOptions: any, callback: (() => void) | Function) => {
+  const exit = (exitOptions: ExitOptions, callback: (() => void)) => {
     if (!state.open || !state.plaid) {
       callback && callback();
       return;
@@ -107,7 +111,7 @@ export const createPlaid = (
     options,
     'publicKey',
     'key'
-  ) as PlaidLinkOptions;
+  );
 
   return createPlaidHandler(config, creator);
 };

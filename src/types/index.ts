@@ -88,7 +88,7 @@ export type PlaidLinkOnEvent = (
 
 export type PlaidLinkOnLoad = () => void;
 
-export interface CommonPlaidLinkOptions<T> {
+export interface CommonPlaidLinkOptions<T> extends Record<string, unknown> {
   // A function that is called when a user has successfully connecter an Item.
   // The function should expect two arguments, the public_key and a metadata object
   onSuccess: T;
@@ -167,7 +167,7 @@ export type PlaidLinkPropTypes = PlaidLinkOptions & {
 
 export interface PlaidHandler {
   open: () => void;
-  exit: (force?: boolean) => void;
+  exit: (exitConfig?: { force?: boolean }) => void;
   destroy: () => void;
 }
 
