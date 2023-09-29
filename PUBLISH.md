@@ -10,7 +10,9 @@ git reset --hard origin/master
 
 2. Run `make storybook` and verify that there are no regressions with Link.
 
-3. Update `CHANGELOG.md` with changes that will be included in the release, commit and push to the release branch.
+3. Update `CHANGELOG.md` with changes that will be included in the release, commit and push to the release branch. To help confirm the changes
+that will be included in the release, consider using GitHub's compare feature: https://github.com/plaid/react-plaid-link/compare/v3.4.0...master
+(replace `v3.4.0` with the last published version).
 
 4. When ready, publish the new version from the branch before merging
 
