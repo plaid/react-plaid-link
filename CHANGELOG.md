@@ -1,4 +1,9 @@
 # Changelog
+## 3.4.1
+
+- Add missing events to `PlaidLinkStableEvent` [#310](https://github.com/plaid/react-plaid-link/pull/310)
+- Update function return types for `usePlaidLink` [#312](https://github.com/plaid/react-plaid-link/pull/312)
+- Update early return condition in `usePlaidLink` for possible inputs [#316](https://github.com/plaid/react-plaid-link/pull/316)
 
 ## 3.4.0
 

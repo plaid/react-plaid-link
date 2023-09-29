@@ -1,5 +1,8 @@
 ## Publishing
 
+**We use the `xyz` NPM package to simplify releases. This library uses a feature that is available in Bash 4 or beyond, but latest versions of macOS
+ship with an older version of Bash. If you run into issues with `xyz`, use `brew install bash` to install a newer verison of Bash.**
+
 1. Create a branch to stage the release, for example `release-3.4.5` (Read [semver](https://semver.org/) to determine what type of version bump to use.)
 
 ```
@@ -10,7 +13,9 @@ git reset --hard origin/master
 
 2. Run `make storybook` and verify that there are no regressions with Link.
 
-3. Update `CHANGELOG.md` with changes that will be included in the release, commit and push to the release branch.
+3. Update `CHANGELOG.md` with changes that will be included in the release, commit and push to the release branch. To help confirm the changes
+that will be included in the release, consider using GitHub's compare feature: https://github.com/plaid/react-plaid-link/compare/v3.4.0...master
+(replace `v3.4.0` with the last published version).
 
 4. When ready, publish the new version from the branch before merging
 
