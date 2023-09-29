@@ -1,5 +1,8 @@
 ## Publishing
 
+**We use the `xyz` NPM package to simplify releases. This library uses a feature that is available in Bash 4 or beyond, but latest versions of macOS
+ship with an older version of Bash. If you run into issues with `xyz`, use `brew install bash` to install a newer verison of Bash.**
+
 1. Create a branch to stage the release, for example `release-3.4.5` (Read [semver](https://semver.org/) to determine what type of version bump to use.)
 
 ```
