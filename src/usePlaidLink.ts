@@ -2,12 +2,20 @@ import { useEffect, useState } from 'react';
 import useScript from 'react-script-hook';
 
 import { createPlaid, PlaidFactory } from './factory';
-import { PlaidLinkOptions, PlaidLinkOptionsWithLinkToken, PlaidLinkOptionsWithPublicKey } from './types';
+import { PlaidLinkOptions, PlaidLinkOptionsWithPublicKey } from './types';
 
 const PLAID_LINK_STABLE_URL =
   'https://cdn.plaid.com/link/v2/stable/link-initialize.js';
 
 const noop = () => {};
+
+/**
+ * Type guard that allows type narrowing of PlaidLinkOptions to the deprecated PlaidLinkOptionsWithPublicKey
+ */
+const isPlaidLinkOptionsWithPublicKey = (options: PlaidLinkOptions): options is PlaidLinkOptionsWithPublicKey => {
+  return (options as PlaidLinkOptionsWithPublicKey).publicKey !== undefined;
+}
+
 
 /**
  * This hook loads Plaid script and manages the Plaid Link creation for you.
@@ -34,6 +42,8 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
     .sort()
     .join(',');
 
+  const hasPublicKey = isPlaidLinkOptionsWithPublicKey(options)
+
   useEffect(() => {
     // If the link.js script is still loading, return prematurely
     if (loading) {
@@ -43,8 +53,8 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
     // If the token, publicKey, and received redirect URI are undefined, return prematurely
     if (
       !options.token &&
-      !(options as PlaidLinkOptionsWithPublicKey).publicKey &&
-      !(options as PlaidLinkOptionsWithLinkToken).receivedRedirectUri
+      !hasPublicKey &&
+      !options.receivedRedirectUri
     ) {
       return;
     }
@@ -79,7 +89,7 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
   }, [
     loading,
     error,
-    (options as PlaidLinkOptionsWithPublicKey).publicKey,
+    hasPublicKey,
     options.token,
     products,
   ]);
