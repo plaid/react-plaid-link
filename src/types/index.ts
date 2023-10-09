@@ -165,18 +165,28 @@ export type PlaidLinkPropTypes = PlaidLinkOptions & {
   style?: React.CSSProperties;
 };
 
+export type PlaidEmbeddedLinkPropTypes = PlaidLinkOptions & {
+  className?: string;
+  style?: React.CSSProperties;
+};
+
 export interface PlaidHandler {
   open: () => void;
   exit: (force?: boolean) => void;
   destroy: () => void;
-}
+};
+
+export interface PlaidEmbeddedHandler {
+  destroy: () => void;
+};
 
 export interface Plaid extends PlaidHandler {
   create: (config: PlaidLinkOptions) => PlaidHandler;
-}
+  createEmbedded: (config: PlaidLinkOptions, domTarget: HTMLElement) => PlaidEmbeddedHandler;
+};
 
 declare global {
   interface Window {
     Plaid: Plaid;
   }
-}
+};
