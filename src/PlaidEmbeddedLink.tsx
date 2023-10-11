@@ -1,6 +1,4 @@
-import React from 'react';
-
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import useScript from 'react-script-hook';
 
 import { PLAID_LINK_STABLE_URL } from './constants';
