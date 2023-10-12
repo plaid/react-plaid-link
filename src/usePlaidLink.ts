@@ -3,9 +3,7 @@ import useScript from 'react-script-hook';
 
 import { createPlaid, PlaidFactory } from './factory';
 import { PlaidLinkOptions, PlaidLinkOptionsWithLinkToken, PlaidLinkOptionsWithPublicKey } from './types';
-
-const PLAID_LINK_STABLE_URL =
-  'https://cdn.plaid.com/link/v2/stable/link-initialize.js';
+import { PLAID_LINK_STABLE_URL } from './constants';
 
 const noop = () => {};
 

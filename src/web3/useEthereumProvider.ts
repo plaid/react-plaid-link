@@ -7,9 +7,7 @@ import {
   PlaidWeb3,
   PlaidGlobalWithWeb3,
 } from '../types/web3';
-
-const PLAID_LINK_STABLE_URL =
-  'https://cdn.plaid.com/link/v2/stable/link-initialize.js';
+import { PLAID_LINK_STABLE_URL } from '../constants';
 
 const noop = () => {};
 

@@ -68,6 +68,20 @@ stories.add('web3', () => {
   );
 });
 
+stories.add('embedded Link', () => {
+  const props = {
+    token: text('token', ''),
+  };
+
+  button('Save Link configuration', reRender);
+
+  return (
+    <div key={counter}>
+      <ExampleComponent file="embedded_link" {...props} />
+    </div>
+  );
+});
+
 export default {
   title: 'Storybook Knobs',
   decorators: [withKnobs],
