@@ -1,4 +1,9 @@
 # Changelog
+
+## 3.5.0
+
+- Add support for Plaid embedded Link, an experimental feature [#320](https://github.com/plaid/react-plaid-link/pull/320)
+
 ## 3.4.1
 
 - Add missing events to `PlaidLinkStableEvent` [#310](https://github.com/plaid/react-plaid-link/pull/310)
