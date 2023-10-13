@@ -1,6 +1,12 @@
 # Changelog
 
-## 3.5.0
+## 3.5.1
+
+- Fix build issue from version 3.5.0
+
+## 3.5.0 (do not use)
+
+Do not use version 3.5.0 because this version contains a build issue.
 
 - Add support for Plaid embedded Link, an experimental feature [#320](https://github.com/plaid/react-plaid-link/pull/320)
 
