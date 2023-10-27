@@ -61,7 +61,7 @@ export type PlaidLinkOnSuccess = (
 ) => void;
 
 export type PlaidLinkOnExit = (
-  error: null | PlaidLinkError,
+  error: undefined | null | PlaidLinkError,
   metadata: PlaidLinkOnExitMetadata
 ) => void;
 
