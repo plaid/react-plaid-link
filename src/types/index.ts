@@ -171,7 +171,7 @@ export type PlaidEmbeddedLinkPropTypes = PlaidLinkOptions & {
 };
 
 export interface PlaidHandler {
-  open: () => void;
+  open: (institution?: string) => void;
   exit: (force?: boolean) => void;
   destroy: () => void;
 }

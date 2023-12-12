@@ -55,13 +55,13 @@ const createPlaidHandler = <T extends CommonPlaidLinkOptions<{}>>(
     },
   });
 
-  const open = () => {
+  const open = (institution?: string) => {
     if (!state.plaid) {
       return;
     }
     state.open = true;
     state.onExitCallback = null;
-    state.plaid.open();
+    state.plaid.open(institution);
   };
 
   const exit = (exitOptions: any, callback: (() => void) | Function) => {
