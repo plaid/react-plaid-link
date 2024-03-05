@@ -56,7 +56,7 @@ class PlaidLinkClass extends React.Component<Props, State> {
         onEvent={this.onEvent}
         onExit={this.onExit}
       >
-        Link you bank account
+        Link your bank account
       </PlaidLink>
     );
   }
