@@ -154,3 +154,4 @@ If you have previously installed `@types/react-plaid-link` before this package
 had types, please uninstall it in favor of built-in types.
 
 [types]: https://github.com/plaid/react-plaid-link/blob/master/src/types/index.ts
+
