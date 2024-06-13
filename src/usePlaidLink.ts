@@ -3,7 +3,6 @@ import useScript from 'react-script-hook';
 
 import { createPlaid, PlaidFactory } from './factory';
 import {
-  PlaidHandlerSubmissionData,
   PlaidLinkOptions,
   PlaidLinkOptionsWithLinkToken,
   PlaidLinkOptionsWithPublicKey,
