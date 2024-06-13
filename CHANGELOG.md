@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.5.2
+
+- Fix rerender issue with PlaidEmbeddedLink
+- Add support for handler.submit
+
 ## 3.5.1
 
 - Fix build issue from version 3.5.0
