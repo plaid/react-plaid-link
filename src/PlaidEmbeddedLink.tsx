@@ -1,11 +1,35 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useMemo } from 'react';
 import useScript from 'react-script-hook';
 
 import { PLAID_LINK_STABLE_URL } from './constants';
-import { PlaidEmbeddedLinkPropTypes } from './types';
+import {
+  PlaidEmbeddedLinkPropTypes,
+  PlaidLinkOptionsWithLinkToken,
+} from './types';
 
 export const PlaidEmbeddedLink = (props: PlaidEmbeddedLinkPropTypes) => {
-  const { style, className, ...config } = props;
+  const {
+    style,
+    className,
+    onSuccess,
+    onExit,
+    onLoad,
+    onEvent,
+    token,
+    receivedRedirectUri,
+  } = props;
+
+  const config = useMemo<PlaidLinkOptionsWithLinkToken>(
+    () => ({
+      onSuccess,
+      onExit,
+      onLoad,
+      onEvent,
+      token,
+      receivedRedirectUri,
+    }),
+    [onSuccess, onExit, onLoad, onEvent, token, receivedRedirectUri]
+  );
 
   // Asynchronously load the plaid/link/stable url into the DOM
   const [loading, error] = useScript({
