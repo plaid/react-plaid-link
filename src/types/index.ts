@@ -165,7 +165,7 @@ export type PlaidLinkPropTypes = PlaidLinkOptions & {
   style?: React.CSSProperties;
 };
 
-export type PlaidEmbeddedLinkPropTypes = PlaidLinkOptions & {
+export type PlaidEmbeddedLinkPropTypes = PlaidLinkOptionsWithLinkToken & {
   className?: string;
   style?: React.CSSProperties;
 };
