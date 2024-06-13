@@ -170,8 +170,13 @@ export type PlaidEmbeddedLinkPropTypes = PlaidLinkOptions & {
   style?: React.CSSProperties;
 };
 
+export type PlaidHandlerSubmissionData = {
+  phone_number: string | null;
+}
+
 export interface PlaidHandler {
   open: () => void;
+  submit: (data: PlaidHandlerSubmissionData) => void;
   exit: (force?: boolean) => void;
   destroy: () => void;
 }

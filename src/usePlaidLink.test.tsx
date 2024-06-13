@@ -44,11 +44,13 @@ describe('usePlaidLink', () => {
         return {
           create: jest.fn(),
           open: jest.fn(),
+          submit: jest.fn(),
           exit: jest.fn(),
           destroy: jest.fn(),
         };
       },
       open: jest.fn(),
+      submit: jest.fn(),
       exit: jest.fn(),
       destroy: jest.fn(),
     };

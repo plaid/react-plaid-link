@@ -1,6 +1,7 @@
 import {
   PlaidLinkOptions,
   PlaidHandler,
+  PlaidHandlerSubmissionData,
   CommonPlaidLinkOptions,
 } from './types';
 
@@ -8,6 +9,7 @@ import { EthereumOnboardingOptions } from './types/web3';
 
 export interface PlaidFactory {
   open: (() => void) | Function;
+  submit: ((data: PlaidHandlerSubmissionData) => void)| Function;
   exit: ((exitOptions: any, callback: () => void) => void) | Function;
   destroy: (() => void) | Function;
 }
@@ -64,6 +66,13 @@ const createPlaidHandler = <T extends CommonPlaidLinkOptions<{}>>(
     state.plaid.open();
   };
 
+  const submit = (data: PlaidHandlerSubmissionData) => {
+    if (!state.plaid) {
+      return;
+    }
+    state.plaid.submit(data)
+  }
+
   const exit = (exitOptions: any, callback: (() => void) | Function) => {
     if (!state.open || !state.plaid) {
       callback && callback();
@@ -87,6 +96,7 @@ const createPlaidHandler = <T extends CommonPlaidLinkOptions<{}>>(
 
   return {
     open,
+    submit,
     exit,
     destroy,
   };

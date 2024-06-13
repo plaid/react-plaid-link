@@ -2,7 +2,12 @@ import { useEffect, useState } from 'react';
 import useScript from 'react-script-hook';
 
 import { createPlaid, PlaidFactory } from './factory';
-import { PlaidLinkOptions, PlaidLinkOptionsWithLinkToken, PlaidLinkOptionsWithPublicKey } from './types';
+import {
+  PlaidHandlerSubmissionData,
+  PlaidLinkOptions,
+  PlaidLinkOptionsWithLinkToken,
+  PlaidLinkOptionsWithPublicKey,
+} from './types';
 import { PLAID_LINK_STABLE_URL } from './constants';
 
 const noop = () => {};
@@ -95,6 +100,7 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
   return {
     error,
     ready,
+    submit: plaid ? plaid.submit : noop,
     exit: plaid ? plaid.exit : noop,
     open: plaid ? plaid.open : openNoOp,
   };
