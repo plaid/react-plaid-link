@@ -73,7 +73,7 @@ return (
 Please refer to the [official Plaid Link
 docs](https://plaid.com/docs/link/web/) for a more holistic understanding of
 the various Link options and the
-[`link_token`](https://plaid.com/docs/api/tokens/#linktokencreate).
+[`link_token`](https://plaid.com/docs/api/link/#linktokencreate).
 
 #### `usePlaidLink` arguments
 
