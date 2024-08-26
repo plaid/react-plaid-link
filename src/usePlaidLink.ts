@@ -60,7 +60,6 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
       {
         ...options,
         onLoad: () => {
-          setIframeLoaded(true);
           options.onLoad && options.onLoad();
         },
       },
@@ -85,7 +84,7 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
     }
   }, [plaid])
 
-  const ready = plaid != null && (!loading || iframeLoaded);
+  const ready = !!plaid && !loading && iframeLoaded; 
 
   const openNoOp = () => {
     if (!options.token) {
