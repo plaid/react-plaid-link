@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import useScript from 'react-script-hook';
 
 import { createPlaid, PlaidFactory } from './factory';
@@ -29,14 +29,13 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
   });
 
   // internal state
-  const [plaid, setPlaid] = useState<PlaidFactory | null>(null);
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const products = ((options as PlaidLinkOptionsWithPublicKey).product || [])
     .slice()
     .sort()
     .join(',');
 
-  useEffect(() => {
+  const plaid = useMemo((): PlaidFactory | void => {
     // If the link.js script is still loading, return prematurely
     if (loading) {
       return;
@@ -57,13 +56,7 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
       return;
     }
 
-    // if an old plaid instance exists, destroy it before
-    // creating a new one
-    if (plaid != null) {
-      plaid.exit({ force: true }, () => plaid.destroy());
-    }
-
-    const next = createPlaid(
+    return createPlaid(
       {
         ...options,
         onLoad: () => {
@@ -73,11 +66,6 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
       },
       window.Plaid.create
     );
-
-    setPlaid(next);
-
-    // destroy the Plaid iframe factory
-    return () => next.exit({ force: true }, () => next.destroy());
   }, [
     loading,
     error,
@@ -85,6 +73,17 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
     options.token,
     products,
   ]);
+
+  useEffect(() => {
+    setIframeLoaded(false);
+    if (!plaid) {
+      return;
+    }
+    return () => {
+      // destroy the Plaid iframe factory when unmounting an instance
+      plaid.exit({ force: true }, () => plaid.destroy());
+    }
+  }, [plaid])
 
   const ready = plaid != null && (!loading || iframeLoaded);
 
