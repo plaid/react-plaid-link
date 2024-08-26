@@ -60,6 +60,7 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
       {
         ...options,
         onLoad: () => {
+          setIframeLoaded(false);
           options.onLoad && options.onLoad();
         },
       },
