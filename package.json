@@ -37,7 +37,8 @@
     "test": "NODE_ENV=test BABEL_ENV=testing jest",
     "storybook": "start-storybook -p 9001",
     "deploy-storybook": "storybook-to-ghpages",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "postinstall": "patch-package"
   },
   "husky": {
     "hooks": {
@@ -90,6 +91,8 @@
     "husky": "^4.2.3",
     "jest": "^27.5.1",
     "mocha": "2.3.x",
+    "patch-package": "^8.0.0",
+    "postinstall-postinstall": "^2.1.0",
     "prettier": "^1.19.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
