@@ -23,10 +23,20 @@ const noop = () => {};
  */
 export const usePlaidLink = (options: PlaidLinkOptions) => {
   // Asynchronously load the plaid/link/stable url into the DOM
-  const [loading, error] = useScript({
+  const [scriptLoading, error] = useScript({
     src: PLAID_LINK_STABLE_URL,
     checkForExisting: true,
   });
+
+  // Sometimes, useScript can get into a bad state
+  // Specifically, if 1) loading starts 2) useScript is unmounted 3) loading finishes,
+  // the internal state management of react-script-hook can get into a bad state
+  // (see https://github.com/hupe1980/react-script-hook/issues/35)
+  // The other library for scripts + hooks (https://github.com/juliencrn/usehooks-ts/tree/master/packages/usehooks-ts/src/useScript)
+  // has a similar issue that is resolved by removing the script tag upon unmounting,
+  // which we don't want.
+  // So, we also check if `window.Plaid` exists, which is a proxy for whether Plaid's script has actually loaded
+  const loading = scriptLoading && !window.Plaid;
 
   // internal state
   const [plaid, setPlaid] = useState<PlaidFactory | null>(null);
