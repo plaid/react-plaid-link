@@ -9865,10 +9865,10 @@ react-popper@^1.3.7:
     typed-styles "^0.0.7"
     warning "^4.0.2"
 
-react-script-hook@^1.6.0:
-  version "1.6.0"
-  resolved "https://registry.npmjs.org/react-script-hook/-/react-script-hook-1.6.0.tgz#6a44ff5e65113cb29252eadad1b8306f5fe0c626"
-  integrity sha512-aJm72XGWV+wJTKiqHmAaTNC/JQZV/Drv6A1kd1VQlzhzAXLqtBRBeTt3iTESImGe5TaBDHUOUeaGNw4v+7bqDw==
+react-script-hook@^1.7.2:
+  version "1.7.2"
+  resolved "https://registry.npmjs.org/react-script-hook/-/react-script-hook-1.7.2.tgz#ec130d67f9a25fcde57fbfd1faa87e5b97521948"
+  integrity sha512-fhyCEfXb94fag34UPRF0zry1XGwmVY+79iibWwTqAoOiCzYJQOYTiWJ7CnqglA9tMSV8g45cQpHCMcBwr7dwhA==
 
 react-select@^3.0.8:
   version "3.2.0"
