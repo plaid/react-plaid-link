@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.6.0
+
+- Fixed an issue that can occur when unmounting the usePlaidLink hook before the underlying script tag is loaded
+
 ## 3.5.2
 
 - Fix rerender issue with PlaidEmbeddedLink
