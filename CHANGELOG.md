@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.6.1
+
+- Update react-script-hook version to make peer dependencies work better for React 18
+
 ## 3.6.0
 
 - Fixed an issue that can occur when unmounting the usePlaidLink hook before the underlying script tag is loaded
