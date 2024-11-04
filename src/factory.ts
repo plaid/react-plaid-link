@@ -5,8 +5,6 @@ import {
   CommonPlaidLinkOptions,
 } from './types';
 
-import { EthereumOnboardingOptions } from './types/web3';
-
 export interface PlaidFactory {
   open: (() => void) | Function;
   submit: ((data: PlaidHandlerSubmissionData) => void)| Function;
@@ -100,13 +98,6 @@ const createPlaidHandler = <T extends CommonPlaidLinkOptions<{}>>(
     exit,
     destroy,
   };
-};
-
-export const createWeb3Plaid = (
-  options: EthereumOnboardingOptions,
-  creator: (options: EthereumOnboardingOptions) => PlaidHandler
-) => {
-  return createPlaidHandler(options, creator);
 };
 
 export const createPlaid = (

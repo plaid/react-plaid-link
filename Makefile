@@ -17,7 +17,7 @@ SRC_FILES  = $(shell find src -name '*.js|*.tsx|*.ts' | sort)
 
 .PHONY: clean
 clean:
-	@rm -rf dist lib web3
+	@rm -rf dist lib
 
 
 .PHONY: build
