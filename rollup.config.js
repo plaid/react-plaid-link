@@ -23,22 +23,6 @@ export default [
       commonjs(),
     ],
   },
-  {
-    input: 'src/web3/index.ts',
-    external: ['react', 'prop-types'],
-    output: [
-      { file: 'web3/index.js', format: 'cjs' },
-      { file: 'web3/index.esm.js', format: 'es' },
-    ],
-    plugins: [
-      ts(),
-      resolve(),
-      babel({
-        extensions: ['.ts', '.tsx'],
-      }),
-      commonjs(),
-    ],
-  },
   // UMD build with inline PropTypes
   {
     input: 'src/index.ts',

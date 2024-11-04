@@ -5,7 +5,6 @@
   "registry": "https://registry.npmjs.org",
   "files": [
     "dist",
-    "web3",
     "src",
     "LICENSE"
   ],
