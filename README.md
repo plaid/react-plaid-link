@@ -5,7 +5,9 @@ with [Plaid Link](https://plaid.com/docs/link/)
 
 ### Compatibility
 
-React 16.8+
+React 16.8-18.x.
+
+Has not yet been tested with React 19.
 
 ### Install
 
