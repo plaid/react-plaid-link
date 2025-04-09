@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import useScript from 'react-script-hook';
+import useScript from './react-script-hook';
 
 import { createPlaid, PlaidFactory } from './factory';
 import {

@@ -2,8 +2,8 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { usePlaidLink, PlaidLinkOptions, PlaidLinkOptionsWithLinkToken } from './';
 
-import useScript from 'react-script-hook';
-jest.mock('react-script-hook');
+import useScript from './react-script-hook';
+jest.mock('./react-script-hook');
 const mockedUseScript = useScript as jest.Mock;
 
 const ScriptLoadingState = {

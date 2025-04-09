@@ -22,7 +22,6 @@ clean:
 
 .PHONY: build
 build: clean
-	yarn patch-package
 	@$(ROLLUP) -c
 
 
@@ -54,7 +53,6 @@ lint-fix:
 .PHONY: setup
 setup:
 	yarn
-	yarn patch-package
 
 
 # .PHONY: test
