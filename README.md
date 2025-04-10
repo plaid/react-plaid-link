@@ -5,20 +5,7 @@ with [Plaid Link](https://plaid.com/docs/link/)
 
 ### Compatibility
 
-React 16.8-18.x.x
-
-React 19 is not officially supported due to the lack of official React 19 support by the project's dependency `react-script-hook`. 
-
-However, if you need to use React 19, you can add the following to your `package.json`:
-
-```
-"overrides": {
-  "react-plaid-link": {
-    "react": "$react",
-    "react-dom": "$react-dom"
-  }
-}
-```
+React 16.8-19.x.x
 
 ### Install
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useMemo } from 'react';
-import useScript from 'react-script-hook';
+import useScript from './react-script-hook';
 
 import { PLAID_LINK_STABLE_URL } from './constants';
 import {
