@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.0.0
+
+- Update peer dependencies to allow React 19
+- Remove react-script-hook dependency, it is now forked into this package
+- Remove Web3-related code
+
 ## 3.6.1
 
 - Update react-script-hook version to make peer dependencies work better for React 18
