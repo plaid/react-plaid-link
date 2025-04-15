@@ -1,6 +1,10 @@
 # Changelog
 
-## 4.0.0
+# 4.0.1
+
+- Fixed bug/regression when unmounting while Link script is loading
+
+## 4.0.0 (do not use)
 
 - Update peer dependencies to allow React 19
 - Remove react-script-hook dependency, it is now forked into this package
