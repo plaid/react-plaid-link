@@ -272,4 +272,26 @@ describe('useScript', () => {
             expect(document.querySelectorAll('script').length).toBe(1);
         });
     });
+
+    it('should remove script from DOM and scripts cache when unmounted during loading', () => {
+        expect(document.querySelectorAll('script').length).toBe(0);
+        expect(Object.keys(scripts).length).toBe(0);
+        
+        const testSrc = 'http://scriptsrc/test';
+        const { unmount } = renderHook(() => useScript({ src: testSrc }));
+        
+        // Verify script was added
+        expect(document.querySelectorAll('script').length).toBe(1);
+        expect(Object.keys(scripts).length).toBe(1);
+        expect(scripts[testSrc]).toBeDefined();
+        expect(scripts[testSrc].loading).toBe(true);
+        
+        // Unmount the component while script is still loading (before load event)
+        unmount();
+        
+        // Verify script was removed from DOM and cache
+        expect(document.querySelectorAll('script').length).toBe(0);
+        expect(Object.keys(scripts).length).toBe(0);
+        expect(scripts[testSrc]).toBeUndefined();
+    });
 });

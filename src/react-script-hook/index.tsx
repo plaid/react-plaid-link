@@ -131,7 +131,7 @@ export default function useScript({
             // but only applied when loading
             if (status && status.loading) {
                 scriptEl.remove();
-                delete exports.scripts[src];
+                delete scripts[src];
             }
         };
         // we need to ignore the attributes as they're a new object per call, so we'd never skip an effect call
