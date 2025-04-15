@@ -1,6 +1,6 @@
 # Changelog
 
-# 4.0.1
+## 4.0.1
 
 - Fixed bug/regression when unmounting while Link script is loading
 
