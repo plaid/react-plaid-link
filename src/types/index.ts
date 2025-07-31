@@ -172,6 +172,7 @@ export type PlaidEmbeddedLinkPropTypes = PlaidLinkOptionsWithLinkToken & {
 
 export type PlaidHandlerSubmissionData = {
   phone_number: string | null;
+  date_of_birth: string | null;
 }
 
 export interface PlaidHandler {
