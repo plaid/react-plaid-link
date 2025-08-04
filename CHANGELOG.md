@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.1.0
+
+- Add `date_of_birth` to handler.submit
+
 ## 4.0.1
 
 - Fixed bug/regression when unmounting while Link script is loading
