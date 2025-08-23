@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 
 import {
   usePlaidLink,
@@ -13,7 +13,7 @@ const PlaidLinkWithOAuth = () => {
   const isOAuthRedirect = window.location.href.includes('?oauth_state_id=');
 
   // generate a link_token when component mounts
-  React.useEffect(() => {
+  useEffect(() => {
     // do not generate a new token if page is handling an OAuth redirect.
     // instead setLinkToken to previously generated token from localStorage
     // https://plaid.com/docs/link/oauth/#reinitializing-link
@@ -68,7 +68,7 @@ const PlaidLinkWithOAuth = () => {
     // exit
   } = usePlaidLink(config);
 
-  React.useEffect(() => {
+  useEffect(() => {
     // If OAuth redirect, instantly open link when it is ready instead of
     // making user click the button
     if (isOAuthRedirect && ready) {
