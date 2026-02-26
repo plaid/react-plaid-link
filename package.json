@@ -92,7 +92,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-tools": "0.13.x",
-    "rollup": "^1.27.0",
+    "rollup": "^2.80.0",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
