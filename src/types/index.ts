@@ -101,6 +101,9 @@ export interface CommonPlaidLinkOptions<T> {
   // A callback that is called during a user's flow in Link.
   // See all values for eventName here https://plaid.com/docs/link/web/#link-web-onevent-eventName
   onEvent?: PlaidLinkOnEvent;
+  // Sets the nonce attribute on the dynamically inserted Plaid Link script tag.
+  // Use this to support nonce-based Content Security Policies.
+  cspNonce?: string;
 }
 
 /**

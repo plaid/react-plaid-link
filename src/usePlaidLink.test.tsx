@@ -37,9 +37,10 @@ describe('usePlaidLink', () => {
   };
 
   beforeEach(() => {
+    mockedUseScript.mockClear();
     mockedUseScript.mockImplementation(() => ScriptLoadingState.LOADED);
     window.Plaid = {
-      create: ({ onLoad }) => {
+      create: jest.fn(({ onLoad }) => {
         onLoad && onLoad();
         return {
           create: jest.fn(),
@@ -48,7 +49,7 @@ describe('usePlaidLink', () => {
           exit: jest.fn(),
           destroy: jest.fn(),
         };
-      },
+      }),
       open: jest.fn(),
       submit: jest.fn(),
       exit: jest.fn(),
@@ -65,6 +66,19 @@ describe('usePlaidLink', () => {
     expect(screen.getByRole('button'));
     expect(screen.getByText(ReadyState.READY));
     expect(screen.getByText(ReadyState.NO_ERROR));
+  });
+
+  it('should pass cspNonce to the Plaid script tag only', async () => {
+    render(<HookComponent config={{ ...config, cspNonce: 'test-csp-nonce' }} />);
+
+    expect(mockedUseScript).toHaveBeenCalledWith({
+      src: 'https://cdn.plaid.com/link/v2/stable/link-initialize.js',
+      checkForExisting: true,
+      nonce: 'test-csp-nonce',
+    });
+    expect(window.Plaid.create).toHaveBeenCalledWith(
+      expect.not.objectContaining({ cspNonce: 'test-csp-nonce' })
+    );
   });
 
   it('should render with publicKey', async () => {

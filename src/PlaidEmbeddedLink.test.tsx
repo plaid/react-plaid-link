@@ -50,4 +50,31 @@ describe('PlaidEmbeddedLink', () => {
     rerender(<PlaidEmbeddedLink {...newConfig} />);
     expect(createEmbeddedSpy).toHaveBeenCalledTimes(2);
   });
+
+  it('should load the Plaid script without a nonce when cspNonce is omitted', () => {
+    mockedUseScript.mockClear();
+    render(<PlaidEmbeddedLink {...config} />);
+
+    expect(mockedUseScript).toHaveBeenCalledWith({
+      src: 'https://cdn.plaid.com/link/v2/stable/link-initialize.js',
+      checkForExisting: true,
+    });
+    expect(createEmbeddedSpy.mock.calls[0][0]).not.toHaveProperty('cspNonce');
+  });
+
+  it('should pass cspNonce to the Plaid script tag only', () => {
+    mockedUseScript.mockClear();
+    createEmbeddedSpy.mockClear();
+    render(<PlaidEmbeddedLink {...config} cspNonce="test-csp-nonce" />);
+
+    expect(mockedUseScript).toHaveBeenCalledWith({
+      src: 'https://cdn.plaid.com/link/v2/stable/link-initialize.js',
+      checkForExisting: true,
+      nonce: 'test-csp-nonce',
+    });
+    expect(createEmbeddedSpy).toHaveBeenCalledWith(
+      expect.not.objectContaining({ cspNonce: 'test-csp-nonce' }),
+      expect.any(HTMLElement)
+    );
+  });
 });
