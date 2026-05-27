@@ -85,6 +85,41 @@ the various Link options and the
 | `onEvent`             | `(eventName: PlaidLinkStableEvent \| string, metadata: PlaidLinkOnEventMetadata) => void` |
 | `onLoad`              | `() => void`                                                                              |
 | `receivedRedirectUri` | `string \| null \| undefined`                                                             |
+| `cspNonce`            | `string \| undefined`                                                                     |
+
+#### Content Security Policy nonce
+
+If your app uses a nonce-based Content Security Policy, generate a fresh nonce
+per page response and pass it as `cspNonce`
+on `usePlaidLink` or `PlaidEmbeddedLink`. Only mount these components once
+`cspNonce` is known.
+
+Allow that nonce in `script-src`, `style-src`, and `style-src-elem`. Link still
+requires `style-src-attr 'unsafe-inline'` today. You will also need `frame-src` and `connect-src` as
+[documented for Link Web](https://plaid.com/docs/link/web/#csp-guidance); for
+example:
+
+```html
+default-src https://cdn.plaid.com/;
+script-src 'nonce-<PAGE_RESPONSE_NONCE>' https://cdn.plaid.com/link/v2/stable/link-initialize.js;
+style-src 'nonce-<PAGE_RESPONSE_NONCE>';
+style-src-elem 'nonce-<PAGE_RESPONSE_NONCE>';
+style-src-attr 'unsafe-inline';
+frame-src https://cdn.plaid.com/;
+connect-src https://production.plaid.com/;
+```
+
+If you omit `cspNonce`, behavior is unchanged (including for embedded Link).
+
+```tsx
+const { open, ready } = usePlaidLink({
+  token: '<GENERATED_LINK_TOKEN>',
+  cspNonce: '<PER_RESPONSE_NONCE>',
+  onSuccess: (public_token, metadata) => {
+    // send public_token to server
+  },
+});
+```
 
 #### `usePlaidLink` return value
 

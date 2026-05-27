@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Add `cspNonce` to support nonce-based Content Security Policies on `usePlaidLink` and `PlaidEmbeddedLink`.
+
 ## 4.1.1 
 
 - Fix build issue from version 4.1.0

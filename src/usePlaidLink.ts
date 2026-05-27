@@ -26,6 +26,7 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
   const [loading, error] = useScript({
     src: PLAID_LINK_STABLE_URL,
     checkForExisting: true,
+    ...(options.cspNonce ? { nonce: options.cspNonce } : {}),
   });
 
   // internal state
@@ -63,9 +64,10 @@ export const usePlaidLink = (options: PlaidLinkOptions) => {
       plaid.exit({ force: true }, () => plaid.destroy());
     }
 
+    const { cspNonce: _cspNonce, ...linkOptions } = options;
     const next = createPlaid(
       {
-        ...options,
+        ...linkOptions,
         onLoad: () => {
           setIframeLoaded(true);
           options.onLoad && options.onLoad();

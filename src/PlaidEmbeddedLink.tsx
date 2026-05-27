@@ -35,6 +35,7 @@ export const PlaidEmbeddedLink = (props: PlaidEmbeddedLinkPropTypes) => {
   const [loading, error] = useScript({
     src: PLAID_LINK_STABLE_URL,
     checkForExisting: true,
+    ...(props.cspNonce ? { nonce: props.cspNonce } : {}),
   });
 
   const embeddedLinkTarget = useRef<HTMLDivElement | null>(null);
@@ -59,7 +60,8 @@ export const PlaidEmbeddedLink = (props: PlaidEmbeddedLinkPropTypes) => {
     // its Plaid Link instance because the embedded Link integration in link-initialize
     // maintains its own handler internally.
     const { destroy } = window.Plaid.createEmbedded(
-      { ...config }, embeddedLinkTarget.current as HTMLElement
+      { ...config },
+      embeddedLinkTarget.current as HTMLElement
     );
 
     // Clean up embedded Link component on unmount
