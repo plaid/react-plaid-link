@@ -89,8 +89,8 @@ export type PlaidLinkOnEvent = (
 export type PlaidLinkOnLoad = () => void;
 
 export interface CommonPlaidLinkOptions<T> {
-  // A function that is called when a user has successfully connecter an Item.
-  // The function should expect two arguments, the public_key and a metadata object
+  // A function that is called when a user has successfully connected an Item.
+  // The function should expect two arguments, the public_token and a metadata object
   onSuccess: T;
   // A callback that is called when a user has specifically exited Link flow
   onExit?: PlaidLinkOnExit;
