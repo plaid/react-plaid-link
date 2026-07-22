@@ -131,6 +131,35 @@ const { open, ready } = usePlaidLink({
 | `error`  | `ErrorEvent \| null`                                            |
 | `exit`   | `(options?: { force: boolean }, callback?: () => void) => void` |
 
+### Handling an invalid Link token
+
+If `onExit` receives an `INVALID_LINK_TOKEN` error, fetch a new Link token and
+update the token in state. `usePlaidLink` destroys the old Link instance and
+creates a new one whenever the token changes.
+
+```tsx
+import { PlaidLinkError, usePlaidLink } from 'react-plaid-link';
+
+const [token, setToken] = React.useState<string | null>(null);
+
+const onExit = React.useCallback(async (error: PlaidLinkError | null) => {
+  if (error?.error_code === 'INVALID_LINK_TOKEN') {
+    setToken(null);
+    const response = await fetch('/api/create_link_token', { method: 'POST' });
+    const { link_token } = await response.json();
+    setToken(link_token);
+  }
+}, []);
+
+const { open, ready } = usePlaidLink({
+  token,
+  onExit,
+  onSuccess: (public_token, metadata) => {
+    // send public_token to server
+  },
+});
+```
+
 ### OAuth / opening Link without a button click
 
 Handling OAuth redirects requires opening Link without any user input (such as
