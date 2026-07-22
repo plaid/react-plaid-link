@@ -2,6 +2,8 @@ import {
   PlaidLinkOptions,
   PlaidHandler,
   PlaidHandlerSubmissionData,
+  PlaidLinkOnSuccess,
+  PlaidLinkOnSuccessMetadata,
   CommonPlaidLinkOptions,
 } from './types';
 
@@ -31,7 +33,9 @@ const renameKeyInObject = (
 /**
  * Wrap link handler creation and instance to clean up iframe via destroy() method
  */
-const createPlaidHandler = <T extends CommonPlaidLinkOptions<{}>>(
+const createPlaidHandler = <
+  T extends CommonPlaidLinkOptions<PlaidLinkOnSuccess>
+>(
   config: T,
   creator: (config: T) => PlaidHandler
 ) => {
@@ -48,7 +52,7 @@ const createPlaidHandler = <T extends CommonPlaidLinkOptions<{}>>(
 
   state.plaid = creator({
     ...config,
-    onSuccess: (publicToken, metadata) => {
+    onSuccess: (publicToken: string, metadata: PlaidLinkOnSuccessMetadata) => {
       state.open = false;
       config.onSuccess(publicToken, metadata);
     },
