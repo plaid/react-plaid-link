@@ -1,6 +1,6 @@
-# react-plaid-link [![npm version](https://badge.fury.io/js/react-plaid-link.svg)](http://badge.fury.io/js/react-plaid-link)
+# react-plaid-link [![npm version](https://badge.fury.io/js/react-plaid-link.svg)](https://www.npmjs.com/package/react-plaid-link)
 
-[React](https://facebook.github.io/react/) hook and components for integrating
+[React](https://react.dev/) hooks and components for integrating
 with [Plaid Link](https://plaid.com/docs/link/)
 
 ### Compatibility
@@ -15,7 +15,7 @@ With `npm`:
 npm install --save react-plaid-link
 ```
 
-With `yarn`
+With `yarn`:
 
 ```
 yarn add react-plaid-link
@@ -40,7 +40,7 @@ This is the preferred approach for integrating with Plaid Link in React.
 **Note:** `token` can be `null` initially and then set once you fetch or generate
 a `link_token` asynchronously.
 
-ℹ️ See a full source code examples of using hooks:
+ℹ️ See full source code examples of using hooks:
 
 - [examples/simple.tsx](examples/simple.tsx): minimal example of using hooks
 - [examples/hooks.tsx](examples/hooks.tsx): example using hooks with all
@@ -48,6 +48,7 @@ a `link_token` asynchronously.
 - [examples/oauth.tsx](examples/oauth.tsx): example handling OAuth with hooks
 
 ```tsx
+import React from 'react';
 import { usePlaidLink } from 'react-plaid-link';
 
 // ...
@@ -73,7 +74,7 @@ return (
 Please refer to the [official Plaid Link
 docs](https://plaid.com/docs/link/web/) for a more holistic understanding of
 the various Link options and the
-[`link_token`](https://plaid.com/docs/api/tokens/#linktokencreate).
+[`link_token`](https://plaid.com/docs/api/link/#linktokencreate).
 
 #### `usePlaidLink` arguments
 
@@ -96,7 +97,7 @@ on `usePlaidLink` or `PlaidEmbeddedLink`. Only mount these components once
 
 Allow that nonce in `script-src`, `style-src`, and `style-src-elem`. Link still
 requires `style-src-attr 'unsafe-inline'` today. You will also need `frame-src` and `connect-src` as
-[documented for Link Web](https://plaid.com/docs/link/web/#csp-guidance); for
+[documented for Link Web](https://plaid.com/docs/link/web/#csp-directives); for
 example:
 
 ```html
@@ -129,7 +130,39 @@ const { open, ready } = usePlaidLink({
 | `ready`  | `boolean`                                                       |
 | `submit` | `(data: PlaidHandlerSubmissionData) => void`                    |
 | `error`  | `ErrorEvent \| null`                                            |
-| `exit`   | `(options?: { force: boolean }, callback?: () => void) => void` |
+| `exit`   | `(options?: { force?: boolean }, callback?: () => void) => void` |
+
+### Handling an invalid Link token
+
+If `onExit` receives an `INVALID_LINK_TOKEN` error, fetch a new Link token and
+update the token in state. `usePlaidLink` destroys the old Link instance and
+creates a new one whenever the token changes. See Plaid's guide to
+[handling an invalid Link token](https://plaid.com/docs/link/handle-invalid-link-token/)
+for more context.
+
+```tsx
+import React from 'react';
+import { PlaidLinkError, usePlaidLink } from 'react-plaid-link';
+
+const [token, setToken] = React.useState<string | null>(null);
+
+const onExit = React.useCallback(async (error: PlaidLinkError | null) => {
+  if (error?.error_code === 'INVALID_LINK_TOKEN') {
+    setToken(null);
+    const response = await fetch('/api/create_link_token', { method: 'POST' });
+    const { link_token } = await response.json();
+    setToken(link_token);
+  }
+}, []);
+
+const { open, ready } = usePlaidLink({
+  token,
+  onExit,
+  onSuccess: (public_token, metadata) => {
+    // send public_token to server
+  },
+});
+```
 
 ### OAuth / opening Link without a button click
 
@@ -140,6 +173,7 @@ immediately when your page or component renders.
 ℹ️ See full source code example at [examples/oauth.tsx](examples/oauth.tsx)
 
 ```tsx
+import React from 'react';
 import { usePlaidLink } from 'react-plaid-link';
 
 // ...
@@ -164,7 +198,8 @@ class components, you can use the `PlaidLink` component.
 ℹ️ See full source code example at [examples/component.tsx](examples/component.tsx)
 
 ```tsx
-import { PlaidLink } from "react-plaid-link";
+import React from 'react';
+import { PlaidLink } from 'react-plaid-link';
 
 const App extends React.Component {
   // ...
@@ -183,7 +218,7 @@ const App extends React.Component {
 }
 ```
 
-## Typescript support
+## TypeScript support
 
 TypeScript definitions for `react-plaid-link` are built into the npm package.
 If you have previously installed `@types/react-plaid-link` before this package
