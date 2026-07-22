@@ -84,7 +84,7 @@ the various Link options and the
 | `onExit`              | `(error: null \| PlaidLinkError, metadata: PlaidLinkOnExitMetadata) => void`              |
 | `onEvent`             | `(eventName: PlaidLinkStableEvent \| string, metadata: PlaidLinkOnEventMetadata) => void` |
 | `onLoad`              | `() => void`                                                                              |
-| `receivedRedirectUri` | `string \| null \| undefined`                                                             |
+| `receivedRedirectUri` | `string \| undefined`                                                                     |
 | `cspNonce`            | `string \| undefined`                                                                     |
 
 #### Content Security Policy nonce
