@@ -153,6 +153,38 @@ describe('useScript', () => {
         expect(handle2.result.current).toStrictEqual([false, null]);
     });
 
+    it('should keep a loading script when one of multiple hooks unmounts', () => {
+        const src = 'http://scriptsrc/shared';
+        const handle1 = renderHook(() => useScript({ src }));
+        const handle2 = renderHook(() => useScript({ src }));
+
+        handle1.unmount();
+
+        const script = document.querySelector(`script[src="${src}"]`);
+        expect(script).not.toBeNull();
+        expect(scripts[src]).toBeDefined();
+
+        act(() => {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            script!.dispatchEvent(new Event('load'));
+        });
+
+        expect(handle2.result.current).toStrictEqual([false, null]);
+    });
+
+    it('should remove a loading script after all hooks unmount', () => {
+        const src = 'http://scriptsrc/shared';
+        const handle1 = renderHook(() => useScript({ src }));
+        const handle2 = renderHook(() => useScript({ src }));
+
+        handle1.unmount();
+        expect(document.querySelector(`script[src="${src}"]`)).not.toBeNull();
+
+        handle2.unmount();
+        expect(document.querySelector(`script[src="${src}"]`)).toBeNull();
+        expect(scripts[src]).toBeUndefined();
+    });
+
     it('should set loading true if previously loaded', async () => {
         const props = { src: 'http://scriptsrc/' };
         const handle1 = renderHook((p) => useScript(p), {
