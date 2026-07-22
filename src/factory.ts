@@ -48,6 +48,10 @@ const createPlaidHandler = <T extends CommonPlaidLinkOptions<{}>>(
 
   state.plaid = creator({
     ...config,
+    onSuccess: (publicToken, metadata) => {
+      state.open = false;
+      config.onSuccess(publicToken, metadata);
+    },
     onExit: (error, metadata) => {
       state.open = false;
       config.onExit && config.onExit(error, metadata);
