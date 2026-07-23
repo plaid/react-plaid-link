@@ -5,19 +5,20 @@ import {
   PlaidLinkOnSuccess,
   PlaidLinkOnSuccessMetadata,
   CommonPlaidLinkOptions,
+  PlaidHandlerExitOptions,
 } from './types';
 
 export interface PlaidFactory {
-  open: (() => void) | Function;
-  submit: ((data: PlaidHandlerSubmissionData) => void)| Function;
-  exit: ((exitOptions: any, callback: () => void) => void) | Function;
-  destroy: (() => void) | Function;
+  open: () => void;
+  submit: (data: PlaidHandlerSubmissionData) => void;
+  exit: (exitOptions?: PlaidHandlerExitOptions, callback?: () => void) => void;
+  destroy: () => void;
 }
 
 interface FactoryInternalState {
   plaid: PlaidHandler | null;
   open: boolean;
-  onExitCallback: (() => void) | null | Function;
+  onExitCallback: (() => void) | null;
 }
 
 const renameKeyInObject = (
@@ -52,7 +53,10 @@ const createPlaidHandler = <
 
   state.plaid = creator({
     ...config,
-    onSuccess: (publicToken: string, metadata: PlaidLinkOnSuccessMetadata) => {
+    onSuccess: (
+      publicToken: string | null,
+      metadata: PlaidLinkOnSuccessMetadata
+    ) => {
       state.open = false;
       config.onSuccess(publicToken, metadata);
     },
@@ -76,15 +80,18 @@ const createPlaidHandler = <
     if (!state.plaid) {
       return;
     }
-    state.plaid.submit(data)
-  }
+    state.plaid.submit(data);
+  };
 
-  const exit = (exitOptions: any, callback: (() => void) | Function) => {
+  const exit = (
+    exitOptions?: PlaidHandlerExitOptions,
+    callback?: () => void
+  ) => {
     if (!state.open || !state.plaid) {
       callback && callback();
       return;
     }
-    state.onExitCallback = callback;
+    state.onExitCallback = callback || null;
     state.plaid.exit(exitOptions);
     if (exitOptions && exitOptions.force) {
       state.open = false;

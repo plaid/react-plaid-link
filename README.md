@@ -46,6 +46,7 @@ a `link_token` asynchronously.
 - [examples/hooks.tsx](examples/hooks.tsx): example using hooks with all
   available callbacks
 - [examples/oauth.tsx](examples/oauth.tsx): example handling OAuth with hooks
+- [examples/layer.tsx](examples/layer.tsx): example implementing Plaid Layer
 
 ```tsx
 import React from 'react';
@@ -81,12 +82,15 @@ the various Link options and the
 | key                   | type                                                                                      |
 | --------------------- | ----------------------------------------------------------------------------------------- |
 | `token`               | `string \| null`                                                                          |
-| `onSuccess`           | `(public_token: string, metadata: PlaidLinkOnSuccessMetadata) => void`                    |
+| `onSuccess`           | `(public_token: string \| null, metadata: PlaidLinkOnSuccessMetadata) => void`             |
 | `onExit`              | `(error: null \| PlaidLinkError, metadata: PlaidLinkOnExitMetadata) => void`              |
 | `onEvent`             | `(eventName: PlaidLinkStableEvent \| string, metadata: PlaidLinkOnEventMetadata) => void` |
 | `onLoad`              | `() => void`                                                                              |
 | `receivedRedirectUri` | `string \| undefined`                                                                     |
 | `cspNonce`            | `string \| undefined`                                                                     |
+
+`public_token` is `null` for flows such as Identity Verification that do not
+create an Item.
 
 #### Content Security Policy nonce
 
@@ -131,6 +135,10 @@ const { open, ready } = usePlaidLink({
 | `submit` | `(data: PlaidHandlerSubmissionData) => void`                    |
 | `error`  | `ErrorEvent \| null`                                            |
 | `exit`   | `(options?: { force?: boolean }, callback?: () => void) => void` |
+
+For Layer, call `submit` with either `phone_number` or `date_of_birth`. See the
+[complete Layer example](examples/layer.tsx) and
+[Plaid Layer integration guide](https://plaid.com/docs/layer/add-to-app/).
 
 ### Handling an invalid Link token
 

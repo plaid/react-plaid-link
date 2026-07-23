@@ -6,6 +6,7 @@ import {
   PlaidLinkOptions,
   PlaidLinkOptionsWithLinkToken,
   PlaidLinkOptionsWithPublicKey,
+  PlaidLinkResult,
 } from './types';
 import { PLAID_LINK_STABLE_URL } from './constants';
 
@@ -21,7 +22,7 @@ const noop = () => {};
  * A new Plaid instance is created every time the token and products options change.
  * It's up to you to prevent unnecessary re-creations on re-render.
  */
-export const usePlaidLink = (options: PlaidLinkOptions) => {
+export const usePlaidLink = (options: PlaidLinkOptions): PlaidLinkResult => {
   // Asynchronously load the plaid/link/stable url into the DOM
   const [loading, error] = useScript({
     src: PLAID_LINK_STABLE_URL,
