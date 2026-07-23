@@ -137,8 +137,8 @@ the various Link options and the
 | `receivedRedirectUri` | `string \| undefined`                                                                     |
 | `cspNonce`            | `string \| undefined`                                                                     |
 
-`public_token` is `null` for products such as Identity Verification and
-Beacon that do not create an Item.
+`public_token` is `null` for flows such as Identity Verification that do not
+create an Item.
 
 #### Content Security Policy nonce
 
