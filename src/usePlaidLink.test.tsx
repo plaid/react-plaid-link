@@ -1,6 +1,11 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { usePlaidLink, PlaidLinkOptions, PlaidLinkOptionsWithLinkToken } from './';
+import {
+  usePlaidLink,
+  PlaidLinkOptions,
+  PlaidLinkOptionsWithLinkToken,
+  PlaidLinkStableEvent,
+} from './';
 
 import useScript from './react-script-hook';
 jest.mock('./react-script-hook');
@@ -30,6 +35,22 @@ const HookComponent: React.FC<{ config: PlaidLinkOptions }> = ({ config }) => {
   );
 };
 
+const LayerHookComponent: React.FC<{ config: PlaidLinkOptions }> = ({
+  config,
+}) => {
+  const { submit } = usePlaidLink(config);
+  return (
+    <div>
+      <button onClick={() => submit({ phone_number: '+14155550123' })}>
+        Submit phone number
+      </button>
+      <button onClick={() => submit({ date_of_birth: '1975-01-18' })}>
+        Submit date of birth
+      </button>
+    </div>
+  );
+};
+
 describe('usePlaidLink', () => {
   const config: PlaidLinkOptions = {
     token: 'test-token',
@@ -50,10 +71,7 @@ describe('usePlaidLink', () => {
           destroy: jest.fn(),
         };
       }),
-      open: jest.fn(),
-      submit: jest.fn(),
-      exit: jest.fn(),
-      destroy: jest.fn(),
+      createEmbedded: jest.fn(),
     };
   });
 
@@ -68,8 +86,40 @@ describe('usePlaidLink', () => {
     expect(screen.getByText(ReadyState.NO_ERROR));
   });
 
+  it('should expose stable Layer events', () => {
+    expect(PlaidLinkStableEvent.LAYER_READY).toBe('LAYER_READY');
+    expect(PlaidLinkStableEvent.LAYER_NOT_AVAILABLE).toBe(
+      'LAYER_NOT_AVAILABLE'
+    );
+    expect(PlaidLinkStableEvent.LAYER_AUTOFILL_NOT_AVAILABLE).toBe(
+      'LAYER_AUTOFILL_NOT_AVAILABLE'
+    );
+  });
+
+  it('should submit Layer phone number and date of birth separately', () => {
+    render(<LayerHookComponent config={config} />);
+    const plaidHandler = (window.Plaid.create as jest.Mock).mock.results[0]
+      .value;
+
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Submit phone number' })
+    );
+    expect(plaidHandler.submit).toHaveBeenCalledWith({
+      phone_number: '+14155550123',
+    });
+
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Submit date of birth' })
+    );
+    expect(plaidHandler.submit).toHaveBeenCalledWith({
+      date_of_birth: '1975-01-18',
+    });
+  });
+
   it('should pass cspNonce to the Plaid script tag only', async () => {
-    render(<HookComponent config={{ ...config, cspNonce: 'test-csp-nonce' }} />);
+    render(
+      <HookComponent config={{ ...config, cspNonce: 'test-csp-nonce' }} />
+    );
 
     expect(mockedUseScript).toHaveBeenCalledWith({
       src: 'https://cdn.plaid.com/link/v2/stable/link-initialize.js',

@@ -19,14 +19,14 @@ export interface PlaidLinkError {
   error_type: string;
   error_code: string;
   error_message: string;
-  display_message: string;
+  display_message: string | null;
 }
 
 export interface PlaidLinkOnSuccessMetadata {
   institution: null | PlaidInstitution;
   accounts: Array<PlaidAccount>;
   link_session_id: string;
-  transfer_status?: string;
+  transfer_status?: string | null;
 }
 
 export interface PlaidLinkOnExitMetadata {
@@ -38,6 +38,7 @@ export interface PlaidLinkOnExitMetadata {
 }
 
 export interface PlaidLinkOnEventMetadata {
+  account_number_mask: null | string;
   error_type: null | string;
   error_code: null | string;
   error_message: null | string;
@@ -45,7 +46,10 @@ export interface PlaidLinkOnEventMetadata {
   institution_id: null | string;
   institution_name: null | string;
   institution_search_query: null | string;
+  is_update_mode: null | string;
+  match_reason: null | string;
   mfa_type: null | string;
+  routing_number: null | string;
   // see possible values for view_name at https://plaid.com/docs/link/web/#link-web-onevent-view-name
   view_name: null | string;
   // see possible values for selection at https://plaid.com/docs/link/web/#link-web-onevent-selection
@@ -57,7 +61,7 @@ export interface PlaidLinkOnEventMetadata {
 }
 
 export type PlaidLinkOnSuccess = (
-  public_token: string,
+  public_token: string | null,
   metadata: PlaidLinkOnSuccessMetadata
 ) => void;
 
@@ -74,8 +78,13 @@ export enum PlaidLinkStableEvent {
   SELECT_INSTITUTION = 'SELECT_INSTITUTION',
   ERROR = 'ERROR',
   BANK_INCOME_INSIGHTS_COMPLETED = 'BANK_INCOME_INSIGHTS_COMPLETED',
+  IDENTITY_MATCH_FAILED = 'IDENTITY_MATCH_FAILED',
+  IDENTITY_MATCH_PASSED = 'IDENTITY_MATCH_PASSED',
   IDENTITY_VERIFICATION_PASS_SESSION = 'IDENTITY_VERIFICATION_PASS_SESSION',
-  IDENTITY_VERIFICATION_FAIL_SESSION = 'IDENTITY_VERIFICATION_FAIL_SESSION'
+  IDENTITY_VERIFICATION_FAIL_SESSION = 'IDENTITY_VERIFICATION_FAIL_SESSION',
+  LAYER_READY = 'LAYER_READY',
+  LAYER_NOT_AVAILABLE = 'LAYER_NOT_AVAILABLE',
+  LAYER_AUTOFILL_NOT_AVAILABLE = 'LAYER_AUTOFILL_NOT_AVAILABLE',
 }
 
 export type PlaidLinkOnEvent = (
@@ -90,7 +99,7 @@ export type PlaidLinkOnEvent = (
 export type PlaidLinkOnLoad = () => void;
 
 export interface CommonPlaidLinkOptions<T> {
-  // A function that is called when a user has successfully connected an Item.
+  // A function that is called when a user has successfully completed Link.
   // The function should expect two arguments, the public_token and a metadata object
   onSuccess: T;
   // A callback that is called when a user has specifically exited Link flow
@@ -174,25 +183,45 @@ export type PlaidEmbeddedLinkPropTypes = PlaidLinkOptionsWithLinkToken & {
   style?: React.CSSProperties;
 };
 
-export type PlaidHandlerSubmissionData = {
-  phone_number: string | null;
-  date_of_birth: string | null;
+export type PlaidHandlerSubmissionData =
+  | {
+      phone_number: string;
+      date_of_birth?: never;
+    }
+  | {
+      phone_number?: never;
+      date_of_birth: string;
+    };
+
+export interface PlaidHandlerExitOptions {
+  force?: boolean;
 }
 
 export interface PlaidHandler {
   open: () => void;
   submit: (data: PlaidHandlerSubmissionData) => void;
-  exit: (force?: boolean) => void;
+  exit: (options?: PlaidHandlerExitOptions) => void;
   destroy: () => void;
+}
+
+export interface PlaidLinkResult {
+  error: ErrorEvent | null;
+  ready: boolean;
+  submit: (data: PlaidHandlerSubmissionData) => void;
+  exit: (options?: PlaidHandlerExitOptions, callback?: () => void) => void;
+  open: () => void;
 }
 
 export interface PlaidEmbeddedHandler {
   destroy: () => void;
 }
 
-export interface Plaid extends PlaidHandler {
+export interface Plaid {
   create: (config: PlaidLinkOptions) => PlaidHandler;
-  createEmbedded: (config: PlaidLinkOptions, domTarget: HTMLElement) => PlaidEmbeddedHandler;
+  createEmbedded: (
+    config: PlaidLinkOptions,
+    domTarget: HTMLElement
+  ) => PlaidEmbeddedHandler;
 }
 
 declare global {

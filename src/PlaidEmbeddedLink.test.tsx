@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { PlaidEmbeddedLink, PlaidLinkOptions } from './';
+import { PlaidEmbeddedHandler, PlaidEmbeddedLink, PlaidLinkOptions } from './';
 
 import useScript from './react-script-hook';
 jest.mock('./react-script-hook');
@@ -20,13 +20,17 @@ describe('PlaidEmbeddedLink', () => {
     onLoad: jest.fn(),
     onEvent: jest.fn(),
   };
-  const createEmbeddedSpy = jest.fn(() => ({
+  const createEmbeddedSpy = jest.fn<
+    PlaidEmbeddedHandler,
+    [PlaidLinkOptions, HTMLElement]
+  >(() => ({
     destroy: jest.fn(),
   }));
 
   beforeEach(() => {
     mockedUseScript.mockImplementation(() => ScriptLoadingState.LOADED);
     window.Plaid = {
+      create: jest.fn(),
       createEmbedded: createEmbeddedSpy,
     };
   });
@@ -36,10 +40,21 @@ describe('PlaidEmbeddedLink', () => {
   });
 
   it('should not rerender if config did not change', () => {
-    const styles = { height: '350px', width: '350px', backgroundColor: 'white' };
-    const { rerender } = render(<PlaidEmbeddedLink {...config} style={styles} />);
+    const styles = {
+      height: '350px',
+      width: '350px',
+      backgroundColor: 'white',
+    };
+    const { rerender } = render(
+      <PlaidEmbeddedLink {...config} style={styles} />
+    );
     expect(createEmbeddedSpy).toHaveBeenCalledTimes(1);
-    rerender(<PlaidEmbeddedLink {...config} style={{...styles, backgroundColor: 'light-blue'}} />);
+    rerender(
+      <PlaidEmbeddedLink
+        {...config}
+        style={{ ...styles, backgroundColor: 'light-blue' }}
+      />
+    );
     expect(createEmbeddedSpy).toHaveBeenCalledTimes(1);
   });
 

@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+- Correct Layer submission types so phone number and date of birth can be
+  submitted separately.
+- Add stable Layer and Identity Match events.
+- Add a complete Layer React example and integration guidance.
+- Add explicit `usePlaidLink` return types and update callback metadata types
+  to match the Link Web SDK.
+
 ## 4.2.0
 
 - Add `cspNonce` to support nonce-based Content Security Policies on `usePlaidLink` and `PlaidEmbeddedLink` (partially fixes [#118](https://github.com/plaid/react-plaid-link/issues/118)).

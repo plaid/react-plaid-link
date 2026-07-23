@@ -46,6 +46,7 @@ a `link_token` asynchronously.
 - [examples/hooks.tsx](examples/hooks.tsx): example using hooks with all
   available callbacks
 - [examples/oauth.tsx](examples/oauth.tsx): example handling OAuth with hooks
+- [examples/layer.tsx](examples/layer.tsx): example implementing Plaid Layer
 
 ```tsx
 import React from 'react';
@@ -67,6 +68,54 @@ return (
 );
 ```
 
+### Using Plaid Layer
+
+Create a Layer Link token with
+[`/session/token/create`](https://plaid.com/docs/api/products/layer/#sessiontokencreate)
+on your server, then initialize `usePlaidLink` as early as possible so Link can
+preload. Submit the user's phone number and wait for a Layer event before
+opening Link:
+
+```tsx
+import { PlaidLinkStableEvent, usePlaidLink } from 'react-plaid-link';
+
+const [layerReady, setLayerReady] = React.useState(false);
+const { open, ready, submit } = usePlaidLink({
+  token: layerLinkToken,
+  onSuccess,
+  onEvent: eventName => {
+    if (eventName === PlaidLinkStableEvent.LAYER_READY) {
+      setLayerReady(true);
+    }
+  },
+});
+
+React.useEffect(() => {
+  if (ready && layerReady) {
+    open();
+  }
+}, [layerReady, open, ready]);
+
+const submitPhoneNumber = () => {
+  submit({ phone_number: '+14155550123' });
+};
+```
+
+If the phone number produces `LAYER_NOT_AVAILABLE`, Layer Extended Autofill
+can be attempted with a separate submission:
+
+```tsx
+const submitDateOfBirth = () => {
+  submit({ date_of_birth: '1975-01-18' });
+};
+```
+
+Fall back to a non-Layer onboarding flow if Extended Autofill produces
+`LAYER_AUTOFILL_NOT_AVAILABLE`. See the
+[complete Layer example](examples/layer.tsx) and
+[Plaid Layer integration guide](https://plaid.com/docs/layer/add-to-app/) for
+the full flow.
+
 ### Available Link configuration options
 
 ℹ️ See [src/types/index.ts][types] for exported types.
@@ -81,12 +130,15 @@ the various Link options and the
 | key                   | type                                                                                      |
 | --------------------- | ----------------------------------------------------------------------------------------- |
 | `token`               | `string \| null`                                                                          |
-| `onSuccess`           | `(public_token: string, metadata: PlaidLinkOnSuccessMetadata) => void`                    |
+| `onSuccess`           | `(public_token: string \| null, metadata: PlaidLinkOnSuccessMetadata) => void`             |
 | `onExit`              | `(error: null \| PlaidLinkError, metadata: PlaidLinkOnExitMetadata) => void`              |
 | `onEvent`             | `(eventName: PlaidLinkStableEvent \| string, metadata: PlaidLinkOnEventMetadata) => void` |
 | `onLoad`              | `() => void`                                                                              |
 | `receivedRedirectUri` | `string \| undefined`                                                                     |
 | `cspNonce`            | `string \| undefined`                                                                     |
+
+`public_token` is `null` for products such as Identity Verification and
+Beacon that do not create an Item.
 
 #### Content Security Policy nonce
 
