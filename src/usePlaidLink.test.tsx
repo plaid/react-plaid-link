@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { usePlaidLink, PlaidLinkOptions, PlaidLinkOptionsWithLinkToken } from './';
 
 import useScript from './react-script-hook';
@@ -168,5 +168,19 @@ describe('usePlaidLink', () => {
     rerender(<HookComponent config={config} />);
     expect(screen.getByText(ReadyState.READY));
     expect(screen.getByText(ReadyState.NO_ERROR));
+  });
+
+  it('should destroy the Plaid instance on unmount after success', () => {
+    const { unmount } = render(<HookComponent config={config} />);
+    const plaidHandler = (window.Plaid.create as jest.Mock).mock.results[0]
+      .value;
+    const plaidConfig = (window.Plaid.create as jest.Mock).mock.calls[0][0];
+
+    fireEvent.click(screen.getByRole('button'));
+    plaidConfig.onSuccess('public-token', {});
+    unmount();
+
+    expect(plaidHandler.exit).not.toHaveBeenCalled();
+    expect(plaidHandler.destroy).toHaveBeenCalledTimes(1);
   });
 });
