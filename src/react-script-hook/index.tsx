@@ -15,6 +15,7 @@ type ScriptStatus = {
     loading: boolean;
     error: ErrorState;
     scriptEl: HTMLScriptElement;
+    subscribers: number;
 };
 type ScriptStatusMap = {
     [key: string]: ScriptStatus;
@@ -36,6 +37,7 @@ const checkExisting = (src: string): ScriptStatus | undefined => {
             loading: false,
             error: null,
             scriptEl: existing,
+            subscribers: 0,
         });
     }
     return undefined;
@@ -100,18 +102,21 @@ export default function useScript({
                 loading: true,
                 error: null,
                 scriptEl: scriptEl,
+                subscribers: 0,
             };
         }
         // `status` is now guaranteed to be defined: either the old status
         // from a previous load, or a newly created one.
+        const subscribedStatus = status;
+        subscribedStatus.subscribers += 1;
 
         const handleLoad = () => {
-            if (status) status.loading = false;
+            subscribedStatus.loading = false;
             setLoading(false);
             setScriptLoaded(true);
         };
         const handleError = (error: ErrorEvent) => {
-            if (status) status.error = error;
+            subscribedStatus.error = error;
             setError(error);
         };
 
@@ -123,15 +128,21 @@ export default function useScript({
         return () => {
             scriptEl.removeEventListener('load', handleLoad);
             scriptEl.removeEventListener('error', handleError);
+            subscribedStatus.subscribers -= 1;
 
             // if we unmount, and we are still loading the script, then
             // remove from the DOM & cache so we have a clean slate next time.
             // this is similar to the `removeOnUnmount` behavior of the TS useScript hook
             // https://github.com/juliencrn/usehooks-ts/blob/20667273744a22dd2cd2c48c38cd3c10f254ae47/packages/usehooks-ts/src/useScript/useScript.ts#L134
-            // but only applied when loading
-            if (status && status.loading) {
+            // but only applied when loading and no other hook still needs it
+            if (
+                subscribedStatus.loading &&
+                subscribedStatus.subscribers === 0
+            ) {
                 scriptEl.remove();
-                delete scripts[src];
+                if (scripts[src] === subscribedStatus) {
+                    delete scripts[src];
+                }
             }
         };
         // we need to ignore the attributes as they're a new object per call, so we'd never skip an effect call
