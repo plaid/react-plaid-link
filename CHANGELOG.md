@@ -2,7 +2,15 @@
 
 ## Unreleased
 
-- Add `cspNonce` to support nonce-based Content Security Policies on `usePlaidLink` and `PlaidEmbeddedLink`.
+## 4.2.0
+
+- Add `cspNonce` to support nonce-based Content Security Policies on `usePlaidLink` and `PlaidEmbeddedLink` (partially fixes [#118](https://github.com/plaid/react-plaid-link/issues/118)).
+- Fix iframe cleanup after successful Link completion (fixes [#325](https://github.com/plaid/react-plaid-link/issues/325)).
+- Preserve the shared Link script while another hook is still loading (fixes [#268](https://github.com/plaid/react-plaid-link/issues/268)).
+- Correct nullable `PlaidAccount` fields and add `class_type` (fixes [#377](https://github.com/plaid/react-plaid-link/issues/377)).
+- Correct the `onSuccess` callback documentation (fixes [#397](https://github.com/plaid/react-plaid-link/issues/397)).
+- Correct the documented `receivedRedirectUri` type (fixes [#398](https://github.com/plaid/react-plaid-link/issues/398)).
+- Document invalid Link token recovery and refresh README examples and links (fixes [#258](https://github.com/plaid/react-plaid-link/issues/258)).
 
 ## 4.1.1 
 
