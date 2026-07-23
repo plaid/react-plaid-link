@@ -9,6 +9,7 @@
     "allowJs": true,
     "removeComments": false,
     "strict": true,
+    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true
   },

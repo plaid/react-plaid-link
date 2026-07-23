@@ -2,7 +2,7 @@
 // We originally started with patch-package, but with React 19 we also needed
 // to update its dependency versions, so (given the size) we just forked it.
 
-import { useState, useEffect } from 'react';
+import React from 'react';
 
 interface ScriptProps {
     src: HTMLScriptElement['src'] | null;
@@ -23,6 +23,7 @@ type ScriptStatusMap = {
 
 // Previously loading/loaded scripts and their current status
 export const scripts: ScriptStatusMap = {};
+const { useEffect, useState } = React;
 
 // Check for existing <script> tags with this src. If so, update scripts[src]
 // and return the new status; otherwise, return undefined.

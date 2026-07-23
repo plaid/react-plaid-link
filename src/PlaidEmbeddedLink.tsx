@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useMemo } from 'react';
+import React from 'react';
 import useScript from './react-script-hook';
 
 import { PLAID_LINK_STABLE_URL } from './constants';
@@ -6,6 +6,8 @@ import {
   PlaidEmbeddedLinkPropTypes,
   PlaidLinkOptionsWithLinkToken,
 } from './types';
+
+const { useEffect, useMemo, useRef } = React;
 
 export const PlaidEmbeddedLink = (props: PlaidEmbeddedLinkPropTypes) => {
   const {

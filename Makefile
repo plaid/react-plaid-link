@@ -2,15 +2,12 @@ NODE = node --harmony
 BABEL = ./node_modules/.bin/babel
 MOCHA = node --harmony node_modules/.bin/mocha --reporter spec --require test/setup.js --compilers js:babel-core/register
 ESLINT = node_modules/.bin/eslint
-JEST = node_modules/.bin/jest
+JEST = node_modules/.bin/jest --no-watchman
 ROLLUP = node_modules/.bin/rollup
+TSC = node_modules/.bin/tsc
 PRETTIER = node_modules/.bin/prettier
 STORYBOOK_TO_PAGES = node_modules/.bin/storybook-to-ghpages
-NPM_ENV_VARS = npm_config_registry=https://registry.npmjs.org
-NPM = $(NPM_ENV_VARS) npm
-XYZ = $(NPM_ENV_VARS) node_modules/.bin/xyz --repo git@github.com:plaid/react-plaid-link.git
 STORYBOOK = node_modules/.bin/start-storybook
-RELEASE_BRANCH = $(shell git rev-parse --abbrev-ref HEAD)
 
 SRC_FILES  = $(shell find src -name '*.js|*.tsx|*.ts' | sort)
 
@@ -45,6 +42,16 @@ test-watch: export BABEL_ENV=testing
 test-watch:
 	@$(JEST) --watch
 
+
+.PHONY: typecheck
+typecheck:
+	@$(TSC) --noEmit
+
+
+.PHONY: verify
+verify: lint typecheck test build
+	@$(MAKE) check-import
+
 .PHONY: lint-fix
 lint-fix:
 	@$(ESLINT) --fix '{src,examples}/**/*.{ts,tsx,js,jsx}'
@@ -75,6 +82,6 @@ storybook-deploy:
 	$(STORYBOOK_TO_PAGES)
 
 
-.PHONY: release-major release-minor release-patch release-premajor release-preminor release-prepatch release-prerelease
-release-major release-minor release-patch release-premajor release-preminor release-prepatch release-prerelease: build
-	@$(XYZ) --increment $(@:release-%=%) --branch $(RELEASE_BRANCH) --prerelease-label beta
+.PHONY: release
+release: verify
+	@./scripts/release

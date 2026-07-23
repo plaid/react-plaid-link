@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook, waitFor } from '@testing-library/react';
 
 import useScript, { scripts } from './';
 
@@ -65,7 +65,7 @@ describe('useScript', () => {
         });
         expect(document.querySelectorAll('script').length).toBe(1);
 
-        handle.rerender();
+        handle.rerender(props);
         expect(document.querySelectorAll('script').length).toBe(1);
     });
 
@@ -81,11 +81,11 @@ describe('useScript', () => {
         });
 
         expect(document.querySelectorAll('script').length).toBe(1);
-        handle2.rerender();
+        handle2.rerender(props);
         expect(document.querySelectorAll('script').length).toBe(1);
-        handle1.rerender();
+        handle1.rerender(props);
         expect(document.querySelectorAll('script').length).toBe(1);
-        handle2.rerender();
+        handle2.rerender(props);
         expect(document.querySelectorAll('script').length).toBe(1);
     });
 
@@ -104,7 +104,7 @@ describe('useScript', () => {
         );
 
         expect(document.querySelectorAll('script').length).toBe(1);
-        handle.rerender();
+        handle.rerender(props);
         expect(document.querySelectorAll('script').length).toBe(1);
     });
 
@@ -246,7 +246,7 @@ describe('useScript', () => {
         expect(document.querySelectorAll('script').length).toBe(1);
         expect(handle.result.current).toStrictEqual([false, null]);
 
-        handle.rerender();
+        handle.rerender(props);
         expect(document.querySelectorAll('script').length).toBe(1);
         expect(handle.result.current).toStrictEqual([false, null]);
     });
@@ -266,7 +266,7 @@ describe('useScript', () => {
         });
         expect(document.querySelectorAll('script').length).toBe(2);
 
-        handle.rerender();
+        handle.rerender(props);
         expect(document.querySelectorAll('script').length).toBe(2);
     });
 
@@ -287,7 +287,7 @@ describe('useScript', () => {
         expect(document.querySelectorAll('script').length).toBe(0);
 
         const props = { src: null };
-        const { result, rerender, waitFor } = renderHook((p) => useScript(p), {
+        const { result, rerender } = renderHook((p) => useScript(p), {
             initialProps: props,
         });
 
