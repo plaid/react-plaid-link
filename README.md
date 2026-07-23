@@ -68,54 +68,6 @@ return (
 );
 ```
 
-### Using Plaid Layer
-
-Create a Layer Link token with
-[`/session/token/create`](https://plaid.com/docs/api/products/layer/#sessiontokencreate)
-on your server, then initialize `usePlaidLink` as early as possible so Link can
-preload. Submit the user's phone number and wait for a Layer event before
-opening Link:
-
-```tsx
-import { PlaidLinkStableEvent, usePlaidLink } from 'react-plaid-link';
-
-const [layerReady, setLayerReady] = React.useState(false);
-const { open, ready, submit } = usePlaidLink({
-  token: layerLinkToken,
-  onSuccess,
-  onEvent: eventName => {
-    if (eventName === PlaidLinkStableEvent.LAYER_READY) {
-      setLayerReady(true);
-    }
-  },
-});
-
-React.useEffect(() => {
-  if (ready && layerReady) {
-    open();
-  }
-}, [layerReady, open, ready]);
-
-const submitPhoneNumber = () => {
-  submit({ phone_number: '+14155550123' });
-};
-```
-
-If the phone number produces `LAYER_NOT_AVAILABLE`, Layer Extended Autofill
-can be attempted with a separate submission:
-
-```tsx
-const submitDateOfBirth = () => {
-  submit({ date_of_birth: '1975-01-18' });
-};
-```
-
-Fall back to a non-Layer onboarding flow if Extended Autofill produces
-`LAYER_AUTOFILL_NOT_AVAILABLE`. See the
-[complete Layer example](examples/layer.tsx) and
-[Plaid Layer integration guide](https://plaid.com/docs/layer/add-to-app/) for
-the full flow.
-
 ### Available Link configuration options
 
 ℹ️ See [src/types/index.ts][types] for exported types.
@@ -183,6 +135,10 @@ const { open, ready } = usePlaidLink({
 | `submit` | `(data: PlaidHandlerSubmissionData) => void`                    |
 | `error`  | `ErrorEvent \| null`                                            |
 | `exit`   | `(options?: { force?: boolean }, callback?: () => void) => void` |
+
+For Layer, call `submit` with either `phone_number` or `date_of_birth`. See the
+[complete Layer example](examples/layer.tsx) and
+[Plaid Layer integration guide](https://plaid.com/docs/layer/add-to-app/).
 
 ### Handling an invalid Link token
 
