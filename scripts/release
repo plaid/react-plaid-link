@@ -43,7 +43,12 @@ if tag_commit=$(git rev-parse -q --verify "refs/tags/$tag^{commit}"); then
   tag_exists=true
 fi
 
-if [ "$published" = true ] && [ "$tag_exists" = true ]; then
+remote_tag_exists=false
+if [ -n "$(git ls-remote --tags origin "refs/tags/$tag")" ]; then
+  remote_tag_exists=true
+fi
+
+if [ "$published" = true ] && [ "$remote_tag_exists" = true ]; then
   printf '%s\n' "$name@$version is already published and tagged."
   exit 0
 fi
