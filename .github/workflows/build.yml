@@ -21,7 +21,19 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        react: [18, 19]
+        include:
+          - react: 16.8.6
+            react-types: 16
+            testing-library: 12.1.5
+          - react: 17.0.2
+            react-types: 17
+            testing-library: 12.1.5
+          - react: 18.3.1
+            react-types: 18
+            testing-library: 16.3.2
+          - react: 19.2.8
+            react-types: 19
+            testing-library: 16.3.2
 
     steps:
       - uses: actions/checkout@v7
@@ -37,6 +49,7 @@ jobs:
           yarn add --dev --ignore-scripts --no-lockfile
           react@${{ matrix.react }}
           react-dom@${{ matrix.react }}
-          @types/react@${{ matrix.react }}
-          @types/react-dom@${{ matrix.react }}
+          @types/react@${{ matrix.react-types }}
+          @types/react-dom@${{ matrix.react-types }}
+          @testing-library/react@${{ matrix.testing-library }}
       - run: make typecheck test
