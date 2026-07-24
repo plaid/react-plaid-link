@@ -1,0 +1,81 @@
+#!/bin/sh
+
+set -eu
+
+registry=https://registry.npmjs.org
+
+abort() {
+  printf '%s\n' "$1" >&2
+  exit 1
+}
+
+branch=$(git rev-parse --abbrev-ref HEAD)
+[ "$branch" = master ] || abort "Releases must run from master."
+[ -z "$(git status --porcelain)" ] || abort "The working tree must be clean."
+
+git fetch origin master --tags
+
+head_commit=$(git rev-parse HEAD)
+remote_commit=$(git rev-parse origin/master)
+[ "$head_commit" = "$remote_commit" ] ||
+  abort "Local master must match origin/master."
+
+name=$(node -p "require('./package.json').name")
+version=$(node -p "require('./package.json').version")
+tag="v$version"
+
+grep -F "## $version" CHANGELOG.md >/dev/null ||
+  abort "CHANGELOG.md must contain a section for $version."
+
+published=false
+if published_version=$(npm view "$name@$version" version --registry="$registry" 2>/dev/null); then
+  [ "$published_version" = "$version" ] ||
+    abort "Unexpected npm version response: $published_version"
+  published=true
+elif ! npm view "$name" version --registry="$registry" >/dev/null 2>&1; then
+  abort "Unable to query $name on npm."
+fi
+
+tag_exists=false
+if tag_commit=$(git rev-parse -q --verify "refs/tags/$tag^{commit}"); then
+  [ "$tag_commit" = "$head_commit" ] ||
+    abort "$tag already points to a different commit."
+  tag_exists=true
+fi
+
+remote_tag_exists=false
+if [ -n "$(git ls-remote --tags origin "refs/tags/$tag")" ]; then
+  remote_tag_exists=true
+fi
+
+if [ "$published" = true ] && [ "$remote_tag_exists" = true ]; then
+  printf '%s\n' "$name@$version is already published and tagged."
+  exit 0
+fi
+
+printf 'Release %s@%s from %s? Type "release" to continue: ' \
+  "$name" "$version" "$head_commit"
+read -r confirmation
+[ "$confirmation" = release ] || abort "Release cancelled."
+
+if [ "$published" = false ]; then
+  case "$version" in
+    *-*)
+      prerelease=${version#*-}
+      dist_tag=${prerelease%%.*}
+      npm publish --registry="$registry" --tag "$dist_tag"
+      ;;
+    *)
+      npm publish --registry="$registry"
+      ;;
+  esac
+else
+  printf '%s\n' "$name@$version is already on npm; continuing with the tag."
+fi
+
+if [ "$tag_exists" = false ]; then
+  git tag --annotate "$tag" --message "Version $version"
+fi
+
+git push origin "refs/tags/$tag"
+printf 'Released %s@%s and %s.\n' "$name" "$version" "$tag"

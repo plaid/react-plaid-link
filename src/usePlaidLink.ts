@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React from 'react';
 import useScript from './react-script-hook';
 
 import { createPlaid, PlaidFactory } from './factory';
@@ -11,6 +11,7 @@ import {
 import { PLAID_LINK_STABLE_URL } from './constants';
 
 const noop = () => {};
+const { useEffect, useState } = React;
 
 /**
  * This hook loads Plaid script and manages the Plaid Link creation for you.

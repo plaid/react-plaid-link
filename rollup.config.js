@@ -3,7 +3,7 @@ import commonjs from 'rollup-plugin-commonjs';
 import resolve from 'rollup-plugin-node-resolve';
 import { terser } from 'rollup-plugin-terser';
 import replace from 'rollup-plugin-replace';
-import ts from '@wessberg/rollup-plugin-ts';
+import typescript from 'rollup-plugin-typescript2';
 import pkg from './package.json';
 
 export default [
@@ -15,8 +15,8 @@ export default [
       { file: pkg.module, format: 'es' },
     ],
     plugins: [
-      ts(),
       resolve(),
+      typescript({ clean: true, tsconfig: 'tsconfig.build.json' }),
       babel({
         extensions: ['.ts', '.js', '.tsx', '.jsx'],
       }),
@@ -38,8 +38,11 @@ export default [
       },
     ],
     plugins: [
-      ts(),
       resolve(),
+      typescript({
+        tsconfig: 'tsconfig.build.json',
+        tsconfigOverride: { compilerOptions: { declaration: false } },
+      }),
       babel({
         extensions: ['.ts', '.js', '.tsx', '.jsx'],
       }),
@@ -61,8 +64,11 @@ export default [
       },
     ],
     plugins: [
-      ts(),
       resolve(),
+      typescript({
+        tsconfig: 'tsconfig.build.json',
+        tsconfigOverride: { compilerOptions: { declaration: false } },
+      }),
       babel({
         extensions: ['.ts', '.js', '.tsx', '.jsx'],
       }),
