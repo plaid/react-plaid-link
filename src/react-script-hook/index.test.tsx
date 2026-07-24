@@ -1,6 +1,35 @@
-import { act, renderHook, waitFor } from '@testing-library/react';
+import React from 'react';
+import { act, render } from '@testing-library/react';
 
 import useScript, { scripts } from './';
+
+const renderHook = <Result, Props = undefined>(
+    callback: (props: Props) => Result,
+    options?: { initialProps: Props },
+) => {
+    let current!: Result;
+
+    const Hook: React.FC<{ hookProps: Props }> = ({ hookProps }) => {
+        current = callback(hookProps);
+        return null;
+    };
+
+    const initialProps = options
+        ? options.initialProps
+        : (undefined as unknown as Props);
+    const handle = render(<Hook hookProps={initialProps} />);
+
+    return {
+        result: {
+            get current() {
+                return current;
+            },
+        },
+        rerender: (props: Props) =>
+            handle.rerender(<Hook hookProps={props} />),
+        unmount: handle.unmount,
+    };
+};
 
 describe('useScript', () => {
     beforeEach(() => {
@@ -283,7 +312,7 @@ describe('useScript', () => {
         expect(document.querySelectorAll('script').length).toBe(0);
     });
 
-    it('should append script after src change from null', async () => {
+    it('should append script after src change from null', () => {
         expect(document.querySelectorAll('script').length).toBe(0);
 
         const props = { src: null };
@@ -300,9 +329,7 @@ describe('useScript', () => {
 
         props.src = 'http://scriptsrc/' as any;
         rerender(props);
-        await waitFor(() => {
-            expect(document.querySelectorAll('script').length).toBe(1);
-        });
+        expect(document.querySelectorAll('script').length).toBe(1);
     });
 
     it('should remove script from DOM and scripts cache when unmounted during loading', () => {
