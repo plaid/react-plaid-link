@@ -1,12 +1,13 @@
 {
   "name": "react-plaid-link",
-  "version": "4.2.0",
+  "version": "5.0.0",
   "description": "A React component for Plaid Link",
   "registry": "https://registry.npmjs.org",
   "files": [
     "dist",
     "src",
-    "LICENSE"
+    "LICENSE",
+    "MIGRATION.md"
   ],
   "main": "dist/index.js",
   "module": "dist/index.esm.js",

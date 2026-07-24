@@ -2,7 +2,15 @@
 
 ## Unreleased
 
-- Correct Layer submission types so phone number and date of birth can be
+## 5.0.0
+
+See the [5.0.0 migration guide](MIGRATION.md) for required TypeScript updates.
+
+- Allow `public_token` to be `null` in `onSuccess` callbacks for Link flows
+  that do not create an Item.
+- Replace the `exit(force)` signature with `exit({ force })` to match the Link
+  Web SDK.
+- Correct Layer submission types so phone number and date of birth must be
   submitted separately.
 - Add stable Layer and Identity Match events.
 - Add a complete Layer React example and integration guidance.
