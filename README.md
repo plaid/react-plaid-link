@@ -209,7 +209,7 @@ class components, you can use the `PlaidLink` component.
 import React from 'react';
 import { PlaidLink } from 'react-plaid-link';
 
-const App extends React.Component {
+class App extends React.Component {
   // ...
   render() {
     return (
