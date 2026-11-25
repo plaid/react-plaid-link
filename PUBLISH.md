@@ -31,8 +31,7 @@ it.
    environment to publish that tarball.
 
 A prerelease such as `5.1.0-beta.1` is published under its prerelease tag
-(`beta`). A stable version older than the current `latest`, such as a
-backport, is published under `latest-<major>`.
+(`beta`). A stable version must be newer than the current `latest`.
 
 If the publish job fails, rerun it from the workflow run. Don't push the tag
 again.

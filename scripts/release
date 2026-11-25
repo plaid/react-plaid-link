@@ -24,7 +24,7 @@ name=$(node -p "require('./package.json').name")
 version=$(node -p "require('./package.json').version")
 tag="v$version"
 
-grep -F "## $version" CHANGELOG.md >/dev/null ||
+awk -v v="$version" '$1 == "##" && $2 == v { found = 1 } END { exit !found }' CHANGELOG.md ||
   abort "CHANGELOG.md must contain a section for $version."
 
 if published_version=$(npm view "$name@$version" version --registry="$registry" 2>/dev/null); then
