@@ -3,8 +3,8 @@ name: Publish to npm
 # Publishes with npm trusted publishing (OIDC): no npm token is stored in this repo, and npm adds a
 # provenance attestation that ties each release to this workflow run and its commit. The build job
 # installs, verifies, and packs without any publish rights. The publish job, which alone can request
-# an OIDC token, waits for approval in the npm-publish environment and publishes exactly the
-# tarball the build job verified.
+# an OIDC token, runs in the npm-publish environment, which only v*.*.* tags can deploy to, and
+# publishes exactly the tarball the build job verified.
 on:
   push:
     tags:
@@ -78,7 +78,7 @@ jobs:
           name: npm-package
           path: ${{ runner.temp }}/pack/${{ steps.pack.outputs.tarball }}
           if-no-files-found: error
-          # Long enough to cover an approval that waits, or a rerun of a failed publish job.
+          # Long enough to rerun a failed publish job later.
           retention-days: 30
 
   publish:

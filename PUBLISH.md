@@ -27,8 +27,7 @@ it.
 
 7. The tag starts the Publish to npm workflow. Its build job checks that the tag
    matches `package.json`, `CHANGELOG.md`, and `master`, runs the same checks,
-   and packs the package. Approve the publish job in the `npm-publish`
-   environment to publish that tarball.
+   and packs the package. The publish job then publishes that tarball.
 
 A prerelease such as `5.1.0-beta.1` is published under its prerelease tag
 (`beta`). A stable version must be newer than the current `latest`.

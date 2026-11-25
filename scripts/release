@@ -43,7 +43,7 @@ if tag_commit=$(git rev-parse -q --verify "refs/tags/$tag^{commit}"); then
 fi
 
 if [ -n "$(git ls-remote --tags origin "refs/tags/$tag")" ]; then
-  abort "$tag is already on GitHub. Approve or rerun its Publish to npm workflow run instead."
+  abort "$tag is already on GitHub. Rerun its Publish to npm workflow run instead."
 fi
 
 printf 'Tag %s at %s and push it, which starts the npm publish? Type "release" to continue: ' \
@@ -56,5 +56,5 @@ if [ "$tag_exists" = false ]; then
 fi
 
 git push origin "refs/tags/$tag"
-printf 'Pushed %s. Approve the Publish to npm run in the npm-publish environment to publish %s@%s.\n' \
+printf 'Pushed %s. The Publish to npm workflow publishes %s@%s.\n' \
   "$tag" "$name" "$version"
