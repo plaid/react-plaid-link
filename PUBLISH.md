@@ -1,7 +1,10 @@
 ## Publishing
 
-Releases are prepared on a branch and published from the merge commit on
-`master`.
+Releases are prepared on a branch and published by GitHub Actions from a tag on
+`master`. The [Publish to npm](.github/workflows/publish.yml) workflow uses npm
+trusted publishing, so no npm token is stored anywhere, and each release gets a
+provenance attestation that links it to the workflow run and commit that built
+it.
 
 1. Create a release branch from the latest `master`.
 2. Move the `Unreleased` changelog entries under the new version heading.
@@ -12,18 +15,24 @@ Releases are prepared on a branch and published from the merge commit on
    ```
 
 4. Open and merge the release PR after CI passes.
-5. Check out the updated `master`, confirm it matches `origin/master`, and
-   authenticate with npm.
+5. Check out the updated `master` and confirm it matches `origin/master`.
 6. Run:
 
    ```bash
    make release
    ```
 
-The release command runs lint, type checking, tests, and all builds before
-publishing. It publishes the version already recorded in `package.json`, then
-creates and pushes the annotated `v<version>` tag.
+   The release command runs lint, type checking, tests, and all builds, then
+   creates and pushes the annotated `v<version>` tag.
 
-If npm publication succeeds but tagging fails, rerun `make release`. The
-release script detects the published npm version and resumes with the missing
-tag instead of attempting to republish.
+7. The tag starts the Publish to npm workflow. Its build job checks that the tag
+   matches `package.json`, `CHANGELOG.md`, and `master`, runs the same checks,
+   and packs the package. Approve the publish job in the `npm-publish`
+   environment to publish that tarball.
+
+A prerelease such as `5.1.0-beta.1` is published under its prerelease tag
+(`beta`). A stable version older than the current `latest`, such as a
+backport, is published under `latest-<major>`.
+
+If the publish job fails, rerun it from the workflow run. Don't push the tag
+again.
