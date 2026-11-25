@@ -52,12 +52,13 @@ jobs:
             exit 1
           fi
 
+      # No dependency install scripts run, so none can tamper with the build. The build doesn't need them.
       - name: Install
         env:
           COREPACK_ENABLE_DOWNLOAD_PROMPT: "0"
         run: |
           corepack enable
-          yarn install --frozen-lockfile
+          yarn install --frozen-lockfile --ignore-scripts
 
       - name: Verify
         run: make verify
