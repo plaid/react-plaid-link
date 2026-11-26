@@ -24,14 +24,13 @@ name=$(node -p "require('./package.json').name")
 version=$(node -p "require('./package.json').version")
 tag="v$version"
 
-grep -F "## $version" CHANGELOG.md >/dev/null ||
+awk -v v="$version" '$1 == "##" && $2 == v { found = 1 } END { exit !found }' CHANGELOG.md ||
   abort "CHANGELOG.md must contain a section for $version."
 
-published=false
 if published_version=$(npm view "$name@$version" version --registry="$registry" 2>/dev/null); then
   [ "$published_version" = "$version" ] ||
     abort "Unexpected npm version response: $published_version"
-  published=true
+  abort "$name@$version is already on npm."
 elif ! npm view "$name" version --registry="$registry" >/dev/null 2>&1; then
   abort "Unable to query $name on npm."
 fi
@@ -43,39 +42,19 @@ if tag_commit=$(git rev-parse -q --verify "refs/tags/$tag^{commit}"); then
   tag_exists=true
 fi
 
-remote_tag_exists=false
 if [ -n "$(git ls-remote --tags origin "refs/tags/$tag")" ]; then
-  remote_tag_exists=true
+  abort "$tag is already on GitHub. Rerun its Publish to npm workflow run instead."
 fi
 
-if [ "$published" = true ] && [ "$remote_tag_exists" = true ]; then
-  printf '%s\n' "$name@$version is already published and tagged."
-  exit 0
-fi
-
-printf 'Release %s@%s from %s? Type "release" to continue: ' \
-  "$name" "$version" "$head_commit"
+printf 'Tag %s at %s and push it, which starts the npm publish? Type "release" to continue: ' \
+  "$tag" "$head_commit"
 read -r confirmation
 [ "$confirmation" = release ] || abort "Release cancelled."
-
-if [ "$published" = false ]; then
-  case "$version" in
-    *-*)
-      prerelease=${version#*-}
-      dist_tag=${prerelease%%.*}
-      npm publish --registry="$registry" --tag "$dist_tag"
-      ;;
-    *)
-      npm publish --registry="$registry"
-      ;;
-  esac
-else
-  printf '%s\n' "$name@$version is already on npm; continuing with the tag."
-fi
 
 if [ "$tag_exists" = false ]; then
   git tag --annotate "$tag" --message "Version $version"
 fi
 
 git push origin "refs/tags/$tag"
-printf 'Released %s@%s and %s.\n' "$name" "$version" "$tag"
+printf 'Pushed %s. The Publish to npm workflow publishes %s@%s.\n' \
+  "$tag" "$name" "$version"
